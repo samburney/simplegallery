@@ -1,0 +1,9 @@
+#topnav {
+	padding-top: 10px;
+}
+
+/* Thumbnail bug work-around */
+.thumbnails > li.span2:nth-child(6n+1),
+.thumbnails > li.span3:nth-child(4n+1),
+.thumbnails > li.span4:nth-child(3n+1),
+.thumbnails > li.span6:nth-child(2n+3){ margin-left: 0 !important; }
