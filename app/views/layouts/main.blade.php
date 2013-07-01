@@ -20,9 +20,16 @@
 			<div id="topnav" class="navbar navbar-inverse">
 				<div class="navbar-inner">
 					<a class="brand" href="/">sU</a>
-					{{--<ul class="nav pull-right">
-						<li><a href="/upload"><i class="icon-arrow-up icon-white"></i>Upload</a></li>
-					</ul>--}}
+					<ul class="nav pull-right">
+						<li class="divider-vertical"></li>
+						<li><a href="/upload"><i class="icon-user icon-white"></i>
+@if ($user && $user->id > 0)
+							{{$user->username}}
+@else
+							Not Logged In
+@endif
+						</a></li>
+					</ul>
 				</div>
 			</div>
 @show

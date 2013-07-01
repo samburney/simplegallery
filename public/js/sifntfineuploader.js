@@ -110,11 +110,14 @@ $(function(){
 					)
 				}
 				else{
-					// ERROR HANDLING TODO
+					// TODO
 				}
 			},
 			onError: function(id, name, reason, xhr){
-				// ERROR HANDLING TODO
+				$('#progress-' + id).children('div.bar').css('width', '100%').addClass('bar-danger');
+				$('#progress-' + id).click(function(){
+					bootbox.alert(reason.message);
+				});
 			}
 		}
 	});

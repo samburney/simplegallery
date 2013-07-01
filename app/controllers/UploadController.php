@@ -5,6 +5,7 @@
 class UploadController extends BaseController
 {
 	protected $layout = 'layouts.main';
+	public $user;
 
 	public function __construct()
 	{
@@ -15,13 +16,19 @@ class UploadController extends BaseController
 
 			Auth::loginUsingId($user_id);
 		}
+
+		$this->user = Auth::user();
+
+		View::composer('layouts.main', function($view)
+			{
+				$view->with('user', $this->user);
+			}
+		);
 	}
 
 	public function getIndex()
 	{
-		$user = Auth::user();
-		
-		$uploads = $user->uploads()->has('image')->with('image')->orderBy('created_at', 'desc')->paginate(12);
+		$uploads = $this->user->uploads()->has('image')->with('image')->orderBy('created_at', 'desc')->paginate(12);
 
 		$this->layout->content = View::make('uploads/index')
 			->with('uploads', $uploads);
@@ -29,8 +36,6 @@ class UploadController extends BaseController
 
 	public function getProto()
 	{
-		$user = Auth::user();
-
 		$this->layout->content = View::make('uploads/proto');
 	}
 
@@ -145,13 +150,6 @@ class UploadController extends BaseController
 	    	    $convert->convertfile($file, $file_requestedext);
 		    	$filepath = public_path() . '/files/' . $file['name'] . '.' . $file['ext'];
 	    	}
-	    	else{
-	    	    /*// Increment 'file_viewed' if no conversion necessary TODO
-	    	    $file_viewed = $file['file_viewed'] + 1;
-	    	    $sql = "update ".$db_tp."files set file_viewed = $file_viewed where file_id = $file_id";
-	    	    $result = $db->exec($sql);
-	    	    checkdberror($result);*/
-	    	}
 
 	    	// Process filetype specific extras
 	    	switch($file['extra']){
@@ -190,22 +188,19 @@ class UploadController extends BaseController
 
     	    // Push file to user    
     	    if(is_file($filepath)){
-		        /*if($context['url_redirect']){
-		            $namesplit = namesplit($filepath);
-		            header('Location: ' . $context['url_redirect_root'] . (false !== strpos($namesplit[1], 'cache') ? '/cache' : '') . '/' . $namesplit[2] . '.' . $namesplit[3] . "/$file_requestedname.$file_ext");
-		        }*/
-		        //else{
-		            $handle = fopen($filepath, 'rb');
-		            
-		            header("Content-type: " . $file['type']);
-		            header("Content-Length: " . $file['size']);
-		            header("Content-disposition: inline; filename=\"$file_requestedname." . $file['ext']);
-		            header("Cache-Control: max-age=31536000");
-		            header("Expires:");
-					header("Pragma:");
-		            
-		            $content = fpassthru($handle);
-		        //}
+    	    	// Increment 'viewed'
+    	    	DB::table('uploads')->where('id', $file['id'])->increment('viewed');
+
+	            $handle = fopen($filepath, 'rb');
+	            
+	            header("Content-type: " . $file['type']);
+	            header("Content-Length: " . $file['size']);
+	            header("Content-disposition: inline; filename=\"$file_requestedname." . $file['ext']);
+	            header("Cache-Control: max-age=31536000");
+	            header("Expires:");
+				header("Pragma:");
+	            
+	            $content = fpassthru($handle);
 	        }
 	        else{
 	        	header('HTTP/1.0 404 Not Found');
