@@ -18,9 +18,18 @@
 		<? $i = ($col + ($row - 1) * 4) - 1; ?>
 		@if($i < count($uploads_arr))
 			<li class="span3">
-				<a href="/view/{{$uploads_arr[$i]['id']}}/{{$uploads_arr[$i]['originalname']}}.{{$uploads_arr[$i]['ext']}}" class="thumbnail">
-					<img src="/get/{{$uploads_arr[$i]['id']}}/{{$uploads_arr[$i]['originalname']}}-200x100.jpg">
-				</a>
+				<div>
+					<a href="/view/{{$uploads_arr[$i]['id']}}/{{$uploads_arr[$i]['cleanname']}}.{{$uploads_arr[$i]['ext']}}" class="thumbnail">
+						<img src="/get/{{$uploads_arr[$i]['id']}}/{{$uploads_arr[$i]['cleanname']}}-200x100.jpg">
+					</a>
+				</div>
+				<div style="text-align: center;">
+					<a href="/view/{{$uploads_arr[$i]['id']}}/{{$uploads_arr[$i]['cleanname']}}.{{$uploads_arr[$i]['ext']}}" style="color: black;">
+						<small>
+							{{$uploads_arr[$i]['originalname']}}
+						</small>
+					</a>
+				</div>
 			</li>
 		@endif			
 	@endfor
@@ -30,6 +39,8 @@
 			{{$uploads->links()}}
 		</div>
 	</div>
-@include('uploads.upload-sidebar')
+	<div class="span2">
+		@include('uploads.upload-sidebar')
+	</div>
 </div>
 @endsection('content')

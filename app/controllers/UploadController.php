@@ -28,7 +28,7 @@ class UploadController extends BaseController
 
 	public function getIndex()
 	{
-		$uploads = $this->user->uploads()->has('image')->with('image')->orderBy('created_at', 'desc')->paginate(12);
+		$uploads = $this->user->uploads()->with('image')->orderBy('created_at', 'desc')->paginate(12);
 
 		$this->layout->content = View::make('uploads/index')
 			->with('uploads', $uploads);

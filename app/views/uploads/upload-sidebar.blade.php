@@ -1,4 +1,4 @@
-<div class="span2 well">
+<div class="well">
 	<div style="text-align: center; width: 100%; border:">
 		<a href="#" id="selectFilesToUpload" class="btn">Select Files</a>
 		<div id="dropArea" style="margin-top: 10px; border: 1px dashed grey;">

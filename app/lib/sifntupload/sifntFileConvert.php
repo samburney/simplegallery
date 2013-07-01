@@ -63,20 +63,20 @@ class sifntFileConvert {
 					
 					break;*/
 	            
-	            // Everything else is assigned a file-type based icon TODO
-	            /*default:
+	            // Everything else is assigned a file-type based icon
+	            default:
 	                // Check for icon file
-	                if(is_file('images/icons/' . $file['file_ext'] . '.gif')){
-	                    $file_path = 'images/icons/' . $file['file_ext'] . '.gif';
+	                if(is_file(public_path() . '/icons/' . $file['ext'] . '.gif')){
+	                    $file_path = public_path() . '/icons/' . $file['ext'] . '.gif';
 	                    $image = imagecreatefrommime($file_path);
 	                }
 
 	                // Generate filetype-icon where none exists
 	                else{
-	                    $image = imagecreatefrommime('images/icons/icon-template.gif');
+	                    $image = $this->imagecreatefrommime(public_path() . '/icons/icon-template.gif');
 	                    
-	                    $text = '.' . $file['file_ext'];
-	                    $font = 'fonts/misterearlbt.ttf';
+	                    $text = '.' . $file['ext'];
+	                    $font = public_path() . '/fonts/misterearlbt.ttf';
 	                    $font_size = 18;
 	                    $text_color = imagecolorallocate($image, 0x00, 0x48, 0x9c);
 	                    
@@ -86,11 +86,7 @@ class sifntFileConvert {
 	                    imagefttext($image, $font_size, 0, 44 - $text_width, 45 - $text_height, $text_color, $font, $text);
 	                }
 
-	                break;*/
-
-	            default:
-	            	return false;
-	            	break;
+	                break;
 	        }
 	        
 	        // Create output image
