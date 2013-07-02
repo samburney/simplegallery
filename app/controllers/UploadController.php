@@ -216,6 +216,11 @@ class UploadController extends BaseController
 		$upload = Upload::with('image')->find($id);
 		$file_path = public_path() . "/files/$upload->name.$upload->ext";
 
+		if(Auth::user()->id != $upload->user_id){
+			return Redirect::to(URL::previous())
+				->with('error', "You don't have permission to do that");
+		}
+
 		if($imageinfo = $convert->rotateimage($file_path, $angle)){
 			$upload->image->width = $imageinfo[0];
 			$upload->image->height = $imageinfo[1];
@@ -236,6 +241,11 @@ class UploadController extends BaseController
 	public function getDelete($id) {
 		$upload = Upload::find($id);
 		$sifntUpload = new sifntFileUpload();
+
+		if(Auth::user()->id != $upload->user_id){
+			return Redirect::to(URL::previous())
+				->with('error', "You don't have permission to do that");
+		}
 
 		if($sifntUpload->deletefile($id)){
 			return Redirect::to('/')
