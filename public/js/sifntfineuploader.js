@@ -39,8 +39,9 @@ $(function(){
 									)
 							)
 							.append(
-								$('<small>')
+								$('<span>')
 									.html(fileName)
+									.attr('style', 'font-size: 10px;')
 									.css('white-space', 'nowrap')
 							)
 							/*.append( // Remove disabled for now
@@ -101,10 +102,10 @@ $(function(){
 						$('<div>').append(
 							$('<a>')
 								.attr('href', '/view/' + data.file_id + '/' + data.file_name + '.' + data.file_ext)
-								.addClass('thumbnail')
 								.append(
 									$('<img>')
-										.attr('src', '/get/' + data.file_id + '/' + data.file_name + '-200x100.jpg')
+										.attr('src', '/get/' + data.file_id + '/' + data.file_name + '-108x100.jpg')
+										.addClass('img-polaroid')
 								)
 						)
 					)

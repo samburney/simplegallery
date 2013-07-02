@@ -38,7 +38,7 @@ class sifntFileConvert {
 	    return false;
 	}
 
-	function convertfile2image(&$file, $target_ext){
+	public function convertfile2image(&$file, $target_ext){
 	    $file_path = public_path() . '/files/' . $file['name'] . '.' . $file['ext'];
 	    $new_filename = 'cache/' . $file['name'];
 	    $new_filepath = public_path() . '/files/cache/' . $file['name'] . "." . $target_ext;
@@ -360,4 +360,27 @@ class sifntFileConvert {
 		// Draw the main text
 		$text2 = imagettftext ($im ,$size ,$angle ,$x ,$y ,$col ,$fontfile ,$text );
 	}
+
+	// Rotate an image clockwise and return it's new values as an array
+	public function rotateimage($filepath, $angle){
+		// Get image details
+		$imageinfo = getimagesize($filepath);
+		
+		// Make angle anti-clockwise
+		$angle = 360 - $angle;
+		
+		// Rotate image
+		$image = $this->imagecreatefrommime($filepath);
+		$image = imagerotate($image, $angle, 0);
+		
+		if($this->saveimageasmime($image, $filepath, $imageinfo['mime'])){
+			imagedestroy($image);
+			
+			// Return new image info
+			return(getimagesize($filepath));
+		}
+		else{
+			return false;
+		}
+	}	
 }

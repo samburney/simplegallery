@@ -2,6 +2,34 @@
 	padding-top: 10px;
 }
 
+.small {
+	font-size: 12px;
+}
+
+.well-empty {
+	padding: 0px;
+}
+
+.well-empty div.well-inner {
+	margin: 10px;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.nav-actions {
+	margin-bottom: 0;
+}
+
+div.image-small, div.image-thumbnail {
+	text-align: center;
+}
+
+ul.nav-pills li.danger a:hover {
+	color: black;
+	background: red;
+}
+
+
 /* Thumbnail bug work-around */
 .thumbnails > li.span2:nth-child(6n+1),
 .thumbnails > li.span3:nth-child(4n+1),

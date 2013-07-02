@@ -19,7 +19,7 @@ class UploadController extends BaseController
 
 		$this->user = Auth::user();
 
-		View::composer('layouts.main', function($view)
+		View::composer(array('layouts.main', 'uploads/index', 'uploads/view'), function($view)
 			{
 				$view->with('user', $this->user);
 			}
@@ -32,11 +32,6 @@ class UploadController extends BaseController
 
 		$this->layout->content = View::make('uploads/index')
 			->with('uploads', $uploads);
-	}
-
-	public function getProto()
-	{
-		$this->layout->content = View::make('uploads/proto');
 	}
 
 	public function postIndex()
@@ -188,8 +183,7 @@ class UploadController extends BaseController
 
     	    // Push file to user    
     	    if(is_file($filepath)){
-    	    	// Increment 'viewed'
-    	    	DB::table('uploads')->where('id', $file['id'])->increment('viewed');
+    	    	Upload::find($file['id'])->increment('viewed');
 
 	            $handle = fopen($filepath, 'rb');
 	            
@@ -213,6 +207,44 @@ class UploadController extends BaseController
             header('HTTP/1.0 404 Not Found');
             die('File not found');
 	    }
+	}
+
+	public function getRotate($id, $angle)
+	{
+		$sifntUpload = new sifntFileUpload();
+		$convert = new sifntFileConvert();
+		$upload = Upload::with('image')->find($id);
+		$file_path = public_path() . "/files/$upload->name.$upload->ext";
+
+		if($imageinfo = $convert->rotateimage($file_path, $angle)){
+			$upload->image->width = $imageinfo[0];
+			$upload->image->height = $imageinfo[1];
+
+			$upload->image->save();
+
+			$sifntUpload->deletefilecache($id);
+
+			return Redirect::to(URL::previous())
+				->with('notice', 'Image successfully rotated ' . $angle . '&deg;');
+		}
+		else{
+			return Redirect::to(URL::previous())
+				->with('error', 'Image rotation failed');
+		}
+	}
+
+	public function getDelete($id) {
+		$upload = Upload::find($id);
+		$sifntUpload = new sifntFileUpload();
+
+		if($sifntUpload->deletefile($id)){
+			return Redirect::to('/')
+				->with('notice', "Deleted $upload->originalname.$upload->ext");
+		}
+		else{
+			return Redirect::to(URL::previous())
+				->with('error', 'File deletion failed');
+		}
 	}
 }
 ?>

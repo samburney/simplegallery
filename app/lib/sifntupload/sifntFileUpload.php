@@ -4,14 +4,14 @@ class sifntFileUpload {
 	private $path_cache;
 	private $path_magicdb;
 
-	function __construct($path_dest){
-		$this->path_dest = $path_dest;
-		$this->path_cache = $path_dest . '/cache'; //FIXME
+	function __construct($path_dest = null){
+		$this->path_dest = $path_dest ? $path_dest : public_path() . "/files";
+		$this->path_cache = $this->path_dest . '/cache';
 		$path_magicdb = null; // FIXME
 	}
 
 	// Quick function to call print_r within a HTML <pre>
-	private function debug($arr){
+	public static function debug($arr){
 
 		$backtrace = debug_backtrace();
 		$file = $backtrace[0]['file'];
@@ -278,8 +278,18 @@ class sifntFileUpload {
 		return $name;
 	}
 
+	public  function deletefile($id){
+		$upload = Upload::find($id);
+		if($upload){
+			$file_path = public_path() . '/files/' . "$upload->name.$upload->ext";
+			$this->deletefilebyfilepath($file_path);
+		}
+
+		return true;
+	}
+
 	// Delete all file data (Physical and DB) by the filepath
-	public function deletefilebyfilepath($file_path){
+	public  function deletefilebyfilepath($file_path){
 		// Check if file exists
 		if(!is_file($file_path)){
 			return false;
@@ -289,35 +299,28 @@ class sifntFileUpload {
 		$namesplit = $this->namesplit($file_path);
 		$file_name = $namesplit['2'];
 		
-		/*$sql = "select file_id from ".$db_tp."files where file_name = '$file_name'"; TODO
-		$result = $db->queryOne($sql);
-		if(checkdberror($result)){
-			$file_id = $result;
-		}*/
-		
-		// Delete file itself
-		unlink($file_path);
-		
-		// Delete cached files based on this one
-		$dir = opendir($this->path_cache);
-		while(false !== ($cachedfile = readdir($dir))){
-			if(0 === strpos($cachedfile, $file_name)){
-				unlink($this->path_cache . '/' . $cachedfile);
-			}
+		$upload = Upload::where('name', '=', $file_name)->first();
+		$upload_id = $upload->id;
+
+		if($upload->delete()){
+			// Delete database references
+			Image::where('upload_id', '=', $upload_id)->delete();
+
+			// Delete file itself
+			if(unlink($file_path)){
+				// Delete cached files based on this one
+				$dir = opendir($this->path_cache);
+				while(false !== ($cachedfile = readdir($dir))){
+					if(0 === strpos($cachedfile, $file_name)){
+						unlink($this->path_cache . '/' . $cachedfile);
+					}
+				}
+
+				return true;
+			}		
 		}
-		
-		// Delete Database References TODO
-		/*if($file_id){
-			$sqls[] = "delete from ".$db_tp."files where file_id = $file_id";
-			$sqls[] = "delete from ".$db_tp."images where file_id = $file_id";
-			$sqls[] = "delete from ".$db_tp."videos where file_id = $file_id";
-			$sqls[] = "delete from ".$db_tp."filetags where file_id = $file_id";
-			
-			foreach($sqls as $sql){
-				$result = $db->exec($sql);
-				checkdberror($result);
-			}
-		}*/
+
+		return false;
 	}
 
 	public function processimage(&$uploadData) // TODO
@@ -418,5 +421,18 @@ class sifntFileUpload {
 
 	private function addaudiotodb($file){
 		return true;
+	}
+
+	// Deleted cache for particular file
+	public function deletefilecache($id){
+		$upload = Upload::find($id);
+
+		// Delete cached files based on this one
+		$dir = opendir($this->path_cache);
+		while(false !== ($cachedfile = readdir($dir))){
+			if(0 === strpos($cachedfile, $upload->name)){
+				unlink($this->path_cache . '/' . $cachedfile);
+			}
+		}
 	}
 }

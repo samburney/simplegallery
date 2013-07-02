@@ -18,9 +18,9 @@
 		<? $i = ($col + ($row - 1) * 4) - 1; ?>
 		@if($i < count($uploads_arr))
 			<li class="span3">
-				<div>
-					<a href="/view/{{$uploads_arr[$i]['id']}}/{{$uploads_arr[$i]['cleanname']}}.{{$uploads_arr[$i]['ext']}}" class="thumbnail">
-						<img src="/get/{{$uploads_arr[$i]['id']}}/{{$uploads_arr[$i]['cleanname']}}-200x100.jpg">
+				<div class="image-thumbnail">
+					<a href="/view/{{$uploads_arr[$i]['id']}}/{{$uploads_arr[$i]['cleanname']}}.{{$uploads_arr[$i]['ext']}}">
+						<img src="/get/{{$uploads_arr[$i]['id']}}/{{$uploads_arr[$i]['cleanname']}}-200x100.jpg" class="img-polaroid">
 					</a>
 				</div>
 				<div style="text-align: center;">

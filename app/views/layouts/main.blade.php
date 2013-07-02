@@ -33,6 +33,16 @@
 				</div>
 			</div>
 @show
+@if (Session::has('error'))
+			<div class="alert alert-error">
+				<b>Error!</b> {{Session::get('error')}}
+			</div>
+@endif
+@if (Session::has('notice'))
+			<div class="alert alert-success">
+				<b>Notice:</b> {{Session::get('notice')}}
+			</div>
+@endif
 		</div>
 		<div class="container">
 			@yield('content')
