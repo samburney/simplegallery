@@ -19,7 +19,7 @@
 				<p><b title="{{$upload->originalname}}.{{$upload->ext}}">{{$upload->originalname}}</b></p>
 				<p style="font-size: 12px;">
 					<b>Size:</b> {{$upload->size}} Bytes<br>
-					<b>Owner:</b> {{User::find($upload->user_id)->pluck('username')}}<br>
+					<b>Owner:</b> {{User::find($upload->user_id)->username}}<br>
 					<b>Type:</b> {{$upload->type}}<br>
 				</p>
 @if ($upload->extra == 'image')
