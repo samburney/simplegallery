@@ -68,7 +68,7 @@ class sifntFileConvert {
 	                // Check for icon file
 	                if(is_file(public_path() . '/icons/' . $file['ext'] . '.gif')){
 	                    $file_path = public_path() . '/icons/' . $file['ext'] . '.gif';
-	                    $image = imagecreatefrommime($file_path);
+	                    $image = $this->imagecreatefrommime($file_path);
 	                }
 
 	                // Generate filetype-icon where none exists
