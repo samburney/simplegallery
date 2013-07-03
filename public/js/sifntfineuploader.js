@@ -101,10 +101,10 @@ $(function(){
 					$('#upload-' + id).prepend(
 						$('<div>').append(
 							$('<a>')
-								.attr('href', '/view/' + data.file_id + '/' + data.file_name + '.' + data.file_ext)
+								.attr('href', '/view/' + data.file_id + '/' + data.file_cleanname + '.' + data.file_ext)
 								.append(
 									$('<img>')
-										.attr('src', '/get/' + data.file_id + '/' + data.file_name + '-108x100.jpg')
+										.attr('src', '/get/' + data.file_id + '/' + data.file_cleanname + '-108x100.jpg')
 										.addClass('img-polaroid')
 								)
 						)
