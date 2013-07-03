@@ -9,12 +9,16 @@ class UploadController extends BaseController
 
 	public function __construct()
 	{
-		// Autologin for now
+		// Autologin if possible
 		if(!Auth::check()){
 			$userauth = new sifntUserAuth();
-			$user_id = $userauth->getUserId($userauth->getUserName());
-
-			Auth::loginUsingId($user_id);
+			if($user_id = $userauth->getUserId($userauth->getUserName())){
+				Auth::loginUsingId($user_id);
+			}
+			
+			//if(Auth::check()){  // FIXME, I don't like this showing up two requests in a row
+			//	Session::flash('warning', "You've been automatically logged in as " . Auth::user()->username . '. <a href="#">Why?</a>');
+			//}
 		}
 
 		$this->user = Auth::user();

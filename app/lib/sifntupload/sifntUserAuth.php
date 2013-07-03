@@ -31,7 +31,12 @@ class sifntUserAuth
 	{
 		$user = User::where('username', '=', $user_name)->first();
 		if($user){
-			return $user->id;
+			if($user->email && $user->password){
+				return -1;
+			}
+			else{
+				return $user->id;
+			}
 		}
 		else{
 			$user = new User;
@@ -68,52 +73,60 @@ class sifntUserAuth
 	// Based on code by justo@air-stream.org - http://code.ridgehaven.wan/browser/phpbot/module/ip.php
 	private function getASUserName($ip)
 	{
-		$postdata = "txtIPAddress=" . $ip;
-
-		$ch = curl_init(); 
-		curl_setopt ($ch, CURLOPT_HEADER, 0);
-		curl_setopt ($ch, CURLOPT_SSL_VERIFYPEER, FALSE); 
-		curl_setopt ($ch, CURLOPT_FOLLOWLOCATION, 0); 
-		curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1); 
-
-		curl_setopt ($ch, CURLOPT_POSTFIELDS, $postdata); 
-		curl_setopt ($ch, CURLOPT_POST, 1); 
-
-		curl_setopt($ch, CURLOPT_URL, 'https://members.air-stream.wan/whois/search');
-		$content = curl_exec($ch);
-		curl_close($ch);
-
-		//IP not Found
-		if (strpos($content, 'No results!') !== FALSE)
-		{
-			return false;
+		if($member = Cache::get('asip-' . $ip . '-member')){
+			return $member;
 		}
-		//IP Found
-		else
-		{
-			//Get table rows
-			preg_match_all('/<tr>.*?<\/tr>/s',$content,$rows);
-			$nodes = count($rows[0]) . "<br>";
+		else{
+			$postdata = "txtIPAddress=" . $ip;
 
-			//echo "Count: " . $nodes;
-			for($i=0; $i <= $nodes-1; $i++)
+			$ch = curl_init(); 
+			curl_setopt ($ch, CURLOPT_HEADER, 0);
+			curl_setopt ($ch, CURLOPT_SSL_VERIFYPEER, FALSE); 
+			curl_setopt ($ch, CURLOPT_FOLLOWLOCATION, 0); 
+			curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1); 
+
+			curl_setopt ($ch, CURLOPT_POSTFIELDS, $postdata); 
+			curl_setopt ($ch, CURLOPT_POST, 1); 
+
+			curl_setopt($ch, CURLOPT_URL, 'https://members.air-stream.wan/whois/search');
+			$content = curl_exec($ch);
+			curl_close($ch);
+
+			//IP not Found
+			if (strpos($content, 'No results!') !== FALSE)
 			{
-				//Get <td>
-				preg_match_all("/<td>.*?<\/td>/s",$rows[0][$i],$nodeinfo[$i]);
-
-				//Set Shit Up
-				$info[$i][0] = trim(strip_tags($nodeinfo[$i][0][0])); //header
-				$info[$i][1] = trim(strip_tags($nodeinfo[$i][0][1])); //data
-
+				return false;
 			}
-			$ipAdress 	= $info[0][1];
-			$ap			= $info[1][1];
-			$type		= $info[2][1];
-			$subnet		= $info[3][1];
-			$member	= $info[4][1];
-			$host = gethostbyaddr($ipAdress);
+			//IP Found
+			else
+			{
+				//Get table rows
+				preg_match_all('/<tr>.*?<\/tr>/s',$content,$rows);
+				$nodes = count($rows[0]) . "<br>";
 
-			return $member;			
+				//echo "Count: " . $nodes;
+				for($i=0; $i <= $nodes-1; $i++)
+				{
+					//Get <td>
+					preg_match_all("/<td>.*?<\/td>/s",$rows[0][$i],$nodeinfo[$i]);
+
+					//Set Shit Up
+					$info[$i][0] = trim(strip_tags($nodeinfo[$i][0][0])); //header
+					$info[$i][1] = trim(strip_tags($nodeinfo[$i][0][1])); //data
+
+				}
+
+				$ipAdress 	= $info[0][1];
+				$ap			= $info[1][1];
+				$type		= $info[2][1];
+				$subnet		= $info[3][1];
+				$member	= $info[4][1];
+				$host = gethostbyaddr($ipAdress);
+
+				Cache::put('asip-' . $ip . '-member', $member, 1440);
+
+				return $member;
+			}
 		}
 
 	}

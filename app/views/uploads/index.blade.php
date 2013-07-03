@@ -23,7 +23,7 @@
 						<img src="/get/{{$uploads_arr[$i]['id']}}/{{$uploads_arr[$i]['cleanname']}}-200x100.jpg" class="img-polaroid">
 					</a>
 				</div>
-				<div style="text-align: center;">
+				<div style="text-align: center; whitespace: nowrap; overflow: hidden;">
 					<a href="/view/{{$uploads_arr[$i]['id']}}/{{$uploads_arr[$i]['cleanname']}}.{{$uploads_arr[$i]['ext']}}" style="color: black;">
 						<small>
 							{{$uploads_arr[$i]['originalname']}}

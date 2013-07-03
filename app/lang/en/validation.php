@@ -63,6 +63,8 @@ return array(
 	),
 	"unique"           => "The :attribute has already been taken.",
 	"url"              => "The :attribute format is invalid.",
+	'unique_username' => 'That username already exists, please choose another.',
+	'unique_email' => 'A user has already registered with that email address.',
 
 	/*
 	|--------------------------------------------------------------------------

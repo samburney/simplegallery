@@ -17,3 +17,4 @@ Route::get('get/{path}/{params}', array('as' => 'get', 'uses' => 'UploadControll
 Route::get('view/{path}/{params}', array('as' => 'view', 'uses' => 'UploadController@getView'));
 
 Route::controller('upload','UploadController');
+Route::controller('user','UserController');

@@ -20,22 +20,44 @@
 			<div id="topnav" class="navbar navbar-inverse">
 				<div class="navbar-inner">
 					<a class="brand" href="/">sU</a>
+@if (@$user)
 					<ul class="nav pull-right">
 						<li class="divider-vertical"></li>
-						<li><a href="/upload"><i class="icon-user icon-white"></i>
-@if ($user && $user->id > 0)
-							{{$user->username}}
-@else
-							Not Logged In
-@endif
-						</a></li>
+						<li class="dropdown">
+							<a href="#" class="dropdown" data-toggle="dropdown">
+								<i class="icon-user icon-white"></i>
+	@if ($user->id > 0)
+								{{$user->username}}
+	@else
+								Not Logged In
+	@endif
+								<b class="caret"></b>
+							</a>
+							<ul class="dropdown-menu">
+	@if ($user->id <=0 || ($user->id > 0 && !$user->email && !$user->password) || !Auth::check())
+								<li><a href="/user/login">Log in</a></li>
+	@endif
+	@if ($user->id <= 0 || !$user->email || !$user->password)
+								<li><a href="/user/register">Register</a></li>
+	@endif	
+	@if ($user->id > 0)
+								<li><a href="/user/logout">Log out</a></li>
+	@endif
+							</ul>
+						</li>
 					</ul>
+@endif
 				</div>
 			</div>
 @show
 @if (Session::has('error'))
 			<div class="alert alert-error">
 				<b>Error!</b> {{Session::get('error')}}
+			</div>
+@endif
+@if (Session::has('warning'))
+			<div class="alert alert-warning">
+				<b>Warning:</b> {{Session::get('warning')}}
 			</div>
 @endif
 @if (Session::has('notice'))
