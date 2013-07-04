@@ -24,7 +24,7 @@
 				<img src="/get/{{$upload->id}}/{{$upload->cleanname}}-710.{{$upload->ext}}" class="img-polaroid">
 			</a>
 		</div>
-@endforeach		
+@endforeach
 	</div>
 	<div class="span3">
 		<div class="row-fluid">

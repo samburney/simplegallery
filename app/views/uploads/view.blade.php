@@ -25,6 +25,9 @@
 @endif
 			</div>
 		</div>
+		<div class="well well-small text-center" style="font-size: 10px;">
+			<input type="hidden" id="tags" style="width: 100%;"></input>
+		</div>
 @if ($upload->user_id == $user->id)
 		<div class="well well-small">
 			<ul class="nav nav-stacked nav-pills nav-actions">
@@ -79,6 +82,19 @@
 				"label": "No",
 				"class": "btn"
 			}]);
+		});
+
+		// Set up tags select
+		$('#tags')
+		.select2({
+			tags:[],
+			placeholder: "Tags",
+			minimumInputLength: 3,
+			tokenSeparators: [","],
+			triggerChange: true,
+		})
+		.change(function(){
+			console.log($(this).val());
 		});
 	});
 </script>

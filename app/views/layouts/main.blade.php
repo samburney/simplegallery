@@ -8,10 +8,12 @@
 		<script type="text/javascript" src="/lib/jquery.fineuploader-3.6.4/jquery.fineuploader-3.6.4.js"></script>
 		<script type="text/javascript" src="/lib/bootstrap-2.3.2/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="/js/bootbox.min.js"></script>
+		<script type="text/javascript" src="/lib/select2-3.4.1/select2.js"></script>
 @show
 @section('styles')
 		<link href="/lib/jquery.fineuploader-3.6.4/fineuploader-3.6.4.css" rel="stylesheet" media="all">
 		<link href="/lib/bootstrap-2.3.2/css/bootstrap.css" rel="stylesheet" media="all">
+		<link href="/lib/select2-3.4.1/select2.css" rel="stylesheet" media="all">
 		<link href="/css/style.css" rel="stylesheet" media="all">
 @show
 	</head>
