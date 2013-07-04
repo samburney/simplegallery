@@ -7,5 +7,15 @@ class Upload extends Eloquent
 	{
 		return $this->hasOne('Image');
 	}
+
+	public function collections()
+	{
+		return $this->belongsToMany('Collection');
+	}
+
+	public function tags()
+	{
+		return $this->belongsToMany('Tag');
+	}
 }
 ?>

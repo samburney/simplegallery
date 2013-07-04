@@ -1,3 +1,7 @@
+@section ('scripts')
+	@parent
+	<script type="text/javascript" src="/js/sifntfineuploader.js"></script>
+@endsection
 <div class="well well-empty">
 	<div class="well-inner" style="text-align: center;">
 		<a href="#" id="selectFilesToUpload" class="btn btn-block">Select Files</a>
@@ -10,6 +14,7 @@
 				</b>
 			</small>
 		</div>
+		<button id="createCollection" class="btn btn-block hide" style="margin-top: 10px;">New Collection</button>
 	</div>
 	<div id="uploadList" class="well-inner" style="margin-top: 10px; text-align: center;" class="hide"></div>
 	<div id="uploadNow" style="margin-top: 10px;" class="hide">

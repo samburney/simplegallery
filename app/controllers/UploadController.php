@@ -22,12 +22,6 @@ class UploadController extends BaseController
 		}
 
 		$this->user = Auth::user();
-
-		View::composer(array('layouts.main', 'uploads/index', 'uploads/view'), function($view)
-			{
-				$view->with('user', $this->user);
-			}
-		);
 	}
 
 	public function getIndex()
@@ -66,7 +60,7 @@ class UploadController extends BaseController
 		return Response::json($result);
 	}
 
-	public function getView($file_id, $file_requestedname)
+	public function getView($file_id, $file_requestedname = null)
 	{
 		$upload = Upload::with('image')->find($file_id);
 

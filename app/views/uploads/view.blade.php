@@ -1,10 +1,5 @@
 @extends('layouts.main')
 
-@section('scripts')
-	@parent
-	<script type="text/javascript" src="/js/sifntfineuploader.js"></script>
-@endsection('scripts')
-
 @section('content')
 <div class="row-fluid" style="height: 100%">
 	<div class="span10 image-small" id="imageView">

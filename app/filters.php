@@ -78,3 +78,16 @@ Route::filter('csrf', function()
 		throw new Illuminate\Session\TokenMismatchException;
 	}
 });
+
+// Define the $user variable for most views
+View::composer(array(
+		'layouts.main',
+		'uploads/index',
+		'uploads/view',
+		'collections/view',
+	),
+	function($view)
+	{
+		$view->with('user', Auth::user());
+	}
+);

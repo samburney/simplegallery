@@ -86,3 +86,4 @@ require app_path().'/lib/fineupload-server/php.php';
 require app_path().'/lib/sifntupload/sifntFileUpload.php';
 require app_path().'/lib/sifntupload/sifntFileConvert.php';
 require app_path().'/lib/sifntupload/sifntUserAuth.php';
+require app_path().'/lib/sifntUtil/sU.php';

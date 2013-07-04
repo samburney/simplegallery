@@ -1,10 +1,5 @@
 @extends('layouts.main')
 
-@section('scripts')
-	@parent
-	<script type="text/javascript" src="/js/sifntfineuploader.js"></script>
-@endsection('sidebar')
-
 @section('content')
 <? $uploads_arr = []; ?>
 @foreach ($uploads as $upload)

@@ -4,6 +4,7 @@
 		<title>sifnt Upload</title>
 @section('scripts')
 		<script type="text/javascript" src="/js/jquery-1.10.1.min.js"></script>
+		<script type="text/javascript" src="/js/jquery.scrollto.js"></script>
 		<script type="text/javascript" src="/lib/jquery.fineuploader-3.6.4/jquery.fineuploader-3.6.4.js"></script>
 		<script type="text/javascript" src="/lib/bootstrap-2.3.2/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="/js/bootbox.min.js"></script>

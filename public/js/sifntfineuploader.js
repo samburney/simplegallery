@@ -1,6 +1,8 @@
 var uploader;
 var dragAndDrop;
 var starttimes = [];
+var collection = [];
+var activeUploads = 0;
 
 $(function(){
 	uploader = new qq.FineUploaderBasic({
@@ -18,6 +20,10 @@ $(function(){
 		},
 		callbacks: {
 			onSubmit: function(id, fileName) {
+				activeUploads++;
+				console.log(activeUploads);
+				$('#createCollection').attr('disabled', 'disabled').addClass('disabled');
+
 				$('#uploadList')
 					.append(
 						$("<div>")
@@ -95,16 +101,23 @@ $(function(){
 				if(responseJSON.success){
 					var data = responseJSON.data;
 
+					activeUploads--;
+					collection[collection.length] = data.file_id;
+					console.log(activeUploads);
+					if(activeUploads <= 0){
+						$('#createCollection').show().removeAttr('disabled').removeClass('disabled');
+					}
+
 					$('#upload-' + id).find('a.remove').parent().remove();
 					$('#progress-' + id).remove();
 
 					$('#upload-' + id).prepend(
 						$('<div>').append(
 							$('<a>')
-								.attr('href', '/view/' + data.file_id + '/' + data.file_cleanname + '.' + data.file_ext)
+								.attr('href', '/view/' + data.file_id + '/' + data.file_name + '.' + data.file_ext)
 								.append(
 									$('<img>')
-										.attr('src', '/get/' + data.file_id + '/' + data.file_cleanname + '-108x100.jpg')
+										.attr('src', '/get/' + data.file_id + '/' + data.file_name + '-108x100.jpg')
 										.addClass('img-polaroid')
 								)
 						)
@@ -125,6 +138,14 @@ $(function(){
 
 	$('#uploadNow').click(function(){
 		uploader.uploadStoredFiles();
+	});
+
+	$('#createCollection').click(function(){
+		bootbox.prompt("Collection Name", function(result) {
+			if(result){
+				createCollection(collection, result);
+			}
+		});
 	});
 
 	dragAndDrop = new qq.DragAndDrop({
@@ -150,4 +171,20 @@ function checkUploadList(id){
 		$('#uploadList').hide();
 		//$('#uploadNow').hide();
 	}
+}
+
+function createCollection(ids, name){
+	$.post(
+		'/collection/new',
+		{
+			ids: ids,
+			name: name,
+		},
+		function(data){
+			if(data.success){
+				window.location = '/collection/view/' + data.collection_id;
+			}
+		},
+		'json'
+	);
 }
