@@ -2,16 +2,16 @@
 
 @section('content')
 <? $uploads_arr = []; ?>
-@foreach ($uploads as $upload)
-	<? $uploads_arr[] = $upload->toArray(); ?>
+@foreach ($collections as $collection)
+	<? $uploads_arr[] = array('collection' => $collection, 'upload' => $collection->uploads()->first()->toArray()); ?>
 @endforeach		
 <div class="row-fluid">
 	<div class="span10">
 		<ul class="nav nav-pills">
-			<li class="active">
+			<li>
 				<a href="/">Recent Uploads</a>
 			</li>
-			<li>
+			<li class="active">
 				<a href="/collections">Recent Collections</a>
 			</li>
 		</ul>
@@ -22,14 +22,14 @@
 		@if($i < count($uploads_arr))
 			<li class="span3">
 				<div class="image-thumbnail">
-					<a href="/view/{{$uploads_arr[$i]['id']}}/{{$uploads_arr[$i]['cleanname']}}.{{$uploads_arr[$i]['ext']}}">
-						<img src="/get/{{$uploads_arr[$i]['id']}}/{{$uploads_arr[$i]['cleanname']}}-200x100.jpg" class="img-polaroid">
+					<a href="/collection/view/{{$uploads_arr[$i]['collection']['id']}}">
+						<img src="/get/{{$uploads_arr[$i]['upload']['id']}}/{{$uploads_arr[$i]['upload']['cleanname']}}-200x100.jpg" class="img-polaroid">
 					</a>
 				</div>
 				<div style="text-align: center; white-space: nowrap; overflow: hidden;">
-					<a href="/view/{{$uploads_arr[$i]['id']}}/{{$uploads_arr[$i]['cleanname']}}.{{$uploads_arr[$i]['ext']}}" style="color: black;">
+					<a href="/collection/view/{{$uploads_arr[$i]['collection']['id']}}" style="color: black;">
 						<small>
-							{{$uploads_arr[$i]['originalname']}}
+							{{$uploads_arr[$i]['collection']['name']}}
 						</small>
 					</a>
 				</div>
@@ -39,7 +39,7 @@
 		</ul>
 @endfor
 		<div class="text-center">
-			{{$uploads->links()}}
+			{{$collections->links()}}
 		</div>
 	</div>
 	<div class="span2">

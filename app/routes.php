@@ -17,6 +17,13 @@ Route::get('get/{path}/{params}', array('as' => 'get', 'uses' => 'UploadControll
 Route::get('view/{path}/{params?}', array('as' => 'view', 'uses' => 'UploadController@getView'));
 
 Route::controller('upload','UploadController');
+Route::controller('uploads','UploadController');
+
 Route::controller('user','UserController');
+Route::controller('users','UserController');
+
 Route::controller('collection','CollectionController');
+Route::controller('collections','CollectionController');
+
 Route::controller('tag','TagController');
+Route::controller('tags','TagController');
