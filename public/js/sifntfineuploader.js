@@ -182,7 +182,7 @@ function createCollection(ids, name){
 		},
 		function(data){
 			if(data.success){
-				window.location = '/collection/view/' + data.collection_id;
+				window.location = '/collection/view/' + data.name_unique;
 			}
 		},
 		'json'

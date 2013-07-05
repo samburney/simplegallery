@@ -14,6 +14,9 @@
 			<li>
 				<a href="/collections">Recent Collections</a>
 			</li>
+			<li>
+				<a href="/tags">Tags</a>
+			</li>
 		</ul>
 @for ($row=1; $row<=3; $row++)
 		<ul class="thumbnails">

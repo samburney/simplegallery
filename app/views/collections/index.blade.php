@@ -11,8 +11,11 @@
 			<li>
 				<a href="/">Recent Uploads</a>
 			</li>
-			<li class="active">
+			<li <? if(Request::is('collection') || Request::is('collections')){ ?>class="active"<? } ?>>
 				<a href="/collections">Recent Collections</a>
+			</li>
+			<li <? if(Request::is('tag') || Request::is('tags')){ ?>class="active"<? } ?>>
+				<a href="/tags">Tags</a>
 			</li>
 		</ul>
 @for ($row=1; $row<=3; $row++)
@@ -22,12 +25,12 @@
 		@if($i < count($uploads_arr))
 			<li class="span3">
 				<div class="image-thumbnail">
-					<a href="/collection/view/{{$uploads_arr[$i]['collection']['id']}}">
+					<a href="/tag/view/{{$uploads_arr[$i]['collection']['name']}}">
 						<img src="/get/{{$uploads_arr[$i]['upload']['id']}}/{{$uploads_arr[$i]['upload']['cleanname']}}-200x100.jpg" class="img-polaroid">
 					</a>
 				</div>
 				<div style="text-align: center; white-space: nowrap; overflow: hidden;">
-					<a href="/collection/view/{{$uploads_arr[$i]['collection']['id']}}" style="color: black;">
+					<a href="/tag/view/{{$uploads_arr[$i]['collection']['name']}}" style="color: black;">
 						<small>
 							{{$uploads_arr[$i]['collection']['name']}}
 						</small>

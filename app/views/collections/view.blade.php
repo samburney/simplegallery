@@ -33,7 +33,9 @@
 					<b>{{$collection->name}}</b>
 				</p>
 				<p style="font-size: 12px;">
+@if(Request::is('collection/*') || Request::is('collections/*'))
 					<b>Owner:</b> {{User::find($collection->user_id)->username}}<br>
+@endif
 					<b>Files:</b> {{count($collection->uploads)}}<br>
 				</p>
 			</div>
@@ -41,7 +43,7 @@
 		<div class="row-fluid">
 			<div class="well well-small text-center">
 @for ($row=1; $row<=3; $row++)
-	@if(count($uploads_arr) / ($row * 3) >= 1)
+	@if((count($uploads_arr) + 3) - ($row * 3))
 				<ul class="thumbnails thumbnails-tiny">
 		@for ($col=1; $col<=3; $col++)
 			<? $i = ($col + ($row - 1) * 3) - 1; ?>
@@ -58,9 +60,11 @@
 				</ul>
 	@endif
 @endfor
+@if($uploads->getLastPage() > 1)
 				<div class="pagination-mini" style="margin-top: -10px; margin-bottom: -20px;">
 					{{$uploads->links()}}
 				</div>
+@endif
 			</div>
 		</div>
 @include('uploads.upload-sidebar')
