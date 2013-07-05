@@ -43,8 +43,21 @@ img.img-polaroid-tiny {
 	padding: 1px;
 }
 
-div.select2-drop {
+div.select2-drop, div.select2-container {
 	font-size: 10px;
+}
+
+.select2-container-multi .select2-choices {
+	min-height: 21px;
+}
+
+.select2-container-multi .select2-choices .select2-search-choice {
+	margin: 1px 0 1px 1px;
+}
+
+.select2-container-multi .select2-choices .select2-search-field input {
+	height: 18px;
+	padding: 0;
 }
 /* Thumbnail bug work-around */
 .thumbnails > li.span2:nth-child(6n+1),

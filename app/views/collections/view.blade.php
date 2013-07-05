@@ -34,6 +34,7 @@
 				</p>
 				<p style="font-size: 12px;">
 					<b>Owner:</b> {{User::find($collection->user_id)->username}}<br>
+					<b>Files:</b> {{count($collection->uploads)}}<br>
 				</p>
 			</div>
 		</div>

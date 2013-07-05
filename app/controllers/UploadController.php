@@ -62,10 +62,13 @@ class UploadController extends BaseController
 
 	public function getView($file_id, $file_requestedname = null)
 	{
-		$upload = Upload::with('image')->find($file_id);
+		$upload = Upload::with('image', 'tags')->find($file_id);
+		
+		$tags = implode(',', $upload->tags->lists('name'));
 
 		$this->layout->content = View::make('uploads/view')
 			->with('upload', $upload)
+			->with('tags', $tags)
 			->with('file_id', $file_id)
 			->with('file_requestedname', $file_requestedname);
 	}

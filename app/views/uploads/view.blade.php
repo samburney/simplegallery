@@ -23,10 +23,11 @@
 					<b>Bitrate:</b> {{$upload->image->bits}}<br>
 				</p>
 @endif
+				<p style="font-size: 12px;">
+					<b>Tags:</b><br>
+					<input type="hidden" id="tags" style="width: 100%;" value="{{$tags}}"></input>
+				</p>
 			</div>
-		</div>
-		<div class="well well-small text-center" style="font-size: 10px;">
-			<input type="hidden" id="tags" style="width: 100%;"></input>
 		</div>
 @if ($upload->user_id == $user->id)
 		<div class="well well-small">
@@ -86,16 +87,47 @@
 
 		// Set up tags select
 		$('#tags')
-		.select2({
-			tags:[],
-			placeholder: "Tags",
-			minimumInputLength: 3,
-			tokenSeparators: [","],
-			triggerChange: true,
-		})
-		.change(function(){
-			console.log($(this).val());
+			.select2({
+				tags: true,
+				ajax: {
+					url: '/tag/query',
+					dataType: 'json',
+					data: function(term, page){
+						return {
+							q: term
+						};
+					},
+					results: function (data, page){
+						return {
+							results: data.results
+						};
+					}
+				},
+				initSelection: function(element, callback){
+					var data = [];
+					$(element.val().split(",")).each(function(index, value){
+						data.push({id: this, text: this});
+					});
+					callback(data);
+				},
+				placeholder: "Tag this now!",
+				minimumInputLength: 2,
+				tokenSeparators: [","],
+				triggerChange: true,
+			})
+			.change(function(){
+				$.post(
+					'/tag/process',
+					{
+						file_id: upload.id,
+						tags: $('#tags').val(),
+					},
+					function(data){
+
+					},
+					'json'
+				);
+			});
 		});
-	});
 </script>
 @endsection('content')
