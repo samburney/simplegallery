@@ -115,18 +115,29 @@
 				tokenSeparators: [","],
 				triggerChange: true,
 			})
-			.change(function(){
-				$.post(
-					'/tag/process',
-					{
-						file_id: upload.id,
-						tags: $('#tags').val(),
-					},
-					function(data){
-
-					},
-					'json'
-				);
+			.change(function(e){
+				if(e.removed){
+					$.post(
+						'/tag/removetag',
+						{
+							file_id: upload.id,
+							tag: e.removed.text,
+						},
+						function(data){},
+						'json'
+					);					
+				}
+				else{
+					$.post(
+						'/tag/process',
+						{
+							file_id: upload.id,
+							tags: $('#tags').val(),
+						},
+						function(data){},
+						'json'
+					);					
+				}
 			});
 		});
 </script>
