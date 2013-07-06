@@ -61,7 +61,7 @@ class UserController extends BaseController
 		$user->save();
 
 		Auth::loginUsingId($user->id);
-		return Redirect::to('/')
+		return Redirect::route('home')
 			->with('notice', "Welcome to sifntUpload, $user->username"); //FIXME, should be dynamic sitename
 	}
 
@@ -80,7 +80,7 @@ class UserController extends BaseController
 		}
 
 		if(Auth::attempt($userdata)){
-			return Redirect::intended('/')
+			return Redirect::intended(action('UploadController@getIndex'))
 				->with('notice', 'Welcome back, ' . Auth::user()->username);
 		}
 		else{
@@ -93,7 +93,7 @@ class UserController extends BaseController
 	public function getLogout()
 	{
 		Auth::logout();
-		return Redirect::to('/')
+		return Redirect::route('home')
 			->with('notice', 'You successfully logged off');
 	}
 }

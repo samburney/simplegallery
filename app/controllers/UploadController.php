@@ -249,7 +249,7 @@ class UploadController extends BaseController
 		}
 
 		if($sifntUpload->deletefile($id)){
-			return Redirect::to('/')
+			return Redirect::route('home')
 				->with('notice', "Deleted $upload->originalname.$upload->ext");
 		}
 		else{
