@@ -55,9 +55,9 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'simplegallery',
-			'username'  => '',
-			'password'  => '',
+			'database'  => 'sifnt_upload-dev',
+			'username'  => 'sifnt',
+			'password'  => 'DbpcZRamG5BnC6xP',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
