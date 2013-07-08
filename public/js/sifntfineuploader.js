@@ -22,7 +22,7 @@ $(function(){
 			onSubmit: function(id, fileName) {
 				activeUploads++;
 				console.log(activeUploads);
-				$('#createCollection').attr('disabled', 'disabled').addClass('disabled');
+				$('#showCollectionModal').attr('disabled', 'disabled').addClass('disabled');
 
 				$('#uploadList')
 					.append(
@@ -105,7 +105,7 @@ $(function(){
 					collection[collection.length] = data.file_id;
 					console.log(activeUploads);
 					if(activeUploads <= 0){
-						$('#createCollection').show().removeAttr('disabled').removeClass('disabled');
+						$('#showCollectionModal').show().removeAttr('disabled').removeClass('disabled');
 					}
 
 					$('#upload-' + id).find('a.remove').parent().remove();
@@ -129,34 +129,70 @@ $(function(){
 			},
 			onError: function(id, name, reason, xhr){
 				$('#progress-' + id).children('div.bar').css('width', '100%').addClass('bar-danger');
-				$('#progress-' + id).click(function(){
-					bootbox.alert(reason.message);
-				});
-			}
-		}
-	});
-
-	$('#uploadNow').click(function(){
-		uploader.uploadStoredFiles();
-	});
-
-	$('#createCollection').click(function(){
-		bootbox.prompt("Collection Name", function(result) {
-			if(result){
-				createCollection(collection, result);
+					$('#progress-' + id).click(function(){
+						bootbox.alert(reason.message);
+					});
+				}
 			}
 		});
-	});
 
-	dragAndDrop = new qq.DragAndDrop({
-		dropZoneElements: $('#dropArea'),
-		callbacks: {
-			processingDroppedFiles: function(){
-				// TODO?
-			},
-			processingDroppedFilesComplete: function(files){
-				// TODO? Hide stuff in above TODO
-				uploader.addFiles(files);
+		$('#uploadNow').click(function(){
+			uploader.uploadStoredFiles();
+		});
+
+		$('#showCollectionModal').click(function(){
+			$('#collectionModal').modal();	
+		});
+
+		$('#addToCollection').click(function(){
+			var ids = collection;
+
+			if($('#createNew').hasClass('active')){
+				var name = $('#createNew').find('input:text[name=collection_name]').val();
+
+				$.post(
+					baseURL + '/collection/new',
+					{
+						ids: ids,
+						name: name,
+					},
+					function(data){
+						if(data.success){
+								window.location = baseURL + '/collection/view/' + data.name_unique;
+						}
+					},
+					'json'
+				);
+			}
+			else if($('#addToExisting').hasClass('active')){
+				var collection_id = $('#addToExisting').find('select[name=collection_id]').val();
+
+
+				$.post(
+					baseURL + '/collection/addtoexisting',
+					{
+						ids: ids,
+						collection_id: collection_id,
+					},
+					function(data){
+						if(data.success){
+								window.location = baseURL + '/collection/view/' + data.name_unique;
+						}
+					},
+					'json'
+				);
+			}
+		});
+
+		dragAndDrop = new qq.DragAndDrop({
+			dropZoneElements: $('#dropArea'),
+			callbacks: {
+				processingDroppedFiles: function(){
+					// TODO?
+				},
+				processingDroppedFilesComplete: function(files){
+					// TODO? Hide stuff in above TODO
+					uploader.addFiles(files);
 			}
 		}
 	});
@@ -171,20 +207,4 @@ function checkUploadList(id){
 		$('#uploadList').hide();
 		//$('#uploadNow').hide();
 	}
-}
-
-function createCollection(ids, name){
-	$.post(
-		baseURL + '/collection/new',
-		{
-			ids: ids,
-			name: name,
-		},
-		function(data){
-			if(data.success){
-				window.location = baseURL + '/collection/view/' + data.name_unique;
-			}
-		},
-		'json'
-	);
 }

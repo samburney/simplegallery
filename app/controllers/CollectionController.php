@@ -23,6 +23,18 @@ class CollectionController extends BaseController
 	public function postNew(){
 		$result['success'] = false;
 
+
+		$rules = array(
+			'name' => 'required|min:2',
+		);
+		$validator = Validator::make(Input::all(), $rules);
+
+
+		if($validator->fails()) {
+			$result['errors'] = $validator->messages()->all();
+			return Response::json($result);
+		}
+
 		$collection = new Collection();
 		$collection->name = Input::get('name');
 		$collection->name_unique = sifntFileUtil::cleantext($collection->name, "collections");
@@ -39,6 +51,28 @@ class CollectionController extends BaseController
 		foreach(Input::get('ids') as $upload_id){
 			$collection->uploads()->attach($upload_id);
 			TagController::processTags($upload_id, [str_singular(sifntFileUtil::cleantext($collection->name))]);
+		}
+
+		return Response::json($result);
+	}
+
+	public function postAddtoexisting(){
+		$result['success'] = false;
+
+		$collection_id = Input::get('collection_id');
+		$collection = Collection::find($collection_id);
+
+		$result = [
+			'success' => true,
+			'collection_id' => $collection->id,
+			'name_unique' => $collection->name_unique,
+		];
+
+		foreach(Input::get('ids') as $upload_id){
+			if(!$collection->uploads()->where('id', '=', $upload_id)->first()){
+				$collection->uploads()->attach($upload_id);
+				TagController::processTags($upload_id, [str_singular(sifntFileUtil::cleantext($collection->name))]);
+			}
 		}
 
 		return Response::json($result);

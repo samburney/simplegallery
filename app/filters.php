@@ -82,13 +82,22 @@ Route::filter('csrf', function()
 // Define the $user variable for most views
 View::composer(array(
 		'layouts.main',
-		'uploads/index',
-		'uploads/view',
-		'collections/view',
 	),
 	function($view)
 	{
 		$view->with('user', Auth::user());
+	}
+);
+
+// Define the $collection_list variable for most view with upload-sidebar
+View::composer(array(
+		'includes.upload-sidebar',
+	),
+	function($view)
+	{
+		$collection_list = Auth::user()->collections()->with('uploads.image')->orderBy('name_unique')->get();
+
+		$view->with('collection_list', $collection_list);
 	}
 );
 

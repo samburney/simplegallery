@@ -27,7 +27,7 @@
 					<b>Tags:</b><br>
 					<input type="hidden" id="tags" style="width: 100%;" value="{{$tags}}"></input>
 				</p>
-@if ($upload->user_id == $user->id && $user->id > 0)
+@if ($upload->user_id == Auth::user()->id && Auth::user()->id > 0)
 				<p style="font-size: 12px;">
 					<label class="checkbox" title="The Private flag keeps files out of public lists">
 						<small>
@@ -39,7 +39,7 @@
 @endif				
 			</div>
 		</div>
-@if ($upload->user_id == $user->id)
+@if ($upload->user_id == Auth::user()->id)
 		<div class="well well-small">
 			<ul class="nav nav-stacked nav-pills nav-actions">
 	@if ($upload->extra == 'image')
