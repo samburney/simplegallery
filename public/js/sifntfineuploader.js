@@ -10,7 +10,7 @@ $(function(){
 		debug: true,
 		autoUpload: true,
 		request: {
-			endpoint: '/upload'
+			endpoint: uploadEndPoint
 		},
 		validation: {
 			sizeLimit: 200 * 1024 * 1024 // 200MB
