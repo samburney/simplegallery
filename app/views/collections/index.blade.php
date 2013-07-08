@@ -9,13 +9,13 @@
 	<div class="span10">
 		<ul class="nav nav-pills">
 			<li>
-				<a href="/">Recent Uploads</a>
+				<a href="{{URL::route('home')}}">Recent Uploads</a>
 			</li>
 			<li <? if(Request::is('collection') || Request::is('collections')){ ?>class="active"<? } ?>>
-				<a href="/collections">Recent Collections</a>
+				<a href="{{URL::to('collections')}}">Recent Collections</a>
 			</li>
 			<li <? if(Request::is('tag') || Request::is('tags')){ ?>class="active"<? } ?>>
-				<a href="/tags">Tags</a>
+				<a href="{{URL::to('tags')}}">Tags</a>
 			</li>
 		</ul>
 @for ($row=1; $row<=3; $row++)

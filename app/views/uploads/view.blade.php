@@ -3,8 +3,8 @@
 @section('content')
 <div class="row-fluid" style="height: 100%">
 	<div class="span10 image-small" id="imageView">
-		<a href="/get/{{$file_id}}/{{$upload->cleanname}}.{{$upload->ext}}">
-			<img src="/get/{{$file_id}}/{{$upload->cleanname}}-780.{{$upload->ext}}?{{uniqid()}}">
+		<a href='{{URL::to("get/$file_id/$upload->cleanname.$upload->ext")}}'>
+			<img src='{{URL::to("get/$file_id/$upload->cleanname-780.$upload->ext?" . uniqid())}}'>
 		</a>
 	</div>
 	<div class="span2">
@@ -60,14 +60,14 @@
 		// Replace image with one that's relevant to the viewport
 		if(upload.extra == 'image'){
 			if(upload.image.width < $('#imageView').width() && upload.image.height < ($(window).height() - 72)){
-				$('#imageView').find('img').addClass('img-polaroid').attr('src', '/get/' + upload.id + '/' + upload.cleanname + '.' + upload.ext + '?{{uniqid()}}');
+				$('#imageView').find('img').addClass('img-polaroid').attr('src', '{{URL::to("get")}}/' + upload.id + '/' + upload.cleanname + '.' + upload.ext + '?{{uniqid()}}');
 			}
 			else{
-				$('#imageView').find('img').addClass('img-polaroid').attr('src', '/get/' + upload.id + '/' + upload.cleanname + '-' + $('#imageView').width() + 'x' + ($(window).height() - 90) + '.jpg?{{uniqid()}}');
+				$('#imageView').find('img').addClass('img-polaroid').attr('src', '{{URL::to("get")}}/' + upload.id + '/' + upload.cleanname + '-' + $('#imageView').width() + 'x' + ($(window).height() - 90) + '.jpg?{{uniqid()}}');
 			}
 		}
 		else{
-			$('#imageView').find('img').addClass('img-polaroid').attr('src', '/get/' + upload.id + '/' + upload.cleanname + '-' + $('#imageView').width() + 'x' + ($(window).height() - 90) + '.jpg?{{uniqid()}}');
+			$('#imageView').find('img').addClass('img-polaroid').attr('src', '{{URL::to("get")}}/' + upload.id + '/' + upload.cleanname + '-' + $('#imageView').width() + 'x' + ($(window).height() - 90) + '.jpg?{{uniqid()}}');
 		}
 
 		// Handle Delete action
@@ -76,7 +76,7 @@
 				"label": "Yes",
 				"class": "btn-danger",
 				"callback": function(){
-					window.location = '/upload/delete/' + upload.id;
+					window.location = '{{URL::to("upload/delete")}}/' + upload.id;
 				}
 			},
 			{
@@ -90,7 +90,7 @@
 			.select2({
 				tags: true,
 				ajax: {
-					url: '/tag/query',
+					url: '{{URL::to("tag/query")}}',
 					dataType: 'json',
 					data: function(term, page){
 						return {
@@ -118,7 +118,7 @@
 			.change(function(e){
 				if(e.removed){
 					$.post(
-						'/tag/removetag',
+						'{{URL::to("tag/removetag")}}',
 						{
 							file_id: upload.id,
 							tag: e.removed.text,
@@ -129,7 +129,7 @@
 				}
 				else{
 					$.post(
-						'/tag/process',
+						'{{URL::to("tag/process")}}',
 						{
 							file_id: upload.id,
 							tags: $('#tags').val(),
