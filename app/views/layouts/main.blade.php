@@ -3,6 +3,9 @@
 	<head>
 		<title>sifnt Upload</title>
 @section('scripts')
+		<script type="text/javascript">
+			var baseURL = "{{URL::to('')}}";
+		</script>
 		<script type="text/javascript" src="{{asset('js/jquery-1.10.1.min.js')}}"></script>
 		<script type="text/javascript" src="{{asset('js/jquery.scrollto.js')}}"></script>
 		<script type="text/javascript" src="{{asset('lib/jquery.fineuploader-3.6.4/jquery.fineuploader-3.6.4.js')}}"></script>

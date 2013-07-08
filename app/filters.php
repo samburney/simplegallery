@@ -91,3 +91,8 @@ View::composer(array(
 		$view->with('user', Auth::user());
 	}
 );
+
+function baseURL()
+{
+	return URL::to('');
+}

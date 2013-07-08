@@ -3,8 +3,8 @@
 @section('content')
 <div class="row-fluid" style="height: 100%">
 	<div class="span10 image-small" id="imageView">
-		<a href='{{URL::to("get/$file_id/$upload->cleanname.$upload->ext")}}'>
-			<img src='{{URL::to("get/$file_id/$upload->cleanname-780.$upload->ext?" . uniqid())}}'>
+		<a href="{{baseURL()}}/get/{{$file_id}}/{{$upload->cleanname}}.{{$upload->ext}}"">
+			<img src="{{baseURL()}}/get/{{$file_id}}/{{$upload->cleanname}}-780.{{$upload->ext}}?{{uniqid()}}">
 		</a>
 	</div>
 	<div class="span2">
@@ -39,9 +39,9 @@
 						<span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a href="/upload/rotate/{{$upload->id}}/90">90&deg; Clockwise</a></li>
-						<li><a href="/upload/rotate/{{$upload->id}}/180">180&deg;</a></li>
-						<li><a href="/upload/rotate/{{$upload->id}}/270">90&deg; Counter-Clockwise</a></li>
+						<li><a href="{{baseURL()}}/upload/rotate/{{$upload->id}}/90">90&deg; Clockwise</a></li>
+						<li><a href="{{baseURL()}}/upload/rotate/{{$upload->id}}/180">180&deg;</a></li>
+						<li><a href="{{baseURL()}}/upload/rotate/{{$upload->id}}/270">90&deg; Counter-Clockwise</a></li>
 					</ul>
 				</li>
 	@endif				
@@ -60,14 +60,14 @@
 		// Replace image with one that's relevant to the viewport
 		if(upload.extra == 'image'){
 			if(upload.image.width < $('#imageView').width() && upload.image.height < ($(window).height() - 72)){
-				$('#imageView').find('img').addClass('img-polaroid').attr('src', '{{URL::to("get")}}/' + upload.id + '/' + upload.cleanname + '.' + upload.ext + '?{{uniqid()}}');
+				$('#imageView').find('img').addClass('img-polaroid').attr('src', '{{baseURL()}}/get/' + upload.id + '/' + upload.cleanname + '.' + upload.ext + '?{{uniqid()}}');
 			}
 			else{
-				$('#imageView').find('img').addClass('img-polaroid').attr('src', '{{URL::to("get")}}/' + upload.id + '/' + upload.cleanname + '-' + $('#imageView').width() + 'x' + ($(window).height() - 90) + '.jpg?{{uniqid()}}');
+				$('#imageView').find('img').addClass('img-polaroid').attr('src', '{{baseURL()}}/get/' + upload.id + '/' + upload.cleanname + '-' + $('#imageView').width() + 'x' + ($(window).height() - 90) + '.jpg?{{uniqid()}}');
 			}
 		}
 		else{
-			$('#imageView').find('img').addClass('img-polaroid').attr('src', '{{URL::to("get")}}/' + upload.id + '/' + upload.cleanname + '-' + $('#imageView').width() + 'x' + ($(window).height() - 90) + '.jpg?{{uniqid()}}');
+			$('#imageView').find('img').addClass('img-polaroid').attr('src', '{{baseURL()}}/get/' + upload.id + '/' + upload.cleanname + '-' + $('#imageView').width() + 'x' + ($(window).height() - 90) + '.jpg?{{uniqid()}}');
 		}
 
 		// Handle Delete action
@@ -76,7 +76,7 @@
 				"label": "Yes",
 				"class": "btn-danger",
 				"callback": function(){
-					window.location = '{{URL::to("upload/delete")}}/' + upload.id;
+					window.location = '{{baseURL()}}/upload/delete/' + upload.id;
 				}
 			},
 			{
@@ -90,7 +90,7 @@
 			.select2({
 				tags: true,
 				ajax: {
-					url: '{{URL::to("tag/query")}}',
+					url: '{{baseURL()}}/tag/query',
 					dataType: 'json',
 					data: function(term, page){
 						return {
@@ -118,7 +118,7 @@
 			.change(function(e){
 				if(e.removed){
 					$.post(
-						'{{URL::to("tag/removetag")}}',
+						'{{baseURL()}}/tag/removetag',
 						{
 							file_id: upload.id,
 							tag: e.removed.text,
@@ -129,7 +129,7 @@
 				}
 				else{
 					$.post(
-						'{{URL::to("tag/process")}}',
+						'{{baseURL()}}/tag/process',
 						{
 							file_id: upload.id,
 							tags: $('#tags').val(),

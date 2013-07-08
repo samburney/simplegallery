@@ -10,7 +10,7 @@ $(function(){
 		debug: true,
 		autoUpload: true,
 		request: {
-			endpoint: uploadEndPoint
+			endpoint: baseURL + '/upload'
 		},
 		validation: {
 			sizeLimit: 200 * 1024 * 1024 // 200MB
@@ -114,10 +114,10 @@ $(function(){
 					$('#upload-' + id).prepend(
 						$('<div>').append(
 							$('<a>')
-								.attr('href', '/view/' + data.file_id + '/' + data.file_name + '.' + data.file_ext)
+								.attr('href', baseURL + '/view/' + data.file_id + '/' + data.file_name + '.' + data.file_ext)
 								.append(
 									$('<img>')
-										.attr('src', '/get/' + data.file_id + '/' + data.file_name + '-108x100.jpg')
+										.attr('src', baseURL + '/get/' + data.file_id + '/' + data.file_name + '-108x100.jpg')
 										.addClass('img-polaroid')
 								)
 						)
@@ -175,14 +175,14 @@ function checkUploadList(id){
 
 function createCollection(ids, name){
 	$.post(
-		'/collection/new',
+		baseURL + '/collection/new',
 		{
 			ids: ids,
 			name: name,
 		},
 		function(data){
 			if(data.success){
-				window.location = '/collection/view/' + data.name_unique;
+				window.location = baseURL + '/collection/view/' + data.name_unique;
 			}
 		},
 		'json'

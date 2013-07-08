@@ -20,8 +20,8 @@
 @foreach($uploads as $upload)
 <? $uploads_arr[] = $upload->toArray(); ?>
 		<div id="upload-{{$upload->id}}" style="margin-bottom: 10px;">		
-			<a href="/view/{{$upload->id}}/{{$upload->cleanname}}.{{$upload->ext}}">
-				<img src="/get/{{$upload->id}}/{{$upload->cleanname}}-710.{{$upload->ext}}" class="img-polaroid">
+			<a href="{{baseURL()}}/view/{{$upload->id}}/{{$upload->cleanname}}.{{$upload->ext}}">
+				<img src="{{baseURL()}}/get/{{$upload->id}}/{{$upload->cleanname}}-710.{{$upload->ext}}" class="img-polaroid">
 			</a>
 		</div>
 @endforeach
@@ -51,7 +51,7 @@
 					<li class="span4">
 						<div class="image-thumbnail">
 							<a href="#upload-{{$uploads_arr[$i]['id']}}">
-								<img src="/get/{{$uploads_arr[$i]['id']}}/{{$uploads_arr[$i]['cleanname']}}-60x60.jpg" class="img-polaroid img-polaroid-tiny">
+								<img src="{{baseURL()}}/get/{{$uploads_arr[$i]['id']}}/{{$uploads_arr[$i]['cleanname']}}-60x60.jpg" class="img-polaroid img-polaroid-tiny">
 							</a>
 						</div>
 					</li>

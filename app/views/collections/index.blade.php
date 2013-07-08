@@ -25,12 +25,12 @@
 		@if($i < count($uploads_arr))
 			<li class="span3">
 				<div class="image-thumbnail">
-					<a href="/tag/view/{{$uploads_arr[$i]['collection']['name']}}">
-						<img src="/get/{{$uploads_arr[$i]['upload']['id']}}/{{$uploads_arr[$i]['upload']['cleanname']}}-200x100.jpg" class="img-polaroid">
+					<a href="{{baseURL()}}/tag/view/{{$uploads_arr[$i]['collection']['name']}}">
+						<img src="{{baseURL()}}/get/{{$uploads_arr[$i]['upload']['id']}}/{{$uploads_arr[$i]['upload']['cleanname']}}-200x100.jpg" class="img-polaroid">
 					</a>
 				</div>
 				<div style="text-align: center; white-space: nowrap; overflow: hidden;">
-					<a href="/tag/view/{{$uploads_arr[$i]['collection']['name']}}" style="color: black;">
+					<a href="{{baseURL()}}/tag/view/{{$uploads_arr[$i]['collection']['name']}}" style="color: black;">
 						<small>
 							{{$uploads_arr[$i]['collection']['name']}}
 						</small>

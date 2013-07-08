@@ -1,9 +1,6 @@
 @section ('scripts')
 	@parent
-	<script type=">
-text/javascript">
-		var baseURL = "{{URL::to('')}}";
-	</script	<script type="text/javascript" src="{{asset('js/sifntfineuploader.js')}}"></script>
+	<script type="text/javascript" src="{{asset('js/sifntfineuploader.js')}}"></script>
 @endsection
 <div class="well well-empty">
 	<div class="well-inner" style="text-align: center;">
