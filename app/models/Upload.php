@@ -17,5 +17,10 @@ class Upload extends Eloquent
 	{
 		return $this->belongsToMany('Tag');
 	}
+
+	public function scopePopular($query)
+	{
+		return $query->where('viewed', '>', 10)->where('private', '!=', '1');
+	}
 }
 ?>

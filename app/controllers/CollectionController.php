@@ -14,7 +14,7 @@ class CollectionController extends BaseController
 
 	public function getIndex()
 	{
-		$collections = $this->user->collections()->with('uploads', 'uploads.image')->orderBy('created_at', 'desc')->paginate(12);
+		$collections = $this->user->collections()->with('uploads', 'uploads.image')->orderBy('name_unique', 'asc')->paginate(12);
 
 		$this->layout->content = View::make('collections/index')
 			->with('collections', $collections);

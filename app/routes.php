@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', array('as' => 'home', 'uses' => 'UploadController@getIndex'));
+Route::get('/', array('as' => 'home', 'uses' => 'UploadController@getPopular'));
 
 Route::get('get/{path}/{params}', array('as' => 'get', 'uses' => 'UploadController@getGet'));
 Route::get('view/{path}/{params?}', array('as' => 'view', 'uses' => 'UploadController@getView'));

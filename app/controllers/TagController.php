@@ -16,7 +16,7 @@ class TagController extends BaseController
 	{
 		$tags = Tag::with('uploads', 'uploads.image')->orderBy('created_at', 'desc')->paginate(12);
 
-		$this->layout->content = View::make('collections/index')
+		$this->layout->content = View::make('tags/index')
 			->with('collections', $tags);
 	}
 

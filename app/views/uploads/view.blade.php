@@ -8,7 +8,7 @@
 		</a>
 	</div>
 	<div class="span2">
-		@include('uploads.upload-sidebar')
+		@include('includes.upload-sidebar')
 		<div class="well well-empty">
 			<div class="well-inner">
 				<p><b title="{{$upload->originalname}}.{{$upload->ext}}">{{$upload->originalname}}</b></p>
@@ -27,6 +27,16 @@
 					<b>Tags:</b><br>
 					<input type="hidden" id="tags" style="width: 100%;" value="{{$tags}}"></input>
 				</p>
+@if ($upload->user_id == $user->id && $user->id > 0)
+				<p style="font-size: 12px;">
+					<label class="checkbox" title="The Private flag keeps files out of public lists">
+						<small>
+							<input type="checkbox" id="privateCB"<? if($upload->private){ ?> checked="checked"<? } ?>>
+							<b>Private</b>
+						</small>
+					</label>
+				</p>
+@endif				
 			</div>
 		</div>
 @if ($upload->user_id == $user->id)
@@ -138,6 +148,16 @@
 						'json'
 					);					
 				}
+			});
+
+			$('#privateCB').change(function(){
+				$.post(
+					baseURL + '/upload/setprivate',
+					{
+						upload_id: upload.id,
+						private: $(this).prop('checked'),
+					}
+				)
 			});
 		});
 </script>

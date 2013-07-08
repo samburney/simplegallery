@@ -32,6 +32,14 @@ class UploadController extends BaseController
 			->with('uploads', $uploads);
 	}
 
+	public function getPopular()
+	{
+		$uploads = Upload::popular()->with('image')->orderBy('viewed', 'desc')->paginate(12);
+
+		$this->layout->content = View::make('uploads/index')
+			->with('uploads', $uploads);
+	}
+
 	public function postIndex()
 	{
 		$path_preprocess = '/tmp';
@@ -239,7 +247,8 @@ class UploadController extends BaseController
 		}
 	}
 
-	public function getDelete($id) {
+	public function getDelete($id)
+	{
 		$upload = Upload::find($id);
 		$sifntUpload = new sifntFileUpload();
 
@@ -256,6 +265,24 @@ class UploadController extends BaseController
 			return Redirect::to(URL::previous())
 				->with('error', 'File deletion failed');
 		}
+	}
+
+	public function postSetprivate()
+	{
+		$upload_id = Input::get('upload_id');
+		$private = Input::get('private') == 'true' ? 1 : 0;
+
+		$upload = Upload::find($upload_id);
+
+		if(Auth::user()->id != $upload->user_id){
+			return Redirect::to(URL::previous())
+				->with('error', "You don't have permission to do that");
+		}
+
+		$upload->private = $private;
+		$upload->save();
+
+		return Response::json();
 	}
 }
 ?>

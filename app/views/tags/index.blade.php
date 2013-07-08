@@ -2,8 +2,8 @@
 
 @section('content')
 <? $uploads_arr = []; ?>
-@foreach ($uploads as $upload)
-	<? $uploads_arr[] = $upload->toArray(); ?>
+@foreach ($collections as $collection)
+	<? $uploads_arr[] = array('collection' => $collection, 'upload' => $collection->uploads()->first()->toArray()); ?>
 @endforeach		
 <div class="row-fluid">
 	<div class="span10">
@@ -15,14 +15,14 @@
 		@if($i < count($uploads_arr))
 			<li class="span3">
 				<div class="image-thumbnail">
-					<a href="{{URL::to('view/' . $uploads_arr[$i]['id'] . '/' . $uploads_arr[$i]['cleanname'] . '.' . $uploads_arr[$i]['ext'])}}">
-						<img src="{{URL::to('get/' . $uploads_arr[$i]['id'] . '/' . $uploads_arr[$i]['cleanname'] . '-200x100.jpg')}}" class="img-polaroid">
+					<a href="{{baseURL()}}/tag/view/{{$uploads_arr[$i]['collection']['name']}}">
+						<img src="{{baseURL()}}/get/{{$uploads_arr[$i]['upload']['id']}}/{{$uploads_arr[$i]['upload']['cleanname']}}-200x100.jpg" class="img-polaroid">
 					</a>
 				</div>
 				<div style="text-align: center; white-space: nowrap; overflow: hidden;">
-					<a href="{{URL::to('view/' . $uploads_arr[$i]['id'] . '/' . $uploads_arr[$i]['cleanname'] . '.' . $uploads_arr[$i]['ext'])}}" style="color: black;">
+					<a href="{{baseURL()}}/tag/view/{{$uploads_arr[$i]['collection']['name']}}" style="color: black;">
 						<small>
-							{{$uploads_arr[$i]['originalname']}}
+							{{$uploads_arr[$i]['collection']['name']}}
 						</small>
 					</a>
 				</div>
@@ -32,7 +32,7 @@
 		</ul>
 @endfor
 		<div class="text-center">
-			{{$uploads->links()}}
+			{{$collections->links()}}
 		</div>
 	</div>
 	<div class="span2">

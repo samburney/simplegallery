@@ -80,7 +80,7 @@ class UserController extends BaseController
 		}
 
 		if(Auth::attempt($userdata)){
-			return Redirect::intended(action('UploadController@getIndex'))
+			return Redirect::intended(URL::to('uploads'))
 				->with('notice', 'Welcome back, ' . Auth::user()->username);
 		}
 		else{

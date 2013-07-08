@@ -7,17 +7,7 @@
 @endforeach		
 <div class="row-fluid">
 	<div class="span10">
-		<ul class="nav nav-pills">
-			<li>
-				<a href="{{URL::route('home')}}">Recent Uploads</a>
-			</li>
-			<li <? if(Request::is('collection') || Request::is('collections')){ ?>class="active"<? } ?>>
-				<a href="{{URL::to('collections')}}">Recent Collections</a>
-			</li>
-			<li <? if(Request::is('tag') || Request::is('tags')){ ?>class="active"<? } ?>>
-				<a href="{{URL::to('tags')}}">Tags</a>
-			</li>
-		</ul>
+@include('includes/top-nav')
 @for ($row=1; $row<=3; $row++)
 		<ul class="thumbnails">
 	@for ($col=1; $col<=4; $col++)
@@ -25,12 +15,12 @@
 		@if($i < count($uploads_arr))
 			<li class="span3">
 				<div class="image-thumbnail">
-					<a href="{{baseURL()}}/tag/view/{{$uploads_arr[$i]['collection']['name']}}">
+					<a href="{{baseURL()}}/collection/view/{{$uploads_arr[$i]['collection']['name_unique']}}">
 						<img src="{{baseURL()}}/get/{{$uploads_arr[$i]['upload']['id']}}/{{$uploads_arr[$i]['upload']['cleanname']}}-200x100.jpg" class="img-polaroid">
 					</a>
 				</div>
 				<div style="text-align: center; white-space: nowrap; overflow: hidden;">
-					<a href="{{baseURL()}}/tag/view/{{$uploads_arr[$i]['collection']['name']}}" style="color: black;">
+					<a href="{{baseURL()}}/collection/view/{{$uploads_arr[$i]['collection']['name_unique']}}" style="color: black;">
 						<small>
 							{{$uploads_arr[$i]['collection']['name']}}
 						</small>
@@ -46,7 +36,7 @@
 		</div>
 	</div>
 	<div class="span2">
-		@include('uploads.upload-sidebar')
+		@include('includes.upload-sidebar')
 	</div>
 </div>
 @endsection('content')

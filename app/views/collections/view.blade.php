@@ -67,7 +67,7 @@
 @endif
 			</div>
 		</div>
-@include('uploads.upload-sidebar')
+@include('includes.upload-sidebar')
 	</div>
 </div>
 @endsection
