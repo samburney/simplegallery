@@ -6,6 +6,6 @@ composer.lock
 .DS_Store
 ._.DS_Store
 simplegallery.sublime*
-/app/config/database.php.*
+/app/config/database.php
 /public/files/*
 /public/preprocessed/*
