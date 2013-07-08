@@ -87,6 +87,6 @@ class CollectionController extends BaseController
 
 		return View::make('collections/view')
 			->with('collection', $collection)
-			->with('uploads', $collection->uploads()->paginate(9));
+			->with('uploads', $collection->uploads()->orderBy('created_at', 'asc')->paginate(9));
 	}
 }

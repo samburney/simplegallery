@@ -3,6 +3,7 @@ var dragAndDrop;
 var starttimes = [];
 var collection = [];
 var activeUploads = 0;
+var upload_ids;
 
 $(function(){
 	uploader = new qq.FineUploaderBasic({
@@ -141,19 +142,19 @@ $(function(){
 		});
 
 		$('#showCollectionModal').click(function(){
-			$('#collectionModal').modal();	
+			upload_ids = collection;
+
+			$('#collectionModal').modal();
 		});
 
 		$('#addToCollection').click(function(){
-			var ids = collection;
-
 			if($('#createNew').hasClass('active')){
 				var name = $('#createNew').find('input:text[name=collection_name]').val();
 
 				$.post(
 					baseURL + '/collection/new',
 					{
-						ids: ids,
+						ids: upload_ids,
 						name: name,
 					},
 					function(data){
@@ -167,11 +168,10 @@ $(function(){
 			else if($('#addToExisting').hasClass('active')){
 				var collection_id = $('#addToExisting').find('select[name=collection_id]').val();
 
-
 				$.post(
 					baseURL + '/collection/addtoexisting',
 					{
-						ids: ids,
+						ids: upload_ids,
 						collection_id: collection_id,
 					},
 					function(data){

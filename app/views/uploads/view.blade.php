@@ -1,5 +1,114 @@
 @extends('layouts.main')
 
+@section('scripts')
+	@parent
+	<script type="text/javascript">
+		$(function(){
+			var upload = {{$upload->toJson()}};
+
+			// Replace image with one that's relevant to the viewport
+			if(upload.extra == 'image'){
+				if(upload.image.width < $('#imageView').width() && upload.image.height < ($(window).height() - 72)){
+					$('#imageView').find('img').addClass('img-polaroid').attr('src', '{{baseURL()}}/get/' + upload.id + '/' + upload.cleanname + '.' + upload.ext + '?{{uniqid()}}');
+				}
+				else{
+					$('#imageView').find('img').addClass('img-polaroid').attr('src', '{{baseURL()}}/get/' + upload.id + '/' + upload.cleanname + '-' + $('#imageView').width() + 'x' + ($(window).height() - 90) + '.jpg?{{uniqid()}}');
+				}
+			}
+			else{
+				$('#imageView').find('img').addClass('img-polaroid').attr('src', '{{baseURL()}}/get/' + upload.id + '/' + upload.cleanname + '-' + $('#imageView').width() + 'x' + ($(window).height() - 90) + '.jpg?{{uniqid()}}');
+			}
+
+			// Handle Delete action
+			$('#delete-button').click(function(){
+				bootbox.dialog('Are you sure?', [{
+					"label": "Yes",
+					"class": "btn-danger",
+					"callback": function(){
+						window.location = '{{baseURL()}}/upload/delete/' + upload.id;
+					}
+				},
+				{
+					"label": "No",
+					"class": "btn"
+				}]);
+			});
+
+			// Set up tags select
+			$('#tags')
+				.select2({
+					tags: true,
+					ajax: {
+						url: '{{baseURL()}}/tag/query',
+						dataType: 'json',
+						data: function(term, page){
+							return {
+								q: term
+							};
+						},
+						results: function (data, page){
+							return {
+								results: data.results
+							};
+						}
+					},
+					initSelection: function(element, callback){
+						var data = [];
+						$(element.val().split(",")).each(function(index, value){
+							data.push({id: this, text: this});
+						});
+						callback(data);
+					},
+					placeholder: "Tag this now!",
+					minimumInputLength: 2,
+					tokenSeparators: [","],
+					triggerChange: true,
+				})
+				.change(function(e){
+					if(e.removed){
+						$.post(
+							'{{baseURL()}}/tag/removetag',
+							{
+								file_id: upload.id,
+								tag: e.removed.text,
+							},
+							function(data){},
+							'json'
+						);					
+					}
+					else{
+						$.post(
+							'{{baseURL()}}/tag/process',
+							{
+								file_id: upload.id,
+								tags: $('#tags').val(),
+							},
+							function(data){},
+							'json'
+						);					
+					}
+				});
+
+				$('#privateCB').change(function(){
+					$.post(
+						baseURL + '/upload/setprivate',
+						{
+							upload_id: upload.id,
+							private: $(this).prop('checked'),
+						}
+					)
+				});
+
+
+				$('#addUploadToCollection').click(function(){
+					upload_ids = [upload.id];
+
+					$('#collectionModal').modal();
+				});				
+			});
+	</script>
+@endsection
+
 @section('content')
 <div class="row-fluid" style="height: 100%">
 	<div class="span10 image-small" id="imageView">
@@ -54,7 +163,10 @@
 						<li><a href="{{baseURL()}}/upload/rotate/{{$upload->id}}/270">90&deg; Counter-Clockwise</a></li>
 					</ul>
 				</li>
-	@endif				
+	@endif
+				<li>
+					<a href="#" id="addUploadToCollection">Collection</a>
+				</li>
 				<li class="danger">
 					<a href="#" id="delete-button">Delete</a>
 				</li>
@@ -63,102 +175,4 @@
 @endif
 	</div>
 </div>
-<script type="text/javascript">
-	$(function(){
-		var upload = {{$upload->toJson()}};
-
-		// Replace image with one that's relevant to the viewport
-		if(upload.extra == 'image'){
-			if(upload.image.width < $('#imageView').width() && upload.image.height < ($(window).height() - 72)){
-				$('#imageView').find('img').addClass('img-polaroid').attr('src', '{{baseURL()}}/get/' + upload.id + '/' + upload.cleanname + '.' + upload.ext + '?{{uniqid()}}');
-			}
-			else{
-				$('#imageView').find('img').addClass('img-polaroid').attr('src', '{{baseURL()}}/get/' + upload.id + '/' + upload.cleanname + '-' + $('#imageView').width() + 'x' + ($(window).height() - 90) + '.jpg?{{uniqid()}}');
-			}
-		}
-		else{
-			$('#imageView').find('img').addClass('img-polaroid').attr('src', '{{baseURL()}}/get/' + upload.id + '/' + upload.cleanname + '-' + $('#imageView').width() + 'x' + ($(window).height() - 90) + '.jpg?{{uniqid()}}');
-		}
-
-		// Handle Delete action
-		$('#delete-button').click(function(){
-			bootbox.dialog('Are you sure?', [{
-				"label": "Yes",
-				"class": "btn-danger",
-				"callback": function(){
-					window.location = '{{baseURL()}}/upload/delete/' + upload.id;
-				}
-			},
-			{
-				"label": "No",
-				"class": "btn"
-			}]);
-		});
-
-		// Set up tags select
-		$('#tags')
-			.select2({
-				tags: true,
-				ajax: {
-					url: '{{baseURL()}}/tag/query',
-					dataType: 'json',
-					data: function(term, page){
-						return {
-							q: term
-						};
-					},
-					results: function (data, page){
-						return {
-							results: data.results
-						};
-					}
-				},
-				initSelection: function(element, callback){
-					var data = [];
-					$(element.val().split(",")).each(function(index, value){
-						data.push({id: this, text: this});
-					});
-					callback(data);
-				},
-				placeholder: "Tag this now!",
-				minimumInputLength: 2,
-				tokenSeparators: [","],
-				triggerChange: true,
-			})
-			.change(function(e){
-				if(e.removed){
-					$.post(
-						'{{baseURL()}}/tag/removetag',
-						{
-							file_id: upload.id,
-							tag: e.removed.text,
-						},
-						function(data){},
-						'json'
-					);					
-				}
-				else{
-					$.post(
-						'{{baseURL()}}/tag/process',
-						{
-							file_id: upload.id,
-							tags: $('#tags').val(),
-						},
-						function(data){},
-						'json'
-					);					
-				}
-			});
-
-			$('#privateCB').change(function(){
-				$.post(
-					baseURL + '/upload/setprivate',
-					{
-						upload_id: upload.id,
-						private: $(this).prop('checked'),
-					}
-				)
-			});
-		});
-</script>
 @endsection('content')
