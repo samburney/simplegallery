@@ -164,8 +164,24 @@
 					</ul>
 				</li>
 	@endif
-				<li>
-					<a href="#" id="addUploadToCollection">Collection</a>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle warning" data-toggle="dropdown">
+						Collections
+						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+@if (count($upload->collections))
+	@foreach($upload->collections as $collection)
+						<li>
+							<a href="{{baseURL()}}/collection/view/{{$collection->name_unique}}">
+								{{$collection->name}}
+							</a>
+						</li>
+	@endforeach
+						<li class="divider"></li>
+@endif
+						<li><a href="#" id="addUploadToCollection">Add to Collection</a></li>
+					</ul>
 				</li>
 				<li class="danger">
 					<a href="#" id="delete-button">Delete</a>
