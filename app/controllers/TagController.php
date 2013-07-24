@@ -14,7 +14,7 @@ class TagController extends BaseController
 
 	public function getIndex()
 	{
-		$tags = Tag::with('uploads', 'uploads.image')->orderBy('created_at', 'desc')->paginate(12);
+		$tags = Tag::has('uploads')->with('uploads', 'uploads.image')->orderBy('name', 'asc')->paginate(12);
 
 		$this->layout->content = View::make('tags/index')
 			->with('collections', $tags);
