@@ -3,7 +3,7 @@
 @section('content')
 <? $uploads_arr = []; ?>
 @foreach ($collections as $collection)
-	<? $uploads_arr[] = array('collection' => $collection, 'upload' => $collection->uploads()->first()->toArray()); ?>
+	<? $uploads_arr[] = array('collection' => $collection, 'upload' => $collection['uploads'][0]); ?>
 @endforeach		
 <div class="row-fluid">
 	<div class="span10">

@@ -4,13 +4,7 @@
 */
 class CollectionController extends BaseController
 {
-	public $user;
 	protected $layout = 'layouts.main';
-
-	public function __construct()
-	{
-		$this->user = Auth::user();
-	}
 
 	public function getIndex()
 	{

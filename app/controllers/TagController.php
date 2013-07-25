@@ -4,17 +4,25 @@
 */
 class TagController extends BaseController
 {
-	public $user;
 	protected $layout = 'layouts.main';
-
-	public function __construct()
-	{
-		$this->user = Auth::user();
-	}
 
 	public function getIndex()
 	{
-		$tags = Tag::has('uploads')->with('uploads', 'uploads.image')->orderBy('name', 'asc')->paginate(12);
+		// This code *should* look like this, but a bug in Laravel4's has() stops it properly supporting conditions
+		//$tags = Tag::has('uploads')->with('uploads', 'uploads.image')->orderBy('name', 'asc')->paginate(12);
+
+		// So it looks like this instead...
+		$tags_unpaged = [];
+		$tags_raw = Tag::has('public_uploads')->with('public_uploads', 'uploads', 'uploads.image')->orderBy('name', 'asc')->get();
+		foreach($tags_raw as $tag){
+			if(count($tag->public_uploads)) {
+				$tags_unpaged[] = $tag->toArray();
+			}
+		};
+
+		$num_tags = count($tags_unpaged);
+		$tags = Paginator::make($tags_unpaged, $num_tags, 12);
+		// END hax
 
 		$this->layout->content = View::make('tags/index')
 			->with('collections', $tags);
@@ -23,7 +31,6 @@ class TagController extends BaseController
 	public function getView($tag_name)
 	{
 		$tag = Tag::where('name', '=', $tag_name)->first();
-		//sU::debug($tag->toArray());
 
 		return View::make('collections/view')
 			->with('collection', $tag)

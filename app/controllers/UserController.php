@@ -1,6 +1,11 @@
 <?php
 class UserController extends BaseController
 {
+	public function __contruct()
+	{
+		Auth::logout();
+	}
+
 	public function getRegister()
 	{
 		return View::make('users/register');
