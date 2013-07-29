@@ -1,5 +1,11 @@
 @extends('layouts.main')
 
+@section('page_title')
+	@if(isset($page_title))
+		// {{$page_title}}
+	@endif
+@endsection
+
 @section('content')
 <? $uploads_arr = []; ?>
 @foreach ($uploads as $upload)

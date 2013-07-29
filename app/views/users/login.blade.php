@@ -1,5 +1,9 @@
 @extends ('layouts.main')
 
+@section('page_title')
+	// User Login
+@endsection
+
 @section ('content')
 <div class="row-fluid">
 	<h2 class="text-center">User Login</h2>
@@ -7,6 +11,7 @@
 	{{Former::open()}}
 	{{Former::text('username', 'Username or Email')}}
 	{{Former::password('password')}}
+	{{Former::checkbox('remember', 'Remember Me')}}
 	<div class="text-center">{{Former::submit('Login')}}</div>
 	{{Former::close()}}
 	</div>

@@ -13,7 +13,7 @@ class TagController extends BaseController
 
 		// So it looks like this instead...
 		$tags_unpaged = [];
-		$tags_raw = Tag::has('public_uploads')->with('public_uploads', 'uploads', 'uploads.image')->orderBy('name', 'asc')->get();
+		$tags_raw = Tag::with('public_uploads', 'uploads', 'uploads.image')->orderBy('name', 'asc')->get();
 		foreach($tags_raw as $tag){
 			if(count($tag->public_uploads)) {
 				$tags_unpaged[] = $tag->toArray();
@@ -21,11 +21,20 @@ class TagController extends BaseController
 		};
 
 		$num_tags = count($tags_unpaged);
-		$tags = Paginator::make($tags_unpaged, $num_tags, 12);
+		//sU::debug($tags_unpaged);
+		$tags_per_page = 12;
+		$tags_paged = Paginator::make($tags_unpaged, $num_tags, $tags_per_page);
+		
+		// Moar hax, apparently the Pagintor doesn't like me
+		$tags = array_slice($tags_unpaged, (Paginator::getCurrentPage() - 1) * $tags_per_page, $tags_per_page);
+		//sU::debug($tags);
 		// END hax
 
+
+
 		$this->layout->content = View::make('tags/index')
-			->with('collections', $tags);
+			->with('tags_paged', $tags_paged)
+			->with('tags', $tags);
 	}
 
 	public function getView($tag_name)

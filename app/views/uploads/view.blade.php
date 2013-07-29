@@ -1,5 +1,9 @@
 @extends('layouts.main')
 
+@section('page_title')
+	// {{$upload->originalname}}
+@endsection
+
 @section('scripts')
 	@parent
 	<script type="text/javascript">
@@ -18,6 +22,8 @@
 			else{
 				$('#imageView').find('img').addClass('img-polaroid').attr('src', '{{baseURL()}}/get/' + upload.id + '/' + upload.cleanname + '-' + $('#imageView').width() + 'x' + ($(window).height() - 90) + '.jpg?{{uniqid()}}');
 			}
+
+			$('#imageView').find('img').show();
 
 			// Handle Delete action
 			$('#delete-button').click(function(){
@@ -112,8 +118,8 @@
 @section('content')
 <div class="row-fluid" style="height: 100%">
 	<div class="span10 image-small" id="imageView">
-		<a href="{{baseURL()}}/get/{{$file_id}}/{{$upload->cleanname}}.{{$upload->ext}}"">
-			<img src="{{baseURL()}}/get/{{$file_id}}/{{$upload->cleanname}}-780.{{$upload->ext}}?{{uniqid()}}">
+		<a href="{{baseURL()}}/get/{{$file_id}}/{{$upload->cleanname}}.{{$upload->ext}}">
+			<img style="display: none;">
 		</a>
 	</div>
 	<div class="span2">

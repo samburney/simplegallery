@@ -84,7 +84,7 @@ class UserController extends BaseController
 			$userdata['username'] = $user->username;
 		}
 
-		if(Auth::attempt($userdata)){
+		if(Auth::attempt(array('username' => $userdata['username'], 'password' => $userdata['password']), isset($userdata['remember']) ? true : false)) {
 			return Redirect::intended(URL::to('uploads'))
 				->with('notice', 'Welcome back, ' . Auth::user()->username);
 		}

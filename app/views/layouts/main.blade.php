@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>sifnt Upload</title>
+		<title>
+			sifnt Upload
+			@section('page_title')
+			@show
+		</title>
 @section('scripts')
 		<script type="text/javascript">
 			var baseURL = "{{URL::to('')}}";

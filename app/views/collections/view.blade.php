@@ -13,6 +13,16 @@
 </script>
 @endsection
 
+@section('page_title')
+	//
+	@if(Request::is('collection/*') || Request::is('collections/*'))
+		Collection
+	@else
+		Tag
+	@endif
+	- {{$collection->name}}
+@endsection
+
 @section('content')
 <div class="row-fluid">
 	<div class="span9">

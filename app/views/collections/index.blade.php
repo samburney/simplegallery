@@ -1,5 +1,9 @@
 @extends('layouts.main')
 
+@section('page_title')
+	// Collections
+@endsection
+
 @section('content')
 <? $uploads_arr = []; ?>
 @foreach ($collections as $collection)

@@ -9,7 +9,8 @@ class UploadController extends BaseController
 		$uploads = $this->user->uploads()->with('image')->orderBy('created_at', 'desc')->paginate(12);
 
 		$this->layout->content = View::make('uploads/index')
-			->with('uploads', $uploads);
+			->with('uploads', $uploads)
+			->with('page_title', 'Your Uploads');
 	}
 
 	public function getPopular()

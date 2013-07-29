@@ -1,5 +1,9 @@
 @extends ('layouts.main')
 
+@section('page_title')
+	// User Registration
+@endsection
+
 @section ('content')
 <div class="row-fluid">
 	<h2 class="text-center">User Registration</h2>
