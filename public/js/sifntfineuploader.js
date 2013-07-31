@@ -39,7 +39,7 @@ $(function(){
 									.css('margin-bottom', '0px')
 									.append(
 										$('<div>')
-											.addClass('bar')
+											.addClass('progress-bar')
 											.css('text-align', 'left')
 											.css('color', 'black')
 											.css('white-space', 'nowrap')
@@ -95,8 +95,8 @@ $(function(){
 					var speed = Math.round(loaded / ((date.getTime()/1000) - starttimes[id]));
 					
 					console.log(progress);
-					$('#progress-' + id).children('div.bar').css('width', progress + '%');
-					//$('#progress-' + id).children('div.bar').html(loaded + '/' + total + ' ' + progress + '%' + ' ' + Math.round(speed/1024) + 'kB/s');
+					$('#progress-' + id).children('div.progress-bar').css('width', progress + '%');
+					//$('#progress-' + id).children('div.progress-bar').html(loaded + '/' + total + ' ' + progress + '%' + ' ' + Math.round(speed/1024) + 'kB/s');
 				}
 			},
 			onComplete: function(id, fileName, responseJSON){
@@ -130,7 +130,7 @@ $(function(){
 				}
 			},
 			onError: function(id, name, reason, xhr){
-				$('#progress-' + id).children('div.bar').css('width', '100%').addClass('bar-danger');
+				$('#progress-' + id).children('div.progress-bar').css('width', '100%').addClass('progress-bar-danger');
 					$('#progress-' + id).click(function(){
 						bootbox.alert(reason.message);
 					});

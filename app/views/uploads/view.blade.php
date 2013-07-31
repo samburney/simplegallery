@@ -26,9 +26,10 @@
 
 			$('#imageView').find('img').show().removeClass('hide');
 
-			// Handle Delete action
+			// Handle Delete action  // Disabled
 			$('#delete-button').click(function(){
-				bootbox.dialog('Are you sure?', [{
+				// Bootbox not currently supporting bootstrap-3.x
+				/*bootbox.dialog('Are you sure?', [{
 					"label": "Yes",
 					"class": "btn-danger",
 					"callback": function(){
@@ -38,8 +39,16 @@
 				{
 					"label": "No",
 					"class": "btn"
-				}]);
-			});
+				}]);*/
+
+				// Work-around for now
+				if(confirm('Are you sure?')){
+					window.location = '{{baseURL()}}/upload/delete/' + upload.id;
+				}
+				else{
+					return false;
+				}
+			});	
 
 			// Set up tags select
 			$('#tags')
