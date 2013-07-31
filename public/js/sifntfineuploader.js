@@ -94,6 +94,7 @@ $(function(){
 					var progress = Math.round(loaded / total * 100);
 					var speed = Math.round(loaded / ((date.getTime()/1000) - starttimes[id]));
 					
+					console.log(progress);
 					$('#progress-' + id).children('div.bar').css('width', progress + '%');
 					//$('#progress-' + id).children('div.bar').html(loaded + '/' + total + ' ' + progress + '%' + ' ' + Math.round(speed/1024) + 'kB/s');
 				}
@@ -106,7 +107,7 @@ $(function(){
 					collection[collection.length] = data.file_id;
 					console.log(activeUploads);
 					if(activeUploads <= 0){
-						$('#showCollectionModal').show().removeAttr('disabled').removeClass('disabled');
+						$('#showCollectionModal').show().removeClass('hide').removeAttr('disabled').removeClass('disabled');
 					}
 
 					$('#upload-' + id).find('a.remove').parent().remove();
@@ -119,7 +120,7 @@ $(function(){
 								.append(
 									$('<img>')
 										.attr('src', baseURL + '/get/' + data.file_id + '/' + data.file_name + '-108x100.jpg')
-										.addClass('img-polaroid')
+										.addClass('img-thumbnail')
 								)
 						)
 					)
@@ -200,7 +201,7 @@ $(function(){
 
 function checkUploadList(id){
 	if(id.children('div').length > 0){
-		$('#uploadList').show();
+		$('#uploadList').show().removeClass('hide');
 		//$('#uploadNow').show();
 	}
 	else{

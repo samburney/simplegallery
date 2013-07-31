@@ -1,4 +1,4 @@
-<ul class="nav nav-pills">
+<ul id="top-nav" class="nav nav-pills row">
 	<li<? if(Request::is('/') || Request::is('/uploads/popular')){ ?> class="active"<? } ?>>
 		<a href="{{URL::route('home')}}">Popular</a>
 	</li>

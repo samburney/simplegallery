@@ -12,18 +12,19 @@
 
 			// Replace image with one that's relevant to the viewport
 			if(upload.extra == 'image'){
-				if(upload.image.width < $('#imageView').width() && upload.image.height < ($(window).height() - 72)){
-					$('#imageView').find('img').addClass('img-polaroid').attr('src', '{{baseURL()}}/get/' + upload.id + '/' + upload.cleanname + '.' + upload.ext + '?{{uniqid()}}');
+
+				if(upload.image.width < $('#imageView').width()){
+					$('#imageView').find('img').addClass('img-thumbnail').attr('src', '{{baseURL()}}/get/' + upload.id + '/' + upload.cleanname + '.' + upload.ext + '?{{uniqid()}}');
 				}
 				else{
-					$('#imageView').find('img').addClass('img-polaroid').attr('src', '{{baseURL()}}/get/' + upload.id + '/' + upload.cleanname + '-' + $('#imageView').width() + 'x' + ($(window).height() - 90) + '.jpg?{{uniqid()}}');
+					$('#imageView').find('img').addClass('img-thumbnail').attr('src', '{{baseURL()}}/get/' + upload.id + '/' + upload.cleanname + '-' + $('#imageView').width() + 'x' + 999999 + '.jpg?{{uniqid()}}');
 				}
 			}
 			else{
-				$('#imageView').find('img').addClass('img-polaroid').attr('src', '{{baseURL()}}/get/' + upload.id + '/' + upload.cleanname + '-' + $('#imageView').width() + 'x' + ($(window).height() - 90) + '.jpg?{{uniqid()}}');
+				$('#imageView').find('img').addClass('img-thumbnail').attr('src', '{{baseURL()}}/get/' + upload.id + '/' + upload.cleanname + '-' + $('#imageView').width() + 'x' + 999999 + '.jpg?{{uniqid()}}');
 			}
 
-			$('#imageView').find('img').show();
+			$('#imageView').find('img').show().removeClass('hide');
 
 			// Handle Delete action
 			$('#delete-button').click(function(){
@@ -116,15 +117,17 @@
 @endsection
 
 @section('content')
-<div class="row-fluid" style="height: 100%">
-	<div class="span10 image-small" id="imageView">
-		<a href="{{baseURL()}}/get/{{$file_id}}/{{$upload->cleanname}}.{{$upload->ext}}">
-			<img style="display: none;">
-		</a>
+<div class="row">
+	<div class="col-lg-10">
+		<div class="row" id="imageView">
+			<a href="{{baseURL()}}/get/{{$file_id}}/{{$upload->cleanname}}.{{$upload->ext}}">
+				<img style="display: none;">
+			</a>
+		</div>
 	</div>
-	<div class="span2">
+	<div class="col-lg-2">
 		@include('includes.upload-sidebar')
-		<div class="well well-empty">
+		<div class="well well-empty row">
 			<div class="well-inner">
 				<p><b title="{{$upload->originalname}}.{{$upload->ext}}">{{$upload->originalname}}</b></p>
 				<p style="font-size: 12px;">
@@ -155,7 +158,7 @@
 			</div>
 		</div>
 @if ($upload->user_id == Auth::user()->id)
-		<div class="well well-small">
+		<div class="well well-small row">
 			<ul class="nav nav-stacked nav-pills nav-actions">
 	@if ($upload->extra == 'image')
 				<li class="dropdown">

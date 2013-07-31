@@ -1,5 +1,9 @@
-#topnav {
-	padding-top: 10px;
+#title-nav {
+	margin-top: 10px;
+}
+
+#top-nav {
+	margin-bottom: 20px;
 }
 
 .small {
@@ -24,11 +28,14 @@ div.image-small, div.image-thumbnail {
 	text-align: center;
 }
 
+div#imageView {
+	margin-right: 0;
+}
+
 ul.nav-pills li.danger a:hover {
 	color: black;
 	background: red;
 }
-
 
 ul.thumbnails-tiny {
 	margin-bottom: 0px;
@@ -37,6 +44,14 @@ ul.thumbnails-tiny {
 ul.thumbnails-tiny li {
 	margin-bottom: 2px;
 	margin-top: 2px;
+}
+
+div.thumbnails-tiny-row {
+	margin: 0 !important;
+}
+
+div.thumbnails-tiny-row div {
+	padding: 0;
 }
 
 img.img-polaroid-tiny {
@@ -59,8 +74,21 @@ div.select2-drop, div.select2-container {
 	height: 18px;
 	padding: 0;
 }
-/* Thumbnail bug work-around */
-.thumbnails > li.span2:nth-child(6n+1),
-.thumbnails > li.span3:nth-child(4n+1),
-.thumbnails > li.span4:nth-child(3n+1),
-.thumbnails > li.span6:nth-child(2n+3){ margin-left: 0 !important; }
+
+.pagination-small > ul > li > a,
+.pagination-small > ul > li > span {
+  padding: 5px 10px;
+  font-size: 12px;
+}
+
+.pagination-small > ul > li:first-child > a,
+.pagination-small > ul > li:first-child > span {
+  border-bottom-left-radius: 3px;
+  border-top-left-radius: 3px;
+}
+
+.pagination-small > ul > li:last-child > a,
+.pagination-small > ul > li:last-child > span {
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}

@@ -11,18 +11,18 @@
 @foreach ($uploads as $upload)
 	<? $uploads_arr[] = $upload->toArray(); ?>
 @endforeach		
-<div class="row-fluid">
-	<div class="span10">
+<div class="row">
+	<div class="col-lg-10">
 @include('includes/top-nav')
 @for ($row=1; $row<=3; $row++)
-		<ul class="thumbnails">
+		<div class="row">
 	@for ($col=1; $col<=4; $col++)
 		<? $i = ($col + ($row - 1) * 4) - 1; ?>
 		@if($i < count($uploads_arr))
-			<li class="span3">
-				<div class="image-thumbnail">
+			<div class="col-lg-3 text-center">
+				<div>
 					<a href="{{URL::to('view/' . $uploads_arr[$i]['id'] . '/' . $uploads_arr[$i]['cleanname'] . '.' . $uploads_arr[$i]['ext'])}}">
-						<img src="{{URL::to('get/' . $uploads_arr[$i]['id'] . '/' . $uploads_arr[$i]['cleanname'] . '-200x100.jpg')}}" class="img-polaroid">
+						<img class="img-thumbnail" src="{{URL::to('get/' . $uploads_arr[$i]['id'] . '/' . $uploads_arr[$i]['cleanname'] . '-200x100.jpg')}}" class="img-polaroid">
 					</a>
 				</div>
 				<div style="text-align: center; white-space: nowrap; overflow: hidden;">
@@ -32,16 +32,16 @@
 						</small>
 					</a>
 				</div>
-			</li>
+			</div>
 		@endif			
 	@endfor
-		</ul>
+		</div>
 @endfor
 		<div class="text-center">
 			{{$uploads->links()}}
 		</div>
 	</div>
-	<div class="span2">
+	<div class="col-lg-2">
 		@include('includes.upload-sidebar')
 	</div>
 </div>
