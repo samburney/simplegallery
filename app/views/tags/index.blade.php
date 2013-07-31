@@ -9,7 +9,7 @@
 	<div class="col-lg-10">
 @include('includes/top-nav')
 @for ($row=1; $row<=3; $row++)
-		<div class="row">
+		<div class="row thumbnails-row">
 	@for ($col=1; $col<=4; $col++)
 		<? $i = ($col + ($row - 1) * 4) - 1; ?>
 		@if($i < count($tags))
