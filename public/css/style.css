@@ -37,6 +37,10 @@ ul.nav-pills li.danger a:hover {
 	background: red;
 }
 
+.thumbnails-row {
+	margin-bottom: 10px;
+}
+
 ul.thumbnails-tiny {
 	margin-bottom: 0px;
 }
@@ -91,4 +95,31 @@ div.select2-drop, div.select2-container {
 .pagination-small > ul > li:last-child > span {
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+
+html,
+body {
+  height: 100%;
+  /* The html and body elements cannot have any padding or margin. */
+}
+
+/* Wrapper for page content to push down footer */
+#wrap {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  /* Negative indent footer by it's height */
+  margin: 0 auto -50px;
+}
+
+/* Set the fixed height of the footer here */
+#push,
+#footer {
+  height: 50px;
+}
+#footer {
+  /*background-color: #f5f5f5;*/
 }

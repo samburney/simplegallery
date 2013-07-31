@@ -15,18 +15,18 @@
 	<div class="col-lg-10">
 @include('includes/top-nav')
 @for ($row=1; $row<=3; $row++)
-		<div class="row">
+		<div class="row thumbnails-row">
 	@for ($col=1; $col<=4; $col++)
 		<? $i = ($col + ($row - 1) * 4) - 1; ?>
 		@if($i < count($uploads_arr))
 			<div class="col-lg-3 text-center">
 				<div>
-					<a href="{{URL::to('view/' . $uploads_arr[$i]['id'] . '/' . $uploads_arr[$i]['cleanname'] . '.' . $uploads_arr[$i]['ext'])}}">
+					<a title="{{$uploads_arr[$i]['originalname']}}" href="{{URL::to('view/' . $uploads_arr[$i]['id'] . '/' . $uploads_arr[$i]['cleanname'] . '.' . $uploads_arr[$i]['ext'])}}">
 						<img class="img-thumbnail" src="{{URL::to('get/' . $uploads_arr[$i]['id'] . '/' . $uploads_arr[$i]['cleanname'] . '-200x100.jpg')}}" class="img-polaroid">
 					</a>
 				</div>
 				<div style="text-align: center; white-space: nowrap; overflow: hidden;">
-					<a href="{{URL::to('view/' . $uploads_arr[$i]['id'] . '/' . $uploads_arr[$i]['cleanname'] . '.' . $uploads_arr[$i]['ext'])}}" style="color: black;">
+					<a title="{{$uploads_arr[$i]['originalname']}}" href="{{URL::to('view/' . $uploads_arr[$i]['id'] . '/' . $uploads_arr[$i]['cleanname'] . '.' . $uploads_arr[$i]['ext'])}}" style="color: black;">
 						<small>
 							{{$uploads_arr[$i]['originalname']}}
 						</small>

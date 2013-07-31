@@ -27,59 +27,71 @@
 @show
 	</head>
 	<body>
-		<div class="container">
+			<div id="wrap">
+				<div class="container" id="header">
 @section('title-nav')
-			<div class="row">
-				<div id="title-nav" class="navbar navbar-inverse">
-					<a class="navbar-brand" href="{{URL::route('home')}}">sU</a>
+					<div class="row">
+						<div id="title-nav" class="navbar navbar-inverse">
+							<a class="navbar-brand" href="{{URL::route('home')}}">sU</a>
 @if (@$user)
-					<ul class="nav navbar-nav pull-right">
-						<li class="divider-vertical"></li>
-						<li class="dropdown">
-							<a href="#" class="dropdown" data-toggle="dropdown">
-								<i class="glyphicon glyphicon-user glyphicon-white"></i>
+							<ul class="nav navbar-nav pull-right">
+								<li class="divider-vertical"></li>
+								<li class="dropdown">
+									<a href="#" class="dropdown" data-toggle="dropdown">
+										<i class="glyphicon glyphicon-user glyphicon-white"></i>
 @if ($user->id > 0)
 								{{$user->username}}
 @else
 								Not Logged In
 @endif
-								<b class="caret"></b>
-							</a>
-							<ul class="dropdown-menu">
+										<b class="caret"></b>
+									</a>
+									<ul class="dropdown-menu">
 @if ($user->id <=0 || ($user->id > 0 && !$user->email && !$user->password) || !Auth::check())
-							<li><a href="{{URL::to('user/login')}}">Log in</a></li>
+									<li><a href="{{URL::to('user/login')}}">Log in</a></li>
 @endif
 @if ($user->id <= 0 || !$user->email || !$user->password)
-							<li><a href="{{URL::to('user/register')}}">Register</a></li>
+									<li><a href="{{URL::to('user/register')}}">Register</a></li>
 @endif	
 @if ($user->id > 0)
-							<li><a href="{{URL::to('user/logout')}}">Log out</a></li>
+									<li><a href="{{URL::to('user/logout')}}">Log out</a></li>
 @endif
+								</ul>
+							</li>
 						</ul>
-					</li>
-				</ul>
 @endif
-			</div>
-		</div>
+					</div>
+				</div>
 @show
 @if (Session::has('error'))
-			<div class="alert alert-error row">
-				<b>Error!</b> {{Session::get('error')}}
-			</div>
+				<div class="alert alert-error row">
+					<b>Error!</b> {{Session::get('error')}}
+				</div>
 @endif
 @if (Session::has('warning'))
-			<div class="alert alert-warning row">
-				<b>Warning:</b> {{Session::get('warning')}}
-			</div>
+				<div class="alert alert-warning row">
+					<b>Warning:</b> {{Session::get('warning')}}
+				</div>
 @endif
 @if (Session::has('notice'))
-			<div class="alert alert-success row">
-				<b>Notice:</b> {{Session::get('notice')}}
-			</div>
+				<div class="alert alert-success row">
+					<b>Notice:</b> {{Session::get('notice')}}
+				</div>
 @endif
+			</div>
+			<div id="content" class="container">
+				@yield('content')
+			</div>
+			<div id="push">
+			</div>
 		</div>
-		<div class="container">
-			@yield('content')
+		<div class="container" id="footer">
+			<div class="row text-center">
+				<p>
+					<a href="http://code.sifnt.net.au/newticket?component=simplegallery">Report a Bug or Request a Feature</a><br>
+					<small>SimpleGallery is Copyright &copy;2013 <a href="http://www.sifnt.net.au/">sifnt</a>.  Use of this software is licensed under the General Public License (GPL) version 2.</small>
+				</p>
+			</div>
 		</div>
 	</body>
 </html>
