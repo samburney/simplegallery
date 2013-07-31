@@ -29,7 +29,7 @@
 <? $uploads_arr = []; ?>
 @foreach($uploads as $upload)
 <? $uploads_arr[] = $upload->toArray(); ?>
-		<div id="upload-{{$upload->id}}" class="row" style="margin-bottom: 10px;">		
+		<div id="upload-{{$upload->id}}" class="row text-center" style="margin-bottom: 10px;">		
 			<a href="{{baseURL()}}/view/{{$upload->id}}/{{$upload->cleanname}}.{{$upload->ext}}">
 				<img src="{{baseURL()}}/get/{{$upload->id}}/{{$upload->cleanname}}-710.{{$upload->ext}}" class="img-thumbnail">
 			</a>

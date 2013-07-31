@@ -119,7 +119,7 @@
 @section('content')
 <div class="row">
 	<div class="col-lg-10">
-		<div class="row" id="imageView">
+		<div class="row text-center" id="imageView">
 			<a href="{{baseURL()}}/get/{{$file_id}}/{{$upload->cleanname}}.{{$upload->ext}}">
 				<img style="display: none;">
 			</a>
