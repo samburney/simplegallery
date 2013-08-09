@@ -8,4 +8,8 @@ composer.lock
 simplegallery.sublime*
 /app/config/database.php
 /public/files/*
+/public/files/cache/*
 /public/preprocessed/*
+
+!/public/files/cache
+!*.gitkeep

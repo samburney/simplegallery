@@ -132,7 +132,8 @@ $(function(){
 			onError: function(id, name, reason, xhr){
 				$('#progress-' + id).children('div.progress-bar').css('width', '100%').addClass('progress-bar-danger');
 					$('#progress-' + id).click(function(){
-						bootbox.alert(reason.message);
+						//bootbox.alert(reason.message);
+						alert(reason);
 					});
 				}
 			}

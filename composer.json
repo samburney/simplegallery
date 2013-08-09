@@ -4,7 +4,7 @@
 	"keywords": ["framework", "laravel"],
 	"require": {
 		"laravel/framework": "4.0.*",
-		"anahkiasen/former": "dev-agnostic"
+		"anahkiasen/former": "dev-master"
 	},
 	"autoload": {
 		"classmap": [
