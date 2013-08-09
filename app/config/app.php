@@ -114,6 +114,7 @@ return array(
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 		'Former\FormerServiceProvider',
+		'Fideloper\Proxy\ProxyServiceProvider',
 
 	),
 
@@ -179,7 +180,7 @@ return array(
 		'URL'             => 'Illuminate\Support\Facades\URL',
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
-		'Former'		  => 'Former\Facades\Illuminate',
+		'Former'	  => 'Former\Facades\Former',
 
 	),
 

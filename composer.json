@@ -4,7 +4,8 @@
 	"keywords": ["framework", "laravel"],
 	"require": {
 		"laravel/framework": "4.0.*",
-		"anahkiasen/former": "dev-master"
+		"anahkiasen/former": "dev-master",
+		"fideloper/proxy": "dev-master"
 	},
 	"autoload": {
 		"classmap": [
