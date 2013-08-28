@@ -15,3 +15,8 @@ simplegallery.sublime*
 
 !/public/files/cache
 !*.gitkeep
+
+/bower_components
+/node_modules
+/test
+/tests

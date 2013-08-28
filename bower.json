@@ -1,0 +1,22 @@
+{
+  "name": "simplegallery",
+  "version": "0.0.1",
+  "authors": [
+    "Sam Burney <sam.burney@air-stream.org>"
+  ],
+  "license": "GPLv2",
+  "homepage": "http://code.sifnt.net.au/tanuki/simplegallery",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootbox": ">= 4.0.0",
+    "bootstrap": ">= 3.0.0",
+    "jquery": ">= 1.9.0"
+  }
+}
