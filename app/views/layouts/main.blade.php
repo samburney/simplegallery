@@ -11,15 +11,15 @@
 		<script type="text/javascript">
 			var baseURL = "{{URL::to('')}}";
 		</script>
-		<script type="text/javascript" src="{{asset('js/jquery-1.10.1.min.js')}}"></script>
+		<script type="text/javascript" src="{{asset('bower/jquery/jquery.min.js')}}"></script>
 		<script type="text/javascript" src="{{asset('js/jquery.scrollto.js')}}"></script>
-		<script type="text/javascript" src="{{asset('lib/jquery.fineuploader-3.6.4/jquery.fineuploader-3.6.4.js')}}"></script>
+		<script type="text/javascript" src="{{asset('lib/jquery.fineuploader-3.8.0/jquery.fineuploader-3.8.0.js')}}"></script>
 		<script type="text/javascript" src="{{asset('lib/bootstrap-3.0.0-rc1/js/bootstrap.min.js')}}"></script>
 		<script type="text/javascript" src="{{asset('js/bootbox.min.js')}}"></script>
 		<script type="text/javascript" src="{{asset('lib/select2-3.4.1/select2.js')}}"></script>
 @show
 @section('styles')
-		<link href="{{asset('lib/jquery.fineuploader-3.6.4/fineuploader-3.6.4.css')}}" rel="stylesheet" media="screen">
+		<link href="{{asset('lib/jquery.fineuploader-3.8.0/fineuploader-3.8.0.css')}}" rel="stylesheet" media="screen">
 		<link href="{{asset('lib/bootstrap-3.0.0-rc1/css/bootstrap.css')}}" rel="stylesheet" media="screen">
 		<link href="{{asset('lib/bootstrap-glyphicons-1.0.0/css/bootstrap-glyphicons.css')}}" rel="stylesheet" media="screen">
 		<link href="{{asset('lib/select2-3.4.1/select2.css')}}" rel="stylesheet" media="screen">
