@@ -167,7 +167,7 @@
 			</div>
 		</div>
 @if ($upload->user_id == Auth::user()->id)
-		<div class="well well-small row">
+		<div class="well well-sm row">
 			<ul class="nav nav-stacked nav-pills nav-actions">
 	@if ($upload->extra == 'image')
 				<li class="dropdown">

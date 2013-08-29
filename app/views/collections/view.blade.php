@@ -4,7 +4,7 @@
 	@parent
 <script type="text/javascript">
 	$(function(){
-		$(".image-thumbnail a").smoothScroll({
+		$(".thumbnail-row a").smoothScroll({
 			afterScroll: function()
 			{
 				window.location.hash = this.hash;
@@ -30,15 +30,20 @@
 <? $uploads_arr = []; ?>
 @foreach($uploads as $upload)
 <? $uploads_arr[] = $upload->toArray(); ?>
-		<div id="upload-{{$upload->id}}" class="row text-center" style="margin-bottom: 10px;">		
+		<div id="upload-{{$upload->id}}" class="row text-center thumbnail-row">		
 			<a href="{{baseURL()}}/view/{{$upload->id}}/{{$upload->cleanname}}.{{$upload->ext}}">
 				<img src="{{baseURL()}}/get/{{$upload->id}}/{{$upload->cleanname}}-710.{{$upload->ext}}" class="img-thumbnail">
 			</a>
 		</div>
 @endforeach
+@if($uploads->getLastPage() > 1)
+		<div class="row text-center">
+			{{$uploads->links()}}
+		</div>
+@endif
 	</div>
 	<div class="col-lg-3">
-		<div class="well well-small row">
+		<div class="well well-sm row">
 			<p class="text-center">
 				<b>{{$collection->name}}</b>
 			</p>
@@ -49,16 +54,16 @@
 				<b>Files:</b> {{count($collection->uploads)}}<br>
 			</p>
 		</div>
-		<div class="well well-small text-center row">
+		<div class="well well-sm text-center row">
 @for ($row=1; $row<=3; $row++)
 @if((count($uploads_arr) + 3) - ($row * 3))
-			<div class="thumbnails-tiny-row row">
+			<div class="row thumbnail-row">
 	@for ($col=1; $col<=3; $col++)
 		<? $i = ($col + ($row - 1) * 3) - 1; ?>
 		@if($i < count($uploads_arr))
-				<div class="col-lg-4 text-center image-thumbnail">
+				<div class="col-lg-4 text-center">
 					<a href="#upload-{{$uploads_arr[$i]['id']}}">
-						<img src="{{baseURL()}}/get/{{$uploads_arr[$i]['id']}}/{{$uploads_arr[$i]['cleanname']}}-60x60.jpg" class="img-thumbnail img-polaroid-tiny">
+						<img src="{{baseURL()}}/get/{{$uploads_arr[$i]['id']}}/{{$uploads_arr[$i]['cleanname']}}-100x100.jpg" class="img-thumbnail img-thumbnail-sm">
 					</a>
 				</div>
 		@endif			
