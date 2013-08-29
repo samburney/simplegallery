@@ -4,10 +4,11 @@
 	@parent
 <script type="text/javascript">
 	$(function(){
-		$(".image-thumbnail a").click(function(e){
-			$('html,body').scrollTo(this.hash, this.hash);
-			window.location.hash = this.hash;
-			e.preventDefault();
+		$(".image-thumbnail a").smoothScroll({
+			afterScroll: function()
+			{
+				window.location.hash = this.hash;
+			}
 		});
 	});
 </script>
@@ -55,7 +56,7 @@
 	@for ($col=1; $col<=3; $col++)
 		<? $i = ($col + ($row - 1) * 3) - 1; ?>
 		@if($i < count($uploads_arr))
-				<div class="col-lg-4 text-center">
+				<div class="col-lg-4 text-center image-thumbnail">
 					<a href="#upload-{{$uploads_arr[$i]['id']}}">
 						<img src="{{baseURL()}}/get/{{$uploads_arr[$i]['id']}}/{{$uploads_arr[$i]['cleanname']}}-60x60.jpg" class="img-thumbnail img-polaroid-tiny">
 					</a>

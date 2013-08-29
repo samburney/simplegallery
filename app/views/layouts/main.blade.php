@@ -12,17 +12,16 @@
 			var baseURL = "{{URL::to('')}}";
 		</script>
 		<script type="text/javascript" src="{{asset('bower/jquery/jquery.min.js')}}"></script>
-		<script type="text/javascript" src="{{asset('js/jquery.scrollto.js')}}"></script>
+		<script type="text/javascript" src="{{asset('bower/jquery.smooth-scroll/jquery.smooth-scroll.js')}}"></script>
 		<script type="text/javascript" src="{{asset('lib/jquery.fineuploader-3.8.0/jquery.fineuploader-3.8.0.js')}}"></script>
-		<script type="text/javascript" src="{{asset('lib/bootstrap-3.0.0-rc1/js/bootstrap.min.js')}}"></script>
-		<script type="text/javascript" src="{{asset('js/bootbox.min.js')}}"></script>
-		<script type="text/javascript" src="{{asset('lib/select2-3.4.1/select2.js')}}"></script>
+		<script type="text/javascript" src="{{asset('bower/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+		<script type="text/javascript" src="{{asset('bower/bootbox/bootbox.js')}}"></script>
+		<script type="text/javascript" src="{{asset('bower/select2/select2.js')}}"></script>
 @show
 @section('styles')
 		<link href="{{asset('lib/jquery.fineuploader-3.8.0/fineuploader-3.8.0.css')}}" rel="stylesheet" media="screen">
-		<link href="{{asset('lib/bootstrap-3.0.0-rc1/css/bootstrap.css')}}" rel="stylesheet" media="screen">
-		<link href="{{asset('lib/bootstrap-glyphicons-1.0.0/css/bootstrap-glyphicons.css')}}" rel="stylesheet" media="screen">
-		<link href="{{asset('lib/select2-3.4.1/select2.css')}}" rel="stylesheet" media="screen">
+		<link href="{{asset('bower/bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet" media="screen">
+		<link href="{{asset('bower/select2/select2.css')}}" rel="stylesheet" media="screen">
 		<link href="{{asset('css/style.css')}}" rel="stylesheet" media="screen">
 @show
 	</head>
@@ -88,8 +87,10 @@
 		<div class="container" id="footer">
 			<div class="row text-center">
 				<p>
-					<a href="http://code.sifnt.net.au/newticket?component=simplegallery">Report a Bug or Request a Feature</a><br>
-					<small>SimpleGallery is Copyright &copy;2013 <a href="http://www.sifnt.net.au/">sifnt</a>.  Use of this software is licensed under the General Public License (GPL) version 2.</small>
+					<small>
+						<a href="http://code.sifnt.wan/tanuki/simplegallery/issues">Report a Bug or Request a Feature</a><br>
+						SimpleGallery is Copyright &copy;2013 <a href="http://www.sifnt.net.au/">sifnt</a>.  Use of this software is licensed under the General Public License (GPL) version 2.
+					</small>
 				</p>
 			</div>
 		</div>
