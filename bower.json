@@ -19,7 +19,6 @@
     "bootstrap": ">= 3.0.0",
     "jquery": ">= 1.9.0",
     "jquery": "< 2.0.0",
-    "fine-uploader": ">= 3.8.0",
     "select2": ">= 3.4.2"
   }
 }
