@@ -38,7 +38,7 @@
 								<span class="icon-bar"></span>
 								<span class="icon-bar"></span>
 							</button>
-							<button type="button" class="btn btn-primary navbar-btn visible-xs pull-right">Upload</button>
+							<a href="{{URL::to('upload/upload')}}" class="btn btn-primary navbar-btn visible-xs pull-right">Upload</button>
 							<a class="navbar-brand" href="{{URL::route('home')}}">sU</a>
 						</div>
 						<div class="navbar-collapse navbar-topnav-toggle collapse">
@@ -57,7 +57,7 @@
 									<a href="{{URL::to('collections')}}">Your Collections</a>
 								</li>
 								<li>
-									<button type="button" class="btn btn-primary navbar-btn visible-sm idden-xs">Upload</button>
+									<button type="button" class="btn btn-primary navbar-btn visible-sm" onclick="window.location='{{URL::to('upload/upload')}}'">Upload</button>
 								</li>
 							@endif
 							</ul>

@@ -77,7 +77,9 @@
 			</div>
 @endif
 		</div>
-		@include('includes.upload-sidebar')
+		<div class="hidden-sm hidden-xs">
+			@include('includes.upload-sidebar')
+		</div>
 	</div>
 </div>
 @endsection

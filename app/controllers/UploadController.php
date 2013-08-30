@@ -21,6 +21,11 @@ class UploadController extends BaseController
 			->with('uploads', $uploads);
 	}
 
+	public function getUpload()
+	{
+		$this->layout->content = View::make('uploads/upload');
+	}
+
 	public function postIndex()
 	{
 		$path_preprocess = '/tmp';

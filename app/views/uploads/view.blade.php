@@ -131,7 +131,9 @@
 		</div>
 	</div>
 	<div class="col-lg-2 col-md-2">
-		@include('includes.upload-sidebar')
+		<div class="hidden-sm hidden-xs">
+			@include('includes.upload-sidebar')
+		</div>
 		<div class="well well-empty row">
 			<div class="well-inner">
 				<p><b title="{{$upload->originalname}}.{{$upload->ext}}">{{$upload->originalname}}</b></p>
