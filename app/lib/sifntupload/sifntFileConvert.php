@@ -232,7 +232,7 @@ class sifntFileConvert {
 					die('New size must be a keyword or in the form &lt;width&gt;x&lt;height&gt;');
 				}
 				
-				if($maxwidth <= '200' && $maxheight <= '200'){
+				if($maxwidth <= '768' && $maxheight <= '576'){
 					$attachwm = false;
 				}
 				

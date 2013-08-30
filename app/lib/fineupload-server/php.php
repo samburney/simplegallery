@@ -91,7 +91,7 @@ class qqUploadedFileForm {
             $filename = $_FILES['qqfile']['name'];
         }
         else{
-            $filename = $_POST['qqblobname'];
+            $filename = $_POST['qqfilename'];
         }
 
         return $filename;

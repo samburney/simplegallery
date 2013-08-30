@@ -4,9 +4,16 @@
 	"keywords": ["framework", "laravel"],
 	"require": {
 		"laravel/framework": "4.0.*",
-		"anahkiasen/former": "dev-master",
-		"fideloper/proxy": "dev-master"
+		"anahkiasen/former": "dev-develop",
+		"fideloper/proxy": "dev-master",
+		"sifnt/sifnt-util": "dev-master"
 	},
+	"repositories": [
+	    {
+	        "type": "composer",
+	        "url": "http://composer.sifnt.wan"
+	    }
+	],
 	"autoload": {
 		"classmap": [
 			"app/commands",

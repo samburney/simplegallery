@@ -13,4 +13,7 @@
 		<a href="{{URL::to('collections')}}">Your Collections</a>
 	</li>
 @endif
+	<li class="pull-right visible-sm">
+		<a class="btn btn-primary">Upload</a>
+	</li>
 </ul>

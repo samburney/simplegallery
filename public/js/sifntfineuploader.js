@@ -96,7 +96,6 @@ $(function(){
 					
 					console.log(progress);
 					$('#progress-' + id).children('div.progress-bar').css('width', progress + '%');
-					//$('#progress-' + id).children('div.progress-bar').html(loaded + '/' + total + ' ' + progress + '%' + ' ' + Math.round(speed/1024) + 'kB/s');
 				}
 			},
 			onComplete: function(id, fileName, responseJSON){
@@ -132,8 +131,7 @@ $(function(){
 			onError: function(id, name, reason, xhr){
 				$('#progress-' + id).children('div.progress-bar').css('width', '100%').addClass('progress-bar-danger');
 					$('#progress-' + id).click(function(){
-						//bootbox.alert(reason.message);
-						alert(reason);
+						bootbox.alert(reason.message);
 					});
 				}
 			}

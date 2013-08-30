@@ -14,40 +14,36 @@
 			if(upload.extra == 'image'){
 
 				if(upload.image.width < $('#imageView').width()){
-					$('#imageView').find('img').addClass('img-thumbnail').attr('src', '{{baseURL()}}/get/' + upload.id + '/' + upload.cleanname + '.' + upload.ext + '?{{uniqid()}}');
+					$('#imageView').find('img').addClass('img-thumbnail img-thumbnail-bordercollapse').attr('src', '{{baseURL()}}/get/' + upload.id + '/' + upload.cleanname + '.' + upload.ext + '?{{uniqid()}}');
 				}
 				else{
-					$('#imageView').find('img').addClass('img-thumbnail').attr('src', '{{baseURL()}}/get/' + upload.id + '/' + upload.cleanname + '-' + $('#imageView').width() + 'x' + 999999 + '.jpg?{{uniqid()}}');
+					$('#imageView').find('img').addClass('img-thumbnail img-thumbnail-bordercollapse').attr('src', '{{baseURL()}}/get/' + upload.id + '/' + upload.cleanname + '-' + $('#imageView').width() + 'x' + 999999 + '.jpg?{{uniqid()}}');
 				}
 			}
 			else{
-				$('#imageView').find('img').addClass('img-thumbnail').attr('src', '{{baseURL()}}/get/' + upload.id + '/' + upload.cleanname + '-' + $('#imageView').width() + 'x' + 999999 + '.jpg?{{uniqid()}}');
+				$('#imageView').find('img').addClass('img-thumbnail img-thumbnail-bordercollapse').attr('src', '{{baseURL()}}/get/' + upload.id + '/' + upload.cleanname + '-' + $('#imageView').width() + 'x' + 999999 + '.jpg?{{uniqid()}}');
 			}
 
 			$('#imageView').find('img').show().removeClass('hide');
 
-			// Handle Delete action  // Disabled
+			// Handle Delete action
 			$('#delete-button').click(function(){
-				// Bootbox not currently supporting bootstrap-3.x
-				/*bootbox.dialog('Are you sure?', [{
-					"label": "Yes",
-					"class": "btn-danger",
-					"callback": function(){
-						window.location = '{{baseURL()}}/upload/delete/' + upload.id;
-					}
-				},
-				{
-					"label": "No",
-					"class": "btn"
-				}]);*/
-
-				// Work-around for now
-				if(confirm('Are you sure?')){
-					window.location = '{{baseURL()}}/upload/delete/' + upload.id;
-				}
-				else{
-					return false;
-				}
+				bootbox.dialog({
+					message: 'Are you sure?',
+					title: "Confirm Delete",
+					label: "Yes",
+					buttons: {
+						Yes: {
+							className: "btn-danger",
+							callback: function(){
+								window.location = '{{baseURL()}}/upload/delete/' + upload.id;
+							}
+						},
+						Cancel: {
+								className: "btn"
+							}
+						}
+					});
 			});	
 
 			// Set up tags select
@@ -127,14 +123,14 @@
 
 @section('content')
 <div class="row">
-	<div class="col-lg-10">
+	<div class="col-lg-10 col-md-10 col-sm-12">
 		<div class="row text-center" id="imageView">
 			<a href="{{baseURL()}}/get/{{$file_id}}/{{$upload->cleanname}}.{{$upload->ext}}">
 				<img style="display: none;">
 			</a>
 		</div>
 	</div>
-	<div class="col-lg-2">
+	<div class="col-lg-2 col-md-2">
 		@include('includes.upload-sidebar')
 		<div class="well well-empty row">
 			<div class="well-inner">

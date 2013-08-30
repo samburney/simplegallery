@@ -99,7 +99,7 @@ class sifntFileUpload {
 					$uploadData['file_fullname'] = $postData['qqfile']['name'];
 				}
 				else{
-					$uploadData['file_fullname'] = $postData['qqblobname'];
+					$uploadData['file_fullname'] = $postData['qqfilename'];
 				}
 
 				$uploadData['copy_mode'] = 'move';

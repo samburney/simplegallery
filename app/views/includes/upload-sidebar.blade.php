@@ -9,7 +9,7 @@
 		});
 	</script>
 @endsection
-<div class="well well-empty row">
+<div class="well well-empty row hidden-sm hidden-xs">
 	<div class="well-inner" style="text-align: center;">
 		<a href="#" id="selectFilesToUpload" class="btn btn-primary btn-block">Select Files</a>
 		<div id="dropArea" style="margin-top: 10px; border: 1px dashed grey;">

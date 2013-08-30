@@ -26,7 +26,7 @@
 
 @section('content')
 <div class="row">
-	<div class="col-lg-9">
+	<div class="col-lg-9 col-md-10 col-sm-12">
 <? $uploads_arr = []; ?>
 @foreach($uploads as $upload)
 <? $uploads_arr[] = $upload->toArray(); ?>
@@ -42,10 +42,10 @@
 		</div>
 @endif
 	</div>
-	<div class="col-lg-3">
-		<div class="well well-sm row">
+	<div class="col-lg-3 col-md-2">
+		<div class="well well-sm row" style="white-space: nowrap; overflow: hidden;">
 			<p class="text-center">
-				<b>{{$collection->name}}</b>
+				<b title="{{$collection->name}}">{{$collection->name}}</b>
 			</p>
 			<p style="font-size: 12px;">
 @if(Request::is('collection/*') || Request::is('collections/*'))
@@ -54,14 +54,14 @@
 				<b>Files:</b> {{count($collection->uploads)}}<br>
 			</p>
 		</div>
-		<div class="well well-sm text-center row">
+		<div class="well well-sm text-center row hidden-sm hidden-xs">
 @for ($row=1; $row<=3; $row++)
 @if((count($uploads_arr) + 3) - ($row * 3))
 			<div class="row thumbnail-row">
 	@for ($col=1; $col<=3; $col++)
 		<? $i = ($col + ($row - 1) * 3) - 1; ?>
 		@if($i < count($uploads_arr))
-				<div class="col-lg-4 text-center">
+				<div class="col-lg-4 col-md-4 text-center">
 					<a href="#upload-{{$uploads_arr[$i]['id']}}">
 						<img src="{{baseURL()}}/get/{{$uploads_arr[$i]['id']}}/{{$uploads_arr[$i]['cleanname']}}-100x100.jpg" class="img-thumbnail img-thumbnail-sm">
 					</a>
