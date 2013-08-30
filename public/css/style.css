@@ -17,13 +17,17 @@
 }
 
 @media (min-width: 992px) {
-	div#imageView {
+	div#imageView, {
 		margin-right: 0;
 	}
 }
 
 @media (max-width: 991px) {
 	div#imageView {
+		margin-bottom: 15px;
+	}
+
+	.thumbnail-row > div {
 		margin-bottom: 15px;
 	}
 }
