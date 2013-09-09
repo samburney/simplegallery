@@ -44,7 +44,7 @@ class CollectionController extends BaseController
 
 		foreach(Input::get('ids') as $upload_id){
 			$collection->uploads()->attach($upload_id);
-			TagController::processTags($upload_id, [str_singular(sifntFileUtil::cleantext($collection->name))]);
+			TagController::processTags($upload_id, [str_singular(sifntFileUtil::cleantext($collection->name))], true);
 		}
 
 		return Response::json($result);

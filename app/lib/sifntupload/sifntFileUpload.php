@@ -305,6 +305,8 @@ class sifntFileUpload {
 		if($upload->delete()){
 			// Delete database references
 			Image::where('upload_id', '=', $upload_id)->delete();
+			$upload->collections()->detach();
+			$upload->tags()->detach();
 
 			// Delete file itself
 			if(unlink($file_path)){
@@ -373,7 +375,7 @@ class sifntFileUpload {
 	private function addfiletodb(&$file){
 		$upload = new Upload;
 
-		$upload->user_id = Auth::user()->id;
+		$upload->user_id = isset($file['user_id']) ? $file['user_id'] : Auth::user()->id;
 		//$upload->filegroup_id = $file['filegroup_id']; // TODO
 		$upload->description = $file['file_description'];
 		$upload->name = $file['file_datename'];

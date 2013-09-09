@@ -56,9 +56,13 @@ class TagController extends BaseController
 		return Response::json(array('success' => $success));
 	}
 
-	public static function processTags($file_id, $tags)
+	public static function processTags($file_id, $tags, $newonly = false)
 	{
-		Upload::find($file_id)->tags()->detach();
+		$success = false;
+
+		if(!$newonly) {
+			Upload::find($file_id)->tags()->detach();
+		}
 
 		foreach($tags as $tag_name){
 			$success = true;
