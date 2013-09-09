@@ -108,17 +108,19 @@ class SifntUploadDBMigrate extends Command {
 							->where('filegroup_id', '=', $file->filegroup_id)
 							->pluck('filegroup_name');
 
-						if(!$collection = Collection::where('name', '=', $group_name)->where('user_id', '=', $user->id)->first()) {
-							$collection = new Collection;
+						if($group_name != 'Unfiled') {
+							if(!$collection = Collection::where('name', '=', $group_name)->where('user_id', '=', $user->id)->first()) {
+								$collection = new Collection;
 
-							$collection->name = $group_name;
-							$collection->name_unique = sifntFileUtil::cleantext($group_name, "collections");
-							$collection->user_id = $user->id;
+								$collection->name = $group_name;
+								$collection->name_unique = sifntFileUtil::cleantext($group_name, "collections");
+								$collection->user_id = $user->id;
 
-							$collection->save();
+								$collection->save();
+							}
+							$collection->uploads()->attach($uploaddata['file_id']);
+							TagController::processTags($uploaddata['file_id'], [str_singular(sifntFileUtil::cleantext($collection->name))], true);
 						}
-						$collection->uploads()->attach($uploaddata['file_id']);
-						TagController::processTags($uploaddata['file_id'], [str_singular(sifntFileUtil::cleantext($collection->name))], true);
 
 						// Process old tags
 						$old_tags = DB::connection($olddbname)->table('sifntupload_filetags')
