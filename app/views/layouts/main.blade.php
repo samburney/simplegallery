@@ -56,10 +56,10 @@
 								<li<? if(Request::is('collection') || Request::is('collections')){ ?> class="active"<? } ?>>
 									<a href="{{URL::to('collections')}}">Your Collections</a>
 								</li>
+							@endif
 								<li>
 									<button type="button" class="btn btn-primary navbar-btn visible-sm" onclick="window.location='{{URL::to('upload/upload')}}'">Upload</button>
 								</li>
-							@endif
 							</ul>
 							<ul class="nav navbar-nav navbar-right">
 								<li class="dropdown">
