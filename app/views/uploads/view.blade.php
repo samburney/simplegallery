@@ -9,19 +9,20 @@
 	<script type="text/javascript">
 		$(function(){
 			var upload = {{$upload->toJson()}};
+			var file_requestedext = '{{$file_requestedext}}';
 
 			// Replace image with one that's relevant to the viewport
 			if(upload.extra == 'image'){
 
 				if(upload.image.width < $('#imageView').width()){
-					$('#imageView').find('img').addClass('img-thumbnail img-thumbnail-bordercollapse').attr('src', '{{baseURL()}}/get/' + upload.id + '/' + upload.cleanname + '.' + upload.ext + '?{{uniqid()}}');
+					$('#imageView').find('img').addClass('img-thumbnail img-thumbnail-bordercollapse').attr('src', '{{baseURL()}}/get/' + upload.id + '/' + upload.cleanname + '.' + file_requestedext + '?{{Session::get('uniqid')}}');
 				}
 				else{
-					$('#imageView').find('img').addClass('img-thumbnail img-thumbnail-bordercollapse').attr('src', '{{baseURL()}}/get/' + upload.id + '/' + upload.cleanname + '-' + $('#imageView').width() + 'x' + 999999 + '.jpg?{{uniqid()}}');
+					$('#imageView').find('img').addClass('img-thumbnail img-thumbnail-bordercollapse').attr('src', '{{baseURL()}}/get/' + upload.id + '/' + upload.cleanname + '-' + $('#imageView').width() + 'x' + 999999 + '.jpg?{{Session::get('uniqid')}}');
 				}
 			}
 			else{
-				$('#imageView').find('img').addClass('img-thumbnail img-thumbnail-bordercollapse').attr('src', '{{baseURL()}}/get/' + upload.id + '/' + upload.cleanname + '-' + $('#imageView').width() + 'x' + 999999 + '.jpg?{{uniqid()}}');
+				$('#imageView').find('img').addClass('img-thumbnail img-thumbnail-bordercollapse').attr('src', '{{baseURL()}}/get/' + upload.id + '/' + upload.cleanname + '-' + $('#imageView').width() + 'x' + 999999 + '.jpg?{{Session::get('uniqid')}}');
 			}
 
 			$('#imageView').find('img').show().removeClass('hide');
@@ -125,7 +126,7 @@
 <div class="row">
 	<div class="col-lg-10 col-md-10 col-sm-12">
 		<div class="row text-center" id="imageView">
-			<a href="{{baseURL()}}/get/{{$file_id}}/{{$upload->cleanname}}.{{$upload->ext}}">
+			<a href="{{baseURL()}}/get/{{$file_id}}/{{$upload->cleanname}}.{{$file_requestedext}}">
 				<img style="display: none;">
 			</a>
 		</div>

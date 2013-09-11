@@ -57,14 +57,22 @@ class UploadController extends BaseController
 	public function getView($file_id, $file_requestedname = null)
 	{
 		$upload = Upload::with('image', 'tags')->find($file_id);
-		
+
+		$file_requestedext = $upload->ext;
+		if($file_requestedname != $upload->cleanname) {
+			$sifntUpload = new sifntFileUpload;
+			$namesplit = $sifntUpload->namesplit($file_requestedname);
+			$file_requestedext = $namesplit[3];
+		}
+
 		$tags = implode(',', $upload->tags->lists('name'));
 
 		$this->layout->content = View::make('uploads/view')
 			->with('upload', $upload)
 			->with('tags', $tags)
 			->with('file_id', $file_id)
-			->with('file_requestedname', $file_requestedname);
+			->with('file_requestedname', $file_requestedname)
+			->with('file_requestedext', $file_requestedext);
 	}
 
 	public function getGet($file_id, $file_requestedname)
@@ -184,7 +192,7 @@ class UploadController extends BaseController
 	            
 	            header("Content-type: " . $file['type']);
 	            header("Content-Length: " . $file['size']);
-	            header("Content-disposition: inline; filename=\"$file_requestedname." . $file['ext']);
+	            header("Content-disposition: inline; filename=\"$file_requestedname." . $file['ext'] . '"');
 	            header("Cache-Control: max-age=31536000");
 	            header("Expires:");
 				header("Pragma:");
@@ -223,6 +231,7 @@ class UploadController extends BaseController
 			$upload->image->save();
 
 			$sifntUpload->deletefilecache($id);
+			Session::forget('uniqid');
 
 			return Redirect::to(URL::previous())
 				->with('notice', 'Image successfully rotated ' . $angle . '&deg;');

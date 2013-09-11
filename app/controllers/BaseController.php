@@ -18,6 +18,10 @@ class BaseController extends Controller {
 			//}
 		}
 
+		if(!Session::has('uniqid')) {
+			Session::put('uniqid', uniqid());
+		}
+
 		$this->user = Auth::user();
 	}
 
