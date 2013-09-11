@@ -26,14 +26,15 @@
 
 @section('content')
 <div class="row">
-	<div class="col-lg-9 col-md-10 col-sm-12">
+	<div class="col-lg-9 col-md-10 col-sm-12 text-center">
 <? $uploads_arr = []; ?>
 @foreach($uploads as $upload)
 <? $uploads_arr[] = $upload->toArray(); ?>
 		<div id="upload-{{$upload->id}}" class="row text-center thumbnail-row">		
-			<a href="{{baseURL()}}/view/{{$upload->id}}/{{$upload->cleanname}}.{{$upload->ext}}">
-				<img src="{{baseURL()}}/get/{{$upload->id}}/{{$upload->cleanname}}-710.{{$upload->ext}}" class="img-thumbnail">
-			</a>
+			<a href="{{baseURL()}}/view/{{$upload->id}}/{{$upload->cleanname}}.{{$upload->ext}}" class="img-thumbnail">
+				<img src="{{baseURL()}}/get/{{$upload->id}}/{{$upload->cleanname}}-710.jpg">
+			</a><br />
+			<a href="{{baseURL()}}/view/{{$upload->id}}/{{$upload->cleanname}}.{{$upload->ext}}" style="color: black;">{{$upload->originalname}}</a>
 		</div>
 @endforeach
 @if($uploads->getLastPage() > 1)
