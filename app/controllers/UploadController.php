@@ -153,7 +153,7 @@ class UploadController extends BaseController
 	    	switch($file['extra']){
 	    	    case 'image':
 	    	        // Dynamic image resize
-	    	        if(preg_match('/^([a-z0-9\_.\-% ]+)\-((thumb|large|small)|([0-9]+|[0-9]+x[0-9]+))$/i', $file_requestedname, $file_requestedname_arr)){
+	    	        if($file_requestedname != $upload->originalname && preg_match('/^([a-z0-9\_.\-% ]+)\-((thumb|large|small)|([0-9]+|[0-9]+x[0-9]+))$/i', $file_requestedname, $file_requestedname_arr)){
 							if($newfilepath = $convert->resizeimage($filepath, $file_requestedname_arr[2])){
 	    	                $filepath = $newfilepath;
 	    	                
