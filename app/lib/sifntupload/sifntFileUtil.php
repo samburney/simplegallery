@@ -24,4 +24,14 @@ class sifntFileUtil
 
 		return $text;
 	}
+
+	public static function createZip($name, $ids) {
+		$zip = new ArchiveStream_zip("$name.zip");
+
+		foreach($ids as $upload) {
+			$zip->add_file_from_path($name . '/' . $upload['originalname'] . '.' . $upload['ext'], public_path() . '/files/' . $upload['name'] . '.' . $upload['ext']);
+		}
+
+		$zip->finish();
+	}
 }

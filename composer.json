@@ -6,7 +6,8 @@
 		"laravel/framework": "4.0.*",
 		"anahkiasen/former": "dev-develop",
 		"fideloper/proxy": "dev-master",
-		"sifnt/sifnt-util": "dev-master"
+		"sifnt/sifnt-util": "dev-master",
+		"barracudanetworks/archivestream-php": "0.2.5"
 	},
 	"repositories": [
 	    {

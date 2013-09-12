@@ -83,4 +83,13 @@ class CollectionController extends BaseController
 			->with('collection', $collection)
 			->with('uploads', $collection->uploads()->orderBy('created_at', 'asc')->paginate(9));
 	}
+
+	public function getGet($id) {
+		if($collection = Collection::where('name_unique', '=', $id)->first()){
+			$id = $collection->id;
+		}
+		$collection = Collection::with('uploads')->find($id);
+
+		sifntFileUtil::createZip($collection->name, $collection->uploads->toArray());
+	}
 }

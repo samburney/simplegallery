@@ -17,4 +17,15 @@ class SearchController extends BaseController
 		return View::make('search/index')
 			->with(compact('uploads', 'tags', 'collections', 'q'));
 	}
+
+	public function searchGet($q) {
+		$uploads = Upload::where('originalname', 'LIKE', "%$q%")
+			->where(function($query) {
+				$query->where('user_id', '=', $this->user->id)
+					->orWhere('private', '=', 0);
+			})
+			->get();
+
+		sifntFileUtil::createZip($q, $uploads->toArray());
+	}
 }

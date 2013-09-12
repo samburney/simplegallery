@@ -15,7 +15,9 @@ Route::get('/', array('as' => 'home', 'uses' => 'UploadController@getPopular'));
 
 Route::get('get/{path}/{params}', array('as' => 'get', 'uses' => 'UploadController@getGet'));
 Route::get('view/{path}/{params?}', array('as' => 'view', 'uses' => 'UploadController@getView'));
+
 Route::any('search/{q?}', array('as' => 'search', 'uses' => 'SearchController@searchIndex'));
+Route::get('search/get/{q?}', array('as' => 'search_get', 'uses' => 'SearchController@searchGet'));
 
 Route::controller('upload','UploadController');
 Route::controller('uploads','UploadController');

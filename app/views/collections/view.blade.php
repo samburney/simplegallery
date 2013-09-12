@@ -55,6 +55,9 @@
 				<b>Files:</b> {{count($collection->uploads)}}<br>
 			</p>
 		</div>
+		<div class="row">
+			<a href="{{baseURL()}}/{{(Request::is('collection/*') || Request::is('collections/*')) ? 'collection' : 'tag'}}/get/{{(Request::is('collection/*') || Request::is('collections/*')) ? $collection->name_unique : $collection->name}}" class="btn btn-lg btn-success btn-block" style="margin-bottom: 20px;"><span class="glyphicon glyphicon-arrow-down"></span> Download</a>
+		</div>
 		<div class="well well-sm text-center row hidden-sm hidden-xs">
 @for ($row=1; $row<=3; $row++)
 @if((count($uploads_arr) + 3) - ($row * 3))

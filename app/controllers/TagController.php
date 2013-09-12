@@ -135,4 +135,10 @@ class TagController extends BaseController
 		];
 		return Response::json($data);
 	}
+
+	public function getGet($tag) {
+		$tag = Tag::where('name', '=', $tag)->first();
+
+		sifntFileUtil::createZip($tag->name, $tag->uploads->toArray());
+	}
 }

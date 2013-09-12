@@ -52,7 +52,10 @@
 					@endfor
 						</div>
 				@endfor
-				<div class="text-center">{{$uploads->appends(array('q' => $q))->links()}}</div>
+				<div class="text-center">
+					{{$uploads->appends(array('q' => $q))->links()}}<br>
+					<a href="{{baseURL()}}/search/get/{{$q}}" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-arrow-down"></span> Download All</a>
+				</div>
 			</div>
 			@endif
 			@if(count($collections))
