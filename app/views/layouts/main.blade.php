@@ -57,6 +57,9 @@
 									<a href="{{URL::to('collections')}}">Your Collections</a>
 								</li>
 							@endif
+								<li<? if(Request::is('search') || Request::is('search')){ ?> class="active"<? } ?>>
+									<a href="{{URL::to('search')}}">Search</a>
+								</li>
 								<li>
 									<button type="button" class="btn btn-primary navbar-btn visible-sm" onclick="window.location='{{URL::to('upload/upload')}}'">Upload</button>
 								</li>
