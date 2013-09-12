@@ -33,5 +33,7 @@ class sifntFileUtil
 		}
 
 		$zip->finish();
+
+		exit();
 	}
 }

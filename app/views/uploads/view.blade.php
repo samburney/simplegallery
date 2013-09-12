@@ -165,6 +165,34 @@
 @endif				
 			</div>
 		</div>
+		<div class="row text-center">
+			@if($upload->extra == 'image')
+			<div class="btn-group">
+				<a href="{{baseURL()}}/upload/get/{{$upload->id}}/{{$upload->originalname}}.{{$upload->ext}}" class="btn btn-default btn-success btn-lg" style="margin-bottom: 20px;">
+					Download
+				</a>
+				<button type="button" class="btn btn-success dropdown-toggle btn-lg" data-toggle="dropdown">
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" role="menu">
+					@if(strtolower($upload->ext) != 'jpg' && strtolower($upload->ext) != 'jpeg' && strtolower($upload->ext) != 'jpe')
+					<li><a href="{{baseURL()}}/upload/get/{{$upload->id}}/{{$upload->originalname}}.jpg">JPEG</a></li>
+					@endif
+					@if(strtolower($upload->ext) != 'png')
+					<li><a href="{{baseURL()}}/upload/get/{{$upload->id}}/{{$upload->originalname}}.png">PNG</a></li>
+					@endif
+					@if(strtolower($upload->ext) != 'gif')
+					<li><a href="{{baseURL()}}/upload/get/{{$upload->id}}/{{$upload->originalname}}.gif">GIF</a></li>
+					@endif
+				</ul>
+			</div>
+			@else
+			<a href="{{baseURL()}}/upload/get/{{$upload->id}}/{{$upload->originalname}}.{{$upload->ext}}" class="btn btn-default btn-success btn-lg btn-block" style="margin-bottom: 20px;">
+				<span class="glyphicon glyphicon-arrow-down"></span>
+				Download
+			</a>
+			@endif
+		</div>
 @if ($upload->user_id == Auth::user()->id)
 		<div class="well well-sm row">
 			<ul class="nav nav-stacked nav-pills nav-actions">
