@@ -17,7 +17,7 @@
 }
 
 @media (min-width: 992px) {
-	div#imageView {
+	div#imageView, div.image-view {
 		margin-right: 0;
 	}
 }

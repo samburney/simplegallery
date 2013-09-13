@@ -133,7 +133,7 @@
 						}
 					},
 					afterLoad: function() {
-						this.title = '<a href="{{baseURL()}}/get/{{$file_id}}/{{$upload->cleanname}}.{{$file_requestedext}}">' + this.title + '</a>'
+						this.title = '<b><a href="{{baseURL()}}/get/{{$file_id}}/{{$upload->cleanname}}.{{$file_requestedext}}">' + this.title + '</a></b>'
 					}
 				});
 			});
@@ -144,7 +144,7 @@
 <div class="row">
 	<div class="col-lg-10 col-md-10 col-sm-12">
 		<div class="row text-center" id="imageView">
-			<a href="{{baseURL()}}/get/{{$file_id}}/{{$upload->cleanname}}.{{$file_requestedext}}" title="{{$upload->description}}." class="fancybox" title="{{$upload->description}}">
+			<a href="{{baseURL()}}/get/{{$file_id}}/{{$upload->cleanname}}.{{$file_requestedext}}" title="{{$upload->description}}" class="fancybox" title="{{$upload->description}}">
 				<img style="display: none;">
 			</a>
 		</div>

@@ -22,7 +22,8 @@
 				}
 			},
 			afterLoad: function() {
-				this.title = '<a href="' + this.href + '">' + this.title + '</a>'
+				console.log($(this).attr('class'));
+				this.title =  '<b><a href="' + $(this.element).attr('href') + '">' + this.title + '</a></b> | <a href="' + $(this.element).data('original-file') + '">Download</a>'
 			}
 		});		
 	});
@@ -43,28 +44,61 @@
 <div class="row">
 	<div class="col-lg-9 col-md-10 col-sm-12 text-center">
 @if($uploads->getCurrentPage() > 1)
-	<div class="hide">
+		<div class="hide">
 	@for($i = 0; $i < ($uploads->getFrom() - 1); $i++)
-		<a href="{{baseURL()}}/get/{{$unpaged_uploads[$i]['id']}}/{{$unpaged_uploads[$i]['cleanname']}}.{{$unpaged_uploads[$i]['ext']}}" class="img-thumbnail fancybox" rel="gallery-{{(Request::is('collection/*') || Request::is('collections/*')) ? $collection->name_unique : $collection->name}}" title="{{$unpaged_uploads[$i]['description']}}"></a>
+			<a
+		@if($unpaged_uploads[$i]['extra'] == 'image' && ($unpaged_uploads[$i]['image']['height'] > (Session::get('height') - 10) || $unpaged_uploads[$i]['image']['width'] > (Session::get('width') - 10)))
+				data-fancybox-href="{{baseURL()}}/get/{{$unpaged_uploads[$i]['id']}}/{{$unpaged_uploads[$i]['cleanname']}}-{{Session::get('width') - 10}}x{{Session::get('height') - 10}}.jpg"
+		@else
+				data-fancybox-href="{{baseURL()}}/get/{{$unpaged_uploads[$i]['id']}}/{{$unpaged_uploads[$i]['cleanname']}}.{{$unpaged_uploads[$i]['ext']}}"
+		@endif
+				class="fancybox"
+				rel="gallery-{{(Request::is('collection/*') || Request::is('collections/*')) ? $collection['name_unique'] : $collection['name']}}"
+				title="{{$unpaged_uploads[$i]['description']}}"
+				href="{{baseURL()}}/view/{{$unpaged_uploads[$i]['id']}}/{{$unpaged_uploads[$i]['cleanname']}}.{{$unpaged_uploads[$i]['ext']}}"
+				data-original-file="{{baseURL()}}/get/{{$unpaged_uploads[$i]['id']}}/{{$unpaged_uploads[$i]['originalname']}}.{{$unpaged_uploads[$i]['ext']}}"
+			></a>
 	@endfor
-	</div>
+		</div>
 @endif
 <? $uploads_arr = []; ?>
 @foreach($uploads as $upload)
 <? $uploads_arr[] = $upload->toArray(); ?>
-		<div id="upload-{{$upload->id}}" class="row text-center thumbnail-row">		
-			<a href="{{baseURL()}}/get/{{$upload->id}}/{{$upload->cleanname}}.{{$upload->ext}}" class="img-thumbnail fancybox" rel="gallery-{{(Request::is('collection/*') || Request::is('collections/*')) ? $collection->name_unique : $collection->name}}" title="{{$upload->description}}">
-				<img src="{{baseURL()}}/get/{{$upload->id}}/{{$upload->cleanname}}-710.jpg">
+		<div id="upload-{{$upload->id}}" class="row text-center thumbnail-row image-view">
+			<a
+@if($upload->extra == 'image' && ($upload->image->height > (Session::get('height') - 10) || $upload->image->width > (Session::get('width') - 10)))
+				data-fancybox-href="{{baseURL()}}/get/{{$upload->id}}/{{$upload->cleanname}}-{{Session::get('width') - 10}}x{{Session::get('height') - 10}}.jpg"
+@else
+				data-fancybox-href="{{baseURL()}}/get/{{$upload->id}}/{{$upload->cleanname}}.{{$upload->ext}}"
+@endif
+				class="fancybox"
+				rel="gallery-{{(Request::is('collection/*') || Request::is('collections/*')) ? $collection->name_unique : $collection->name}}"
+				title="{{$upload->description}}"
+				href="{{baseURL()}}/view/{{$upload->id}}/{{$upload->cleanname}}.{{$upload->ext}}"
+				data-original-file="{{baseURL()}}/get/{{$upload->id}}/{{$upload->originalname}}.{{$upload->ext}}"
+				>
+				<img src="{{baseURL()}}/get/{{$upload->id}}/{{$upload->cleanname}}-{{Session::get('width') > 863 ? 863 : Session::get('width')}}.jpg" class="img-thumbnail">
 			</a><br />
 			<a href="{{baseURL()}}/view/{{$upload->id}}/{{$upload->cleanname}}.{{$upload->ext}}" style="color: black;">{{$upload->originalname}}</a>
 		</div>
 @endforeach
 @if($uploads->getCurrentPage() < $uploads->getLastPage())
-	<div class="hide">
+		<div class="hide">
 	@for($i = $uploads->getTo(); $i < count($unpaged_uploads); $i++)
-		<a href="{{baseURL()}}/get/{{$unpaged_uploads[$i]['id']}}/{{$unpaged_uploads[$i]['cleanname']}}.{{$unpaged_uploads[$i]['ext']}}" class="img-thumbnail fancybox" rel="gallery-{{(Request::is('collection/*') || Request::is('collections/*')) ? $collection->name_unique : $collection->name}}" title="{{$unpaged_uploads[$i]['description']}}"></a>
+			<a
+		@if($unpaged_uploads[$i]['extra'] == 'image' && ($unpaged_uploads[$i]['image']['height'] > (Session::get('height') - 10) || $unpaged_uploads[$i]['image']['width'] > (Session::get('width') - 10)))
+				data-fancybox-href="{{baseURL()}}/get/{{$unpaged_uploads[$i]['id']}}/{{$unpaged_uploads[$i]['cleanname']}}-{{Session::get('width') - 10}}x{{Session::get('height') - 10}}.jpg"
+		@else
+				data-fancybox-href="{{baseURL()}}/get/{{$unpaged_uploads[$i]['id']}}/{{$unpaged_uploads[$i]['cleanname']}}.{{$unpaged_uploads[$i]['ext']}}"
+		@endif
+				class="fancybox"
+				rel="gallery-{{(Request::is('collection/*') || Request::is('collections/*')) ? $collection['name_unique'] : $collection['name']}}"
+				title="{{$unpaged_uploads[$i]['description']}}"
+				href="{{baseURL()}}/view/{{$unpaged_uploads[$i]['id']}}/{{$unpaged_uploads[$i]['cleanname']}}.{{$unpaged_uploads[$i]['ext']}}"
+				data-original-file="{{baseURL()}}/get/{{$unpaged_uploads[$i]['id']}}/{{$unpaged_uploads[$i]['originalname']}}.{{$unpaged_uploads[$i]['ext']}}"
+			></a>
 	@endfor
-	</div>
+		</div>
 @endif
 @if($uploads->getLastPage() > 1)
 		<div class="row text-center">
