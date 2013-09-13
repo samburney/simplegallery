@@ -279,5 +279,13 @@ class UploadController extends BaseController
 
 		return Response::json();
 	}
+
+	public function postSetClientSessionVars()
+	{
+		Session::set('width', Input::get('width'));
+		Session::set('height', Input::get('height'));
+
+		exit();
+	}
 }
 ?>

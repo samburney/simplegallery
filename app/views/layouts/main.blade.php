@@ -8,9 +8,6 @@
 		</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 @section('scripts')
-		<script type="text/javascript">
-			var baseURL = "{{URL::to('')}}";
-		</script>
 		<script type="text/javascript" src="{{asset('bower/jquery/jquery.min.js')}}"></script>
 		<script type="text/javascript" src="{{asset('bower/jquery.smooth-scroll/jquery.smooth-scroll.js')}}"></script>
 		<script type="text/javascript" src="{{asset('lib/jquery.fineuploader-3.8.0/jquery.fineuploader-3.8.0.js')}}"></script>
@@ -19,6 +16,22 @@
 		<script type="text/javascript" src="{{asset('bower/bootstrap/dist/js/bootstrap.min.js')}}"></script>
 		<script type="text/javascript" src="{{asset('bower/bootbox/bootbox.js')}}"></script>
 		<script type="text/javascript" src="{{asset('bower/select2/select2.js')}}"></script>
+		<script type="text/javascript">
+			var baseURL = "{{URL::to('')}}";
+			var Session = {{json_encode(Session::all())}}
+
+			$(function() {
+				if(Session.width != $(window).width() || Session.height != $(window).height()) {
+					$.post(
+						baseURL + '/upload/set-client-session-vars',
+						{
+							height: $(window).height(),
+							width: $(window).width()
+						}
+					);
+				}
+			})
+		</script>
 @show
 @section('styles')
 		<link href="{{asset('lib/jquery.fineuploader-3.8.0/fineuploader-3.8.0.css')}}" rel="stylesheet" media="screen">
