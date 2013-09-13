@@ -73,7 +73,6 @@ class sifntUserAuth
 	// Based on code by justo@air-stream.org - http://code.ridgehaven.wan/browser/phpbot/module/ip.php
 	private function getASUserName($ip)
 	{
-		$ip = '10.112.0.65';
 		if($member = Cache::get('asip-' . $ip . '-member')){
 			return $member;
 		}
