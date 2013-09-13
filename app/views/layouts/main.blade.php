@@ -14,6 +14,8 @@
 		<script type="text/javascript" src="{{asset('bower/jquery/jquery.min.js')}}"></script>
 		<script type="text/javascript" src="{{asset('bower/jquery.smooth-scroll/jquery.smooth-scroll.js')}}"></script>
 		<script type="text/javascript" src="{{asset('lib/jquery.fineuploader-3.8.0/jquery.fineuploader-3.8.0.js')}}"></script>
+		<script type="text/javascript" src="{{asset('bower/fancybox/lib/jquery.mousewheel-3.0.6.pack.js')}}"></script>
+		<script type="text/javascript" src="{{asset('bower/fancybox/source/jquery.fancybox.pack.js?v=2.1.5')}}"></script>
 		<script type="text/javascript" src="{{asset('bower/bootstrap/dist/js/bootstrap.min.js')}}"></script>
 		<script type="text/javascript" src="{{asset('bower/bootbox/bootbox.js')}}"></script>
 		<script type="text/javascript" src="{{asset('bower/select2/select2.js')}}"></script>
@@ -22,6 +24,7 @@
 		<link href="{{asset('lib/jquery.fineuploader-3.8.0/fineuploader-3.8.0.css')}}" rel="stylesheet" media="screen">
 		<link href="{{asset('bower/bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet" media="screen">
 		<link href="{{asset('bower/select2/select2.css')}}" rel="stylesheet" media="screen">
+		<link href="{{asset('bower/fancybox/source/jquery.fancybox.css?v=2.1.5')}}" rel="stylesheet" media="screen">
 		<link href="{{asset('css/style.css')}}" rel="stylesheet" media="screen">
 @show
 	</head>

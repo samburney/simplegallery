@@ -43,7 +43,8 @@ class TagController extends BaseController
 
 		return View::make('collections/view')
 			->with('collection', $tag)
-			->with('uploads', $tag->uploads()->paginate(9));
+			->with('uploads', $tag->uploads()->paginate(9))
+			->with('unpaged_uploads', $tag->uploads()->orderBy('created_at', 'asc')->get()->toArray());			
 	}
 
 	public function postProcess()

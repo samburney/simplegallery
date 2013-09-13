@@ -13,6 +13,9 @@
 
 			// Replace image with one that's relevant to the viewport
 			if(upload.extra == 'image'){
+				if(upload.image.width > ($(window).width() - 10) || upload.image.height > ($(window).height() - 10)) {
+					$('#imageView > a').attr('href', '{{baseURL()}}/get/{{$file_id}}/{{$upload->cleanname}}-' + ($(window).width() - 10) + 'x' + ($(window).height() - 10) + '.jpg');
+				}
 
 				if(upload.image.width < $('#imageView').width()){
 					$('#imageView').find('img').addClass('img-thumbnail img-thumbnail-bordercollapse').attr('src', '{{baseURL()}}/get/' + upload.id + '/' + upload.cleanname + '.' + file_requestedext + '?{{Session::get('uniqid')}}');
@@ -117,7 +120,22 @@
 					upload_ids = [upload.id];
 
 					$('#collectionModal').modal();
-				});				
+				});
+
+				$('.fancybox').fancybox({
+					padding: 0,
+					margin: 5,
+					closeBtn: false,
+					closeClick: true,
+					helpers: {
+						title: {
+							type: 'over'
+						}
+					},
+					afterLoad: function() {
+						this.title = '<a href="{{baseURL()}}/get/{{$file_id}}/{{$upload->cleanname}}.{{$file_requestedext}}">' + this.title + '</a>'
+					}
+				});
 			});
 	</script>
 @endsection
@@ -126,7 +144,7 @@
 <div class="row">
 	<div class="col-lg-10 col-md-10 col-sm-12">
 		<div class="row text-center" id="imageView">
-			<a href="{{baseURL()}}/get/{{$file_id}}/{{$upload->cleanname}}.{{$file_requestedext}}">
+			<a href="{{baseURL()}}/get/{{$file_id}}/{{$upload->cleanname}}.{{$file_requestedext}}" title="{{$upload->description}}." class="fancybox" title="{{$upload->description}}">
 				<img style="display: none;">
 			</a>
 		</div>
@@ -134,6 +152,34 @@
 	<div class="col-lg-2 col-md-2">
 		<div class="hidden-sm hidden-xs">
 			@include('includes.upload-sidebar')
+		</div>
+		<div class="row text-center">
+			@if($upload->extra == 'image')
+			<div class="btn-group">
+				<a href="{{baseURL()}}/upload/get/{{$upload->id}}/{{$upload->originalname}}.{{$upload->ext}}" class="btn btn-default btn-success btn-lg" style="margin-bottom: 20px;">
+					Download
+				</a>
+				<button type="button" class="btn btn-success dropdown-toggle btn-lg" data-toggle="dropdown">
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" role="menu">
+					@if(strtolower($upload->ext) != 'jpg' && strtolower($upload->ext) != 'jpeg' && strtolower($upload->ext) != 'jpe')
+					<li><a href="{{baseURL()}}/upload/get/{{$upload->id}}/{{$upload->originalname}}.jpg">JPEG</a></li>
+					@endif
+					@if(strtolower($upload->ext) != 'png')
+					<li><a href="{{baseURL()}}/upload/get/{{$upload->id}}/{{$upload->originalname}}.png">PNG</a></li>
+					@endif
+					@if(strtolower($upload->ext) != 'gif')
+					<li><a href="{{baseURL()}}/upload/get/{{$upload->id}}/{{$upload->originalname}}.gif">GIF</a></li>
+					@endif
+				</ul>
+			</div>
+			@else
+			<a href="{{baseURL()}}/upload/get/{{$upload->id}}/{{$upload->originalname}}.{{$upload->ext}}" class="btn btn-default btn-success btn-lg btn-block" style="margin-bottom: 20px;">
+				<span class="glyphicon glyphicon-arrow-down"></span>
+				Download
+			</a>
+			@endif
 		</div>
 		<div class="well well-empty row">
 			<div class="well-inner">
@@ -164,34 +210,6 @@
 				</p>
 @endif				
 			</div>
-		</div>
-		<div class="row text-center">
-			@if($upload->extra == 'image')
-			<div class="btn-group">
-				<a href="{{baseURL()}}/upload/get/{{$upload->id}}/{{$upload->originalname}}.{{$upload->ext}}" class="btn btn-default btn-success btn-lg" style="margin-bottom: 20px;">
-					Download
-				</a>
-				<button type="button" class="btn btn-success dropdown-toggle btn-lg" data-toggle="dropdown">
-					<span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu" role="menu">
-					@if(strtolower($upload->ext) != 'jpg' && strtolower($upload->ext) != 'jpeg' && strtolower($upload->ext) != 'jpe')
-					<li><a href="{{baseURL()}}/upload/get/{{$upload->id}}/{{$upload->originalname}}.jpg">JPEG</a></li>
-					@endif
-					@if(strtolower($upload->ext) != 'png')
-					<li><a href="{{baseURL()}}/upload/get/{{$upload->id}}/{{$upload->originalname}}.png">PNG</a></li>
-					@endif
-					@if(strtolower($upload->ext) != 'gif')
-					<li><a href="{{baseURL()}}/upload/get/{{$upload->id}}/{{$upload->originalname}}.gif">GIF</a></li>
-					@endif
-				</ul>
-			</div>
-			@else
-			<a href="{{baseURL()}}/upload/get/{{$upload->id}}/{{$upload->originalname}}.{{$upload->ext}}" class="btn btn-default btn-success btn-lg btn-block" style="margin-bottom: 20px;">
-				<span class="glyphicon glyphicon-arrow-down"></span>
-				Download
-			</a>
-			@endif
 		</div>
 @if ($upload->user_id == Auth::user()->id)
 		<div class="well well-sm row">
