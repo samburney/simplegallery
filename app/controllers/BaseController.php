@@ -18,8 +18,15 @@ class BaseController extends Controller {
 			//}
 		}
 
+		// Set Session's uniqid
 		if(!Session::has('uniqid')) {
 			Session::put('uniqid', uniqid());
+		}
+
+		// Set default viewport if we don't have one yet
+		if(!Session::has('width') || !Session::has('height')) {
+			Session::put('width', 768);
+			Session::put('height', 768);
 		}
 
 		$this->user = Auth::user();
