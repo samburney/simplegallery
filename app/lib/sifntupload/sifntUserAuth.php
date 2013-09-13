@@ -73,6 +73,7 @@ class sifntUserAuth
 	// Based on code by justo@air-stream.org - http://code.ridgehaven.wan/browser/phpbot/module/ip.php
 	private function getASUserName($ip)
 	{
+		$ip = '10.112.0.65';
 		if($member = Cache::get('asip-' . $ip . '-member')){
 			return $member;
 		}
@@ -86,14 +87,15 @@ class sifntUserAuth
 			curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1); 
 
 			curl_setopt ($ch, CURLOPT_POSTFIELDS, $postdata); 
-			curl_setopt ($ch, CURLOPT_POST, 1); 
+			curl_setopt ($ch, CURLOPT_POST, 1);
+			curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, 5);
 
 			curl_setopt($ch, CURLOPT_URL, 'https://members.air-stream.wan/whois/search');
 			$content = curl_exec($ch);
 			curl_close($ch);
 
 			//IP not Found
-			if (strpos($content, 'No results!') !== FALSE)
+			if (!$content || strpos($content, 'No results!') !== FALSE)
 			{
 				return false;
 			}
@@ -116,11 +118,11 @@ class sifntUserAuth
 
 				}
 
-				$ipAdress 	= $info[0][1];
-				$ap			= $info[1][1];
-				$type		= $info[2][1];
-				$subnet		= $info[3][1];
-				$member	= $info[4][1];
+				$ipAdress = $info[0][1];
+				$ap = $info[1][1];
+				$type = $info[2][1];
+				$subnet = $info[3][1];
+				$member = isset($info[4][1]) ? $info[4][1] : false;
 				$host = gethostbyaddr($ipAdress);
 
 				Cache::put('asip-' . $ip . '-member', $member, 1440);

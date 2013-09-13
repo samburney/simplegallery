@@ -45,7 +45,7 @@
 		<div id="wrap">
 			<div class="container" id="header">
 @section('title-nav')
-				<div class="row">
+				<div id="title-nav" class="row">
 					<nav class="navbar navbar-inverse" role="navigation">
 						<div class="navbar-header">
 							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-topnav-toggle">
