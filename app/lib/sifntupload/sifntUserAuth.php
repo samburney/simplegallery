@@ -2,6 +2,7 @@
 class sifntUserAuth
 {
 	private $user_id;
+	private $auth_trusted = false;
 	
 	function __construct()
 	{
@@ -22,7 +23,17 @@ class sifntUserAuth
 
 	public function getUserName()
 	{
-		$user_name = $this->getUserByIPAddress();
+		$user_name = false;
+
+		if(!$user_name && Config::get('auth.cas')) {
+			if($user_name = $this->getUserByCas()) {
+				$this->auth_trusted = true;
+			}
+		}
+		
+		if (!$user_name) {
+			$user_name = $this->getUserByIPAddress();
+		}
 
 		return $user_name;
 	}
@@ -31,7 +42,7 @@ class sifntUserAuth
 	{
 		$user = User::where('username', '=', $user_name)->first();
 		if($user){
-			if($user->email && $user->password){
+			if(!$this->auth_trusted && $user->email && $user->password){
 				return -1;
 			}
 			else{
@@ -129,7 +140,26 @@ class sifntUserAuth
 				return $member;
 			}
 		}
+	}
 
+	private function getUserByCas()
+	{
+		$user_name = false;
+
+		if($auth = phpCAS::checkAuthentication()) {
+			$user_name = phpCAS::getUser();
+		}
+
+		return $user_name;
+	}
+
+	public static function logout()
+	{
+		Auth::logout();
+
+		if(Config::get('auth.cas') && phpCAS::isAuthenticated()) {
+			phpCAS::logout(array('url' => baseURL()));
+		}
 	}
 }
 ?>

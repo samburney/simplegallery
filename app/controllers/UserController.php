@@ -97,8 +97,27 @@ class UserController extends BaseController
 
 	public function getLogout()
 	{
-		Auth::logout();
+		sifntUserAuth::logout();
+
 		return Redirect::route('home')
 			->with('notice', 'You successfully logged off');
+	}
+
+	public function getLoginWithCas()
+	{
+		Auth::logout();
+
+		if(!phpCAS::isAuthenticated()) {
+			phpCAS::forceAuthentication();
+		}
+		else {
+			$userauth = new sifntUserAuth();
+			if($user_id = $userauth->getUserId($userauth->getUserName())){
+				Auth::loginUsingId($user_id);
+			}			
+
+			return Redirect::route('home')
+				->with('notice', "Welcome to sifntUpload, " . Auth::user()->username); //FIXME, should be dynamic sitename
+		}
 	}
 }

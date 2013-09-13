@@ -36,4 +36,7 @@
 		{{Former::close()}}
 	</div>
 </div>
+<div class="row text-center">
+	<a class="btn btn-default btn-primary" href="{{baseURL()}}/user/login-with-cas">Login with ASCAS</a>
+</div>
 @endsection

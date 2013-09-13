@@ -105,3 +105,14 @@ function baseURL()
 {
 	return URL::to('');
 }
+
+if(Config::get('auth.cas')) {
+		phpCAS::client(
+			CAS_VERSION_2_0,
+			Config::get('auth.cas.host'),
+			Config::get('auth.cas.port'),
+			Config::get('auth.cas.context')
+		);
+
+		phpCAS::setCasServerCACert(Config::get('auth.cas.cacert'));
+}

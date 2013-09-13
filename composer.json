@@ -7,13 +7,28 @@
 		"anahkiasen/former": "dev-develop",
 		"fideloper/proxy": "dev-master",
 		"sifnt/sifnt-util": "dev-master",
-		"barracudanetworks/archivestream-php": "0.2.5"
+		"barracudanetworks/archivestream-php": "0.2.5",
+		"jasig/phpcas": "1.3.2"
 	},
 	"repositories": [
 	    {
 	        "type": "composer",
 	        "url": "http://composer.sifnt.wan"
-	    }
+	    },
+		{
+			"type": "package",
+			"package": {
+				"name": "jasig/phpcas",
+				"version": "1.3.2",
+				"dist": {
+					"url": "http://downloads.jasig.org/cas-clients/php/1.3.2/CAS-1.3.2.tgz",
+					"type": "tar"
+				},
+				"autoload" : {
+					"classmap": ["CAS-1.3.2/"]
+				}
+			}
+		}
 	],
 	"autoload": {
 		"classmap": [
