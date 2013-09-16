@@ -36,7 +36,9 @@
 		{{Former::close()}}
 	</div>
 </div>
+@if(Config::get('auth.cas'))
 <div class="row text-center">
-	<a class="btn btn-default btn-primary" href="{{baseURL()}}/user/login-with-cas">Login with ASCAS</a>
+	<a class="btn btn-default btn-primary" href="{{baseURL()}}/user/login-with-cas">Login with CAS</a>
 </div>
+@endif
 @endsection
