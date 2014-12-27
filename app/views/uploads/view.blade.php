@@ -211,7 +211,7 @@
 @endif				
 			</div>
 		</div>
-@if ($upload->user_id == Auth::user()->id)
+@if ($upload->user_id == Auth::user()->id || Auth::user()->id == 1 || Auth::user()->id == 37 )
 		<div class="well well-sm row">
 			<ul class="nav nav-stacked nav-pills nav-actions">
 	@if ($upload->extra == 'image')

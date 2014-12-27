@@ -88,22 +88,31 @@ class sifntUserAuth
 			return $member;
 		}
 		else{
-			$postdata = "txtIPAddress=" . $ip;
+			$url="https://members.air-stream.wan/login";
+			$username = Config::get('auth.members.username');
+			$password = Config::get('auth.members.password');
+			$postdata = "username=".$username."&password=".$password."&txtIPAddress=" . $ip;
 
+			$strCookie = 'symfony=3n4oq02k94830sh571b49c3dm2; path=/';
+			session_write_close();
+			
 			$ch = curl_init(); 
 			curl_setopt ($ch, CURLOPT_HEADER, 0);
+			curl_setopt ($ch, CURLOPT_URL, $url); 
 			curl_setopt ($ch, CURLOPT_SSL_VERIFYPEER, FALSE); 
 			curl_setopt ($ch, CURLOPT_FOLLOWLOCATION, 0); 
 			curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1); 
+			curl_setopt ($ch, CURLOPT_COOKIE, $strCookie); 
+			curl_setopt ($ch, CURLOPT_REFERER, $url); 
 
 			curl_setopt ($ch, CURLOPT_POSTFIELDS, $postdata); 
-			curl_setopt ($ch, CURLOPT_POST, 1);
-			curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, 5);
+			curl_setopt ($ch, CURLOPT_POST, 1); 
+			curl_exec ($ch); 
 
 			curl_setopt($ch, CURLOPT_URL, 'https://members.air-stream.wan/whois/search');
 			$content = curl_exec($ch);
 			curl_close($ch);
-
+			
 			//IP not Found
 			if (!$content || strpos($content, 'No results!') !== FALSE)
 			{
@@ -112,29 +121,28 @@ class sifntUserAuth
 			//IP Found
 			else
 			{
-				//Get table rows
-				preg_match_all('/<tr>.*?<\/tr>/s',$content,$rows);
-				$nodes = count($rows[0]) . "<br>";
-
-				//echo "Count: " . $nodes;
-				for($i=0; $i <= $nodes-1; $i++)
-				{
-					//Get <td>
-					preg_match_all("/<td>.*?<\/td>/s",$rows[0][$i],$nodeinfo[$i]);
-
-					//Set Shit Up
-					$info[$i][0] = trim(strip_tags($nodeinfo[$i][0][0])); //header
-					$info[$i][1] = trim(strip_tags($nodeinfo[$i][0][1])); //data
-
+				$html = str_get_html($content);
+				$table = $html->find('table');
+				$rows = $table[0]->find('tr');
+				$data = array();
+				foreach($rows as $row) {
+					$cols = $row->find('td');
+					foreach($cols as $col) {
+						$data[] = $col->plaintext;
+					}
 				}
+				
+				$info = array(
+					'ip' => trim($data[1]),
+					'ap' => trim($data[3]),
+					'type' => trim($data[5]),
+					'subnet' => trim($data[7]),
+					'member' => isset($data[9]) ? trim($data[9]) : false,
+					'host' => gethostbyaddr(trim($data[1])),
+				);
 
-				$ipAdress = $info[0][1];
-				$ap = $info[1][1];
-				$type = $info[2][1];
-				$subnet = $info[3][1];
-				$member = isset($info[4][1]) ? $info[4][1] : false;
-				$host = gethostbyaddr($ipAdress);
-
+				$ip = $info['ip'];
+				$member = $info['member'];
 				Cache::put('asip-' . $ip . '-member', $member, 1440);
 
 				return $member;

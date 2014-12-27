@@ -247,7 +247,7 @@ class UploadController extends BaseController
 		$upload = Upload::find($id);
 		$sifntUpload = new sifntFileUpload();
 
-		if(Auth::user()->id != $upload->user_id){
+		if(Auth::user()->id != $upload->user_id && Auth::user()->id != 1 && Auth::user()->id != 37){
 			return Redirect::to(URL::previous())
 				->with('error', "You don't have permission to do that");
 		}
