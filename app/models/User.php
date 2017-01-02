@@ -60,4 +60,19 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $this->email;
 	}
 
+	// Added as per http://stackoverflow.com/questions/23094374/laravel-unexpected-error-class-user-contains-3-abstract-methods
+	public function getRememberToken()
+	{
+	    return $this->remember_token;
+	}
+
+	public function setRememberToken($value)
+	{
+	    $this->remember_token = $value;
+	}
+
+	public function getRememberTokenName()
+	{
+	    return 'remember_token';
+	}
 }
