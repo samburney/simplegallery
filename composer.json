@@ -3,7 +3,7 @@
 	"description": "The Laravel Framework.",
 	"keywords": ["framework", "laravel"],
 	"require": {
-		"laravel/framework": "4.0.*",
+		"laravel/framework": "4.1.*",
 		"anahkiasen/former": "3.*",
 		"fideloper/proxy": "2.*",
 		"sifnt/sifnt-util": "dev-master",
