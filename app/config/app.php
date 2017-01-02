@@ -67,6 +67,8 @@ return array(
 
 	'key' => 'zJNHK93mlXnuduM899IxTWALnnEZI8dx',
 
+	'cipher' => MCRYPT_RIJNDAEL_256,
+
 	/*
 	|--------------------------------------------------------------------------
 	| Autoloaded Service Providers
