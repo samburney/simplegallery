@@ -67,7 +67,7 @@ class UserController extends BaseController
 
 		Auth::loginUsingId($user->id);
 		return Redirect::route('home')
-			->with('notice', "Welcome to sifntUpload, $user->username"); //FIXME, should be dynamic sitename
+			->with('notice', "You've successfully logged in as $user->username");
 	}
 
 	public function getLogin()
@@ -117,7 +117,51 @@ class UserController extends BaseController
 			}			
 
 			return Redirect::route('home')
-				->with('notice', "Welcome to sifntUpload, " . Auth::user()->username); //FIXME, should be dynamic sitename
+				->with('notice', "You've successfully logged in as $user->username");
+		}
+	}
+
+	public function getForgotPassword()
+	{
+		return View::make('users/forgot-password');
+	}
+
+
+	public function postForgotPassword()
+	{
+		$formdata = Input::all();
+
+		// Try for user with matching username and email
+		if($user = User::where('username', '=', $formdata['username'])
+		->where('email', '=', $formdata['email'])
+		->first()) {
+			if(Password::remind(Input::only('email'), function($message)
+				{
+					$message->subject('Password Reminder');
+				}
+			)) {
+				return Redirect::route('home')
+					->with('notice', 'A password reset email has been sent to your specified email address, please follow the instructions in this email to complete your password reset.');
+			}
+			else {
+				return Redirect::to(URL::previous())
+					->with('error', 'An error occured sending a reminder email.')
+					->withInput($formdata);
+			}
+		}
+		// Check for username with no password or email address
+		else if($user = User::where('username', '=', $formdata['username'])
+		->where('email', '=', '')
+		->where('password', '=', '')
+		->first()) {
+			return Redirect::to(URL::to('users/register'))
+				->with('notice', 'This user already exists but has no registered Email Address.  You may claim it by registering it now.')
+				->withInput($formdata);
+		}
+		else {
+			return Redirect::to(URL::previous())
+				->with('error', 'Username and email address do not match or Username not registered.  Note: These fields are case-sensitive.')
+				->withInput($formdata);
 		}
 	}
 }

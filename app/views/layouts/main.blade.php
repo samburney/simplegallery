@@ -115,8 +115,18 @@
 				</div>
 @show
 @if (Session::has('error'))
-				<div class="alert alert-error row">
+				<div class="alert alert-danger row">
 					<b>Error!</b> {{Session::get('error')}}
+				</div>
+@endif
+@if ($errors->all())
+				<div class="alert alert-danger row">
+					<b>Error!</b>
+					<ul>
+@foreach ($errors->all() as $error)
+						<li>{{$error}}</li>
+@endforeach
+					</ul>
 				</div>
 @endif
 @if (Session::has('warning'))

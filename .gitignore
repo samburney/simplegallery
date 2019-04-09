@@ -1,5 +1,6 @@
 /app/config/database.php
 /app/config/proxy.php
+/app/config/mail.php
 
 /bootstrap/compiled.php
 /vendor
@@ -8,10 +9,12 @@ composer.phar
 composer.lock
 .DS_Store
 ._.DS_Store
+*._*
 simplegallery.sublime*
 /public/files/*
 /public/files/cache/*
 /public/preprocessed/*
+phpinfo.php
 
 !/public/files/cache
 !*.gitkeep

@@ -34,6 +34,10 @@
 		</div>
 		<div class="text-center">{{Former::submit('Login')->class('btn btn-primary')}}</div>
 		{{Former::close()}}
+		<div class="text-center">
+			<br />
+			<a href="{{baseURL()}}/user/forgot-password">Forgotten Password Reset</a>
+		</div>
 	</div>
 </div>
 @if(Config::get('auth.cas'))

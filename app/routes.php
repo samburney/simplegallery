@@ -30,3 +30,6 @@ Route::controller('collections','CollectionController');
 
 Route::controller('tag','TagController');
 Route::controller('tags','TagController');
+
+Route::controller('password','RemindersController');
+Route::controller('passwords','RemindersController');
