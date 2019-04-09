@@ -1,0 +1,19 @@
+#!/usr/bin/with-contenv bash
+
+# Handle PHP variables
+echo "
+
+# Set by simplegallery-docker
+php_value upload_max_filesize $PHP_UPLOAD_MAX_FILESIZE
+php_value post_max_size $PHP_POST_MAX_SIZE
+php_value short_open_tag On
+php_value memory_limit $PHP_MEMORY_LIMIT" >> /var/www/simplegallery/public/.htaccess
+
+# Handle DB_HOST, DB_DATABASE, DB_USERNAME and DB_PASSWORD variables
+cat /var/www/simplegallery/app/config/database.php.sample \
+    | sed -e "s/'default'.*'mysql'.*/'default' => '$DB_DRIVER',/" \
+    | sed -e "s/'host'.*'localhost'.*/'host' => '$DB_HOST',/" \
+    | sed -e "s/'database'.*'database'.*/'database' => '$DB_DATABASE',/" \
+    | sed -e "s/'username'.*'root'.*/'username' => '$DB_USERNAME',/" \
+    | sed -e "s/'password'.*''.*/'password' => '$DB_PASSWORD',/" \
+    > /var/www/simplegallery/app/config/database.php

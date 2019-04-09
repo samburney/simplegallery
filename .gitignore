@@ -20,3 +20,5 @@ simplegallery.sublime*
 /node_modules
 /test
 /tests
+
+/data

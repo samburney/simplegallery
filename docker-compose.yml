@@ -1,0 +1,30 @@
+version: '2.4'
+
+services:
+  simplegallery:
+    build: '.'
+    restart: "unless-stopped"
+    image: "samburney/simplegallery:latest"
+    environment:
+      PHP_UPLOAD_MAX_FILESIZE: "2048M"
+      PHP_POST_MAX_SIZE: "2048M"
+      PHP_MEMORY_LIMIT: "1024M"
+      DB_DRIVER: "mysql"
+      DB_HOST: "db"
+      DB_DATABASE: "simplegallery"
+      DB_USERNAME: "simplegallery"
+      DB_PASSWORD: ""
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+      - "./data/files/:/var/www/simplegallery/public/files"
+    ports:
+      - "8081:80"
+    networks:
+      - 'default'
+      - 'mariadb'
+
+networks:
+  default:
+  mariadb:
+    external:
+      name: 'mariadb_default'
