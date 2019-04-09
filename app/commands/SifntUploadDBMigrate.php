@@ -63,7 +63,7 @@ class SifntUploadDBMigrate extends Command {
 				$user->email = $old_user->email;
 				$user->save();
 			}
-			echo "Processing files for " . $user->username;
+			echo "Processing files for " . $user->username . "\n";
 
 			// process this user's files
 			$files = DB::connection($olddbname)
