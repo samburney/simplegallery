@@ -1,0 +1,11 @@
+#!/usr/bin/with-contenv bash
+
+# Update from git
+cd /var/www/simplegallery
+git pull
+
+# Fix permissions
+chown -R www-data:www-data /var/www/radium
+chown -R www-data:www-data /var/www/simplegallery/
+chmod -R 664 /var/www/simplegallery/
+find /var/www/simplegallery/ -type d -exec chmod 2775 {} \;
