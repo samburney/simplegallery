@@ -50,9 +50,9 @@ class SifntUploadDBMigrate extends Command {
 		// List of relevant user ids
 		$users = DB::connection($olddbname)
 			->table('sifntupload_files')
-			->groupBy('user_id')
-			->join('drupal_users', 'sifntupload_files.user_id', '=', 'drupal_users.uid')
-			->select('user_id as id', 'name as username', 'mail as email')
+			->groupBy('sifntupload_files.user_id')
+			->join('phpbb_users', 'sifntupload_files.user_id', '=', 'phpbb_users.user_id')
+			->select('phpbb_users.user_id as id', 'phpbb_users.username as username', 'phpbb_users.user_email as email')
 			->get();
 
 		foreach($users as $old_user) {
@@ -63,6 +63,7 @@ class SifntUploadDBMigrate extends Command {
 				$user->email = $old_user->email;
 				$user->save();
 			}
+			echo "Processing files for " . $user->username;
 
 			// process this user's files
 			$files = DB::connection($olddbname)
@@ -90,17 +91,29 @@ class SifntUploadDBMigrate extends Command {
 				);
 
 				if($file->file_extra == 'image'){
-					$uploaddata['image_width'] = $file->image_width;
-					$uploaddata['image_height'] = $file->image_height;
-					$uploaddata['image_bits'] = $file->image_bits;
-					$uploaddata['image_channels'] = $file->image_channels;
-					$uploaddata['image_type'] = $file->image_type;
+					if($uploaddata['image_type'] = $file->image_type) {
+						$uploaddata['image_width'] = $file->image_width;
+						$uploaddata['image_height'] = $file->image_height;
+						$uploaddata['image_bits'] = $file->image_bits;
+						$uploaddata['image_channels'] = $file->image_channels;
+					}
+					elseif($image_data = getimagesize($uploaddata['tmp_name'])) {
+						$uploaddata['image_type'] = $image_data['mime'];
+						$uploaddata['image_width'] = $image_data[0];
+						$uploaddata['image_height'] = $image_data[1];
+						$uploaddata['image_bits'] = @$image_data['bits'] ? $image_data['bits'] : 0;
+						$uploaddata['image_channels'] = @$image_data['channels'] ? $image_data['channels'] : 0;
+					}
+					else {
+						echo "Error: " . $uploaddata['tmp_name'] . " is an image but doesn't have image data; aborting.";
+					}
 				}
 
 				$file_name = public_path() . "/files/" . $uploaddata['file_datename'] . '.' . $uploaddata['file_ext'];
 				if(!file_exists($file_name)) {
+					echo "Processing: $file_name   ";
 					if($sifntFileUpload->processFile($uploaddata)) {
-						echo "Processed: $file_name\n";
+						echo "Done.\n";
 
 						// Add collection and tag based on group name
 						$group_name = DB::connection($olddbname)
@@ -127,6 +140,10 @@ class SifntUploadDBMigrate extends Command {
 							->where('file_id', '=', $file->file_id)
 							->lists('tag');
 						TagController::processTags($uploaddata['file_id'], $old_tags, true);
+					}
+					else {
+						echo "Error!\n";
+						unlink($filename);
 					}
 				}
 				else {
