@@ -37,7 +37,9 @@
 		</div>
 @endfor
 		<div class="text-center">
+		@if (method_exists($uploads, 'links'))
 			{{$uploads->links()}}
+		@endif
 		</div>
 	</div>
 	<div class="col-lg-2 col-md-2 hidden-sm hidden-xs">

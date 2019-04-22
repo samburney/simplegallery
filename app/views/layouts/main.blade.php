@@ -59,8 +59,20 @@
 						</div>
 						<div class="navbar-collapse navbar-topnav-toggle collapse">
 							<ul class="nav navbar-nav">
-								<li<? if(Request::is('/') || Request::is('/uploads/popular')){ ?> class="active"<? } ?>>
-									<a href="{{URL::route('home')}}">Popular</a>
+								<li class="dropdown<? if(Request::is('/') || Request::is('uploads/random') || Request::is('uploads/popular') || Request::is('uploads/all')){ ?> active<? } ?>">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="active">								
+										<?
+											if(Request::is('/') || Request::is('uploads/random')){ ?>Random<? }
+											elseif(Request::is('uploads/popular')){ ?>Popular<? }
+											elseif(Request::is('uploads/all')){ ?>All<? } 
+											else { ?>Home<? }
+										?>
+										<span class="caret"></span></a>
+									<ul class="dropdown-menu">
+										<li><a href="{{URL::route('random')}}">Random</a></li>
+										<li><a href="{{URL::route('popular')}}">Popular</a></li>
+										<li><a href="{{URL::route('all')}}">All</a></li>
+									</ul>
 								</li>
 								<li<? if(Request::is('tag') || Request::is('tags')){ ?> class="active"<? } ?>>
 									<a href="{{URL::to('tags')}}">Tags</a>

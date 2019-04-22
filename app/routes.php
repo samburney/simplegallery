@@ -11,7 +11,10 @@
 |
 */
 
-Route::get('/', array('as' => 'home', 'uses' => 'UploadController@getPopular'));
+Route::get('/', array('as' => 'home', 'uses' => 'UploadController@getRandom'));
+Route::get('/uploads/random', array('as' => 'random', 'uses' => 'UploadController@getRandom'));
+Route::get('/uploads/popular', array('as' => 'popular', 'uses' => 'UploadController@getPopular'));
+Route::get('/uploads/all', array('as' => 'all', 'uses' => 'UploadController@getAll'));
 
 Route::get('get/{path}/{params}', array('as' => 'get', 'uses' => 'UploadController@getGet'));
 Route::get('view/{path}/{params?}', array('as' => 'view', 'uses' => 'UploadController@getView'));

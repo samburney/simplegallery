@@ -21,6 +21,22 @@ class UploadController extends BaseController
 			->with('uploads', $uploads);
 	}
 
+	public function getRandom()
+	{
+		$uploads = Upload::with('image')->where('private', '!=', '1')->orderByRaw('RAND() ASC')->limit(12)->get();
+
+		$this->layout->content = View::make('uploads/index')
+			->with('uploads', $uploads);
+	}
+
+	public function getAll()
+	{
+		$uploads = Upload::with('image')->where('private', '!=', '1')->orderBy('created_at', 'desc')->paginate(12);
+
+		$this->layout->content = View::make('uploads/index')
+			->with('uploads', $uploads);
+	}
+
 	public function getUpload()
 	{
 		$this->layout->content = View::make('uploads/upload');
