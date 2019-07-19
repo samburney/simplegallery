@@ -29,6 +29,7 @@ RUN apt-get update \
         php-xml \
         php-bcmath \
         php-curl \
+        php-gmp \
         git \
         mysql-client \
     && apt-get clean \
