@@ -6,17 +6,18 @@ LABEL maintainer 'Sam Burney <sam@burney.io>'
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Set default environment vars
-ENV PHP_UPLOAD_MAX_FILESIZE 2048M
-ENV PHP_POST_MAX_SIZE 2048M
-ENV PHP_MEMORY_LIMIT 256M
-ENV DB_DRIVER mysql
-ENV DB_HOST localhost
-ENV DB_DATABASE simplegallery
-ENV DB_USERNAME root
-ENV DB_PASSWORD ''
+ENV PHP_UPLOAD_MAX_FILESIZE=2048M \
+    PHP_POST_MAX_SIZE=2048M \
+    PHP_MEMORY_LIMIT=256M \
+    DB_DRIVER=mysql \
+    DB_HOST=localhost \
+    DB_DATABASE=simplegallery \
+    DB_USERNAME=root \
+    DB_PASSWORD=''
 
 # Install wget and install/updates certificates
 RUN apt-get update \
+    && apt-get dist-upgrade -f -y -q \
     && apt-get install -f -y -q --no-install-recommends \
         apache2 \
         php \

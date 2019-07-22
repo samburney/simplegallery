@@ -17,7 +17,7 @@ if [ $DB_NOT_EXISTS != 0 ] ; then
 
 	mysqladmin -h$DB_HOST -u$DB_USERNAME -p$DB_PASSWORD create $DB_DATABASE
 	php artisan migrate --force
-elif
+else
 	# Update database
 	php artisan migrate --force
 fi
