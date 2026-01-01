@@ -15,6 +15,7 @@ simplegallery.sublime*
 /public/files/cache/*
 /public/preprocessed/*
 phpinfo.php
+.env
 
 !/public/files/cache
 !*.gitkeep
